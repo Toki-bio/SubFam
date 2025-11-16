@@ -1,4 +1,6 @@
 #/bin/sh
+# original idea by me, impproved by Nikita, added xargs parallel alignment of chunks
+
 T0=$(date +%s); T1=$(date +%s)
 Secs_HMS() { echo "  done in $(( ${1} / 3600 ))h $(( (${1} / 60) % 60 ))m $(( ${1} % 60 ))s"; }
 #
@@ -21,17 +23,35 @@ fi
 echo Reordering bank and making consensus sequences
 mafft --thread $(nproc) --threadtb $(nproc) --threadit $(nproc) --nuc --quiet --retree 0 --reorder $1 \
         | seqkit split2 -s $BnkSz -O ./ > /dev/null  2>&1 \
-                && rename -f "s/stdin.part/${1%.*}/" stdin.part*.fasta \
-                && rename -f "s/fasta$/bnk/" *.fasta \
+                && /usr/bin/rename -f "s/stdin.part/${1%.*}/" stdin.part*.fasta \
+                && /usr/bin/rename -f "s/fasta$/bnk/" *.fasta \
         || exit 1
-Secs_HMS "$(($(date +%s) - ${T1}))"; T1=$(date +%s)
+
+for b in $(find . -maxdepth 1 -name "${1%.*}_*.bnk" -type f | sort); do
+        Count=$(grep -c '^>' "$b")
+        if [ "$Count" -lt "$BnkSz" ]; then
+                echo "Skipping short batch $b ($Count sequences < $BnkSz)"
+                rm -f "$b"
+        fi
+done
 #
 echo Aligning consensus sequences
-for b in $(find . -name "${1%.*}_*.bnk"); do
-        mafft --thread $(nproc) --threadtb $(nproc) --threadit $(nproc) --nuc --reorder --quiet $b \
-        | cons -plurality 18 -name $(basename "${b%.*}") -filter \
-        | awk '!/^>/{gsub(/[Nn]/, "-")}1' > $(basename "${b%.*}").cons
+#for b in $(find . -name "${1%.*}_*.bnk"); do
+#       mafft --thread $(nproc) --threadtb $(nproc) --threadit $(nproc) --nuc --reorder --quiet $b \
+#       | cons -plurality 18 -name $(basename "${b%.*}") -filter \
+#       | awk '!/^>/{gsub(/[Nn]/, "-")}1' > $(basename "${b%.*}").cons
+#done;
+
+find -type f -name "${1%.*}_*.bnk" -print0 |
+ xargs -0 -t -I % -P $(nproc) sh -c "mafft --thread $(nproc) --threadtb $(nproc) --threadit $(nproc) --nuc --reorder --quiet '%' > '%'.al"
+
+for b in $(find . -name "${1%.*}_*.al"); do
+    cat $b \
+    | cons -plurality 18 -name $(basename "${b%.*}") -filter \
+    | awk '!/^>/{gsub(/[Nn]/, "-")}1' > $(basename "${b%.*}").cons
+    rm $b
 done;
+
 Secs_HMS "$(($(date +%s) - ${T1}))"; T1=$(date +%s)
 #
 echo Final alignment
