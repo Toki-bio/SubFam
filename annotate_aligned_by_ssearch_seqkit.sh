@@ -84,11 +84,11 @@ if [[ "$DB" == *","* ]]; then
     MULTI_DB=true
     echo "Multiple databases detected, preparing merged database..."
     MERGED_DB="${WORKDIR}/merged_db.fasta"
-    
+
     # Parse database specifications: file.fa or file.fa:Name
     IFS=',' read -ra DB_SPECS <<< "$DB"
     DB_NAMES=()
-    
+
     for spec in "${DB_SPECS[@]}"; do
         if [[ "$spec" == *":"* ]]; then
             # Custom name provided: file.fa:Name
@@ -99,23 +99,23 @@ if [[ "$DB" == *","* ]]; then
             db_file="$spec"
             db_name=$(basename "$db_file" | sed 's/\.[^.]*$//' | tr '[:lower:]' '[:upper:]')
         fi
-        
+
         if [ ! -f "$db_file" ]; then
             echo "ERROR: Database file not found: $db_file" >&2
             exit 1
         fi
-        
+
         echo "  Adding $db_file as {$db_name}"
         DB_NAMES+=("$db_name")
-        
+
         # Add prefix and append to merged database
         sed "s/^>/>\\{${db_name}\\}/" "$db_file" >> "$MERGED_DB"
     done
-    
+
     # Set SPLIT_DBS for later use
     SPLIT_DBS=$(IFS=','; echo "${DB_NAMES[*]}")
     DB="$MERGED_DB"
-    
+
     echo "  Created merged database: $MERGED_DB"
     echo "  Database names: $SPLIT_DBS"
 fi
@@ -149,7 +149,7 @@ fi
 # Parse output and get best hit with strand information
 # In ssearch36 -m 8 format: qid, sid, %id, alnlen, mismatch, gaps, qstart, qend, sstart, send, evalue, bitscore
 echo "$ssearch_output" | awk -F"\t" -v q="$qid" '
-BEGIN{best_s="None";best=0;found=0;strand="+"} 
+BEGIN{best_s="None";best=0;found=0;strand="+"}
 !/^#/ && NF>=12 {
     score=$(NF)+0
     # Determine strand: if sstart > send, it is reverse complement
@@ -164,11 +164,11 @@ BEGIN{best_s="None";best=0;found=0;strand="+"}
         strand=curr_strand
         found=1
     }
-} 
-END{ 
-    if(found) 
+}
+END{
+    if(found)
         print q "\t" best_s "\t" int(best+0.5) "\t" strand
-    else 
+    else
         print q "\tNone\t0\t+"
 }' > "${f}.hit"
 SH
@@ -205,7 +205,7 @@ awk -F"\t" '
         best[$1]=$0
         best_score[$1]=score
     }
-} 
+}
 END{
     for(k in best) print best[k]
 }' "$BEST_TSV" > "${BEST_TSV}.uniq" && mv "${BEST_TSV}.uniq" "$BEST_TSV"
@@ -237,7 +237,7 @@ best = {}
 with open(best_tsv) as fh:
     for line in fh:
         line=line.rstrip("\n")
-        if not line: 
+        if not line:
             continue
         cols=line.split("\t")
         q=cols[0]
@@ -270,14 +270,14 @@ unmatched_sequences = []  # Store sequences without hits (when split_dbs enabled
 with open(aligned_fa) as inf:
     header=None
     seq=[]
-    
+
     for line in inf:
         if line.startswith(">"):
             # Save previous sequence if exists
             if header is not None:
                 seq_str = "".join(seq)
                 sequences.append((header, seq_str))
-                
+
                 # If splitting by database, categorize this sequence
                 if split_dbs:
                     # Extract DB from header (it's in the hit name)
@@ -288,11 +288,11 @@ with open(aligned_fa) as inf:
                     else:
                         # No DB prefix found - this is unmatched (keeps original name)
                         unmatched_sequences.append((header, seq_str))
-            
+
             # Process new header
             raw=line[1:].rstrip("\n")
             qid=raw.split()[0]
-            
+
             if qid in best:
                 s, b, strand = best[qid]
                 annotated_count += 1
@@ -300,7 +300,7 @@ with open(aligned_fa) as inf:
                 s, b, strand = "None", "0", "+"
                 missing_count += 1
                 print(f"WARNING: No hit found for sequence: {qid}", file=sys.stderr)
-            
+
             # For matched sequences, prepend hit name
             # For unmatched sequences, keep original name unchanged
             if s != "None":
@@ -313,12 +313,12 @@ with open(aligned_fa) as inf:
             seq=[]
         else:
             seq.append(line)
-    
+
     # Save last sequence
     if header is not None:
         seq_str = "".join(seq)
         sequences.append((header, seq_str))
-        
+
         if split_dbs:
             hit_part = header[1:].split("|")[0]
             db_prefix = extract_db_prefix(hit_part)
@@ -352,7 +352,7 @@ if split_dbs:
             print(f"Wrote {len(db_sequences[db])} sequences to {db_fa}", file=sys.stderr)
         else:
             print(f"WARNING: No sequences found for database {db}", file=sys.stderr)
-    
+
     # Write unmatched sequences file
     if unmatched_sequences:
         unmatched_fa = f"{out_prefix}.unmatched.aligned.fasta"
@@ -383,7 +383,7 @@ if [ -n "$SPLIT_DBS" ]; then
             echo "  $db_file - $db matches, $count sequences"
         fi
     done
-    
+
     # Report unmatched file if it exists
     unmatched_file="${OUT_PREFIX}.unmatched.aligned.fasta"
     if [ -f "$unmatched_file" ]; then
