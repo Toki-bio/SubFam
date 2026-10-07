@@ -105,7 +105,32 @@ benchmark/run_benchmark.sh bench_out 8      # needs mafft, emboss, cd-hit, vsear
 
 **Metrics.** *reps*: number of output sequences. *reps≥10*: those built from at least 10 copies. *singletons*: fraction of copies left alone in a cluster. *median id*: identity of the reps≥10 to the nearest true subfamily source. *recovered*: true subfamilies matched at ≥ 99% identity by a representative whose group is mostly that subfamily.
 
-_Results table: being generated, see `benchmark/run_benchmark.sh`._
+Each cell shows **subfamilies recovered (of 8)** and, in brackets, **how many representatives** the method produced from 2,000 copies. Full metrics are in [`benchmark/results.tsv`](benchmark/results.tsv).
+
+| method | young (3%) | middle (8%) | old (15%) |
+|---|---|---|---|
+| **SubFam `-n 50`** (no threshold) | **8/8** (40) | **8/8** (40) | **7/8** (40) |
+| **SubFam `-n 20`** (no threshold) | **8/8** (100) | **8/8** (100) | **7/8** (100) |
+| VSEARCH `--consout --id 0.95` | 8/8 (1,306) | 0/8 (2,000) | 0/8 (2,000) |
+| VSEARCH `--consout --id 0.90` | 8/8 (97) | 1/8 (1,961) | 0/8 (2,000) |
+| VSEARCH `--consout --id 0.85` | 6/8 (6) | 8/8 (1,133) | 0/8 (2,000) |
+| VSEARCH `--consout --id 0.80` | 0/8 (1) | 8/8 (210) | 0/8 (1,988) |
+| VSEARCH `--consout --id 0.75` | 0/8 (1) | 7/8 (15) | 3/8 (1,536) |
+| VSEARCH `--consout --id 0.70` | 0/8 (1) | 0/8 (3) | 7/8 (571) |
+| VSEARCH `--consout --id 0.65` | 0/8 (1) | 0/8 (2) | 2/8 (73) |
+| CD-HIT-EST `-c 0.95` + mafft/cons per cluster | 8/8 (650) | 0/8 (2,000) | 0/8 (2,000) |
+| CD-HIT-EST `-c 0.90` + mafft/cons per cluster | 4/8 (10) | 7/8 (1,660) | 0/8 (2,000) |
+| CD-HIT-EST `-c 0.80` + mafft/cons per cluster | 0/8 (1) | 6/8 (21) | 4/8 (1,559) |
+| CD-HIT-EST centroids, `-c` 0.95 / 0.90 / 0.80 | 0/8 | 0/8 | 0/8 |
+| MMseqs2 centroids, `--min-seq-id` 0.95 / 0.90 / 0.80 | ≤ 3/8 | 0/8 | 0/8 |
+
+What the table shows:
+
+- **A threshold that works for one family fails for another.** VSEARCH matches SubFam on each family only inside a narrow window: 0.90 for young, 0.80–0.85 for middle, exactly 0.70 for old. One step outside that window, it either splits the copies into singletons or merges all subfamilies into a single row. A real genome mixes families of every age, so no single `--id` can be right.
+- **Even inside that window it is less compact.** On the old family, the best VSEARCH setting needs 571 representatives (16% of copies left as singletons) to reach what SubFam gets with 40.
+- **Real copies are bad representatives.** CD-HIT and MMseqs2 centroids never recover a subfamily source. They carry their own mutations: median identity to the true source is 94–98% (young) and as low as 86–90% (middle and old). Building a consensus per cluster fixes this, but only at the cluster sizes the threshold happens to produce.
+- **SubFam's consensuses are exact.** Median identity to the true source is 100.0% in all three scenarios. The single miss is the smallest subfamily (40 copies, below *N*), which merges into its sister subfamily: see [Limitations](#limitations).
+- **The cost is speed.** SubFam takes 7–15 s on 2,000 × 300 bp (4 cores), versus about 1 s for VSEARCH.
 
 ## Limitations
 
