@@ -3,16 +3,20 @@
 #
 #   1. simulate 100,000 copies: 7 abundant subfamilies + 1 rare one (100 copies, 0.1 %)
 #   2. round 1: sample SAMPLE copies, SubFam -P, assign ALL copies to the round's consensuses
-#   3. deplete: a copy is "explained" when its identity to its best consensus is within that
-#      consensus's main mode (>= the 5th percentile of the identities of the copies it attracted);
-#      everything else (unassigned, or below the mode: a shoulder) stays in the residual
+#   3. deplete: a copy is "explained" when its identity to its best consensus is in the upper
+#      part of that consensus's identity distribution (>= the given percentile of the copies it
+#      attracted); the rest (unassigned, or further from the consensus than its typical copy)
+#      stays in the residual. Rare sister subfamilies sit a few % below the sister's copies, so
+#      only the close half (or quarter) of each consensus's copies should be removed per round
 #   4. round 2: sample again from the residual, SubFam -P; does the rare subfamily appear now?
 #
-#   deplete_loop.sh [outdir] [threads] [sample]
+#   deplete_loop.sh [outdir] [threads] [sample] [percentile]
+# percentile (default 50): a copy is explained when its identity to its best consensus is at or
+# above this percentile of that consensus's copies; lower keeps less, higher keeps more.
 # Requires: mafft, vsearch, python3 + numpy.
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
-OUT=${1:-deplete_out}; T=${2:-$(nproc)}; SAMPLE=${3:-30000}
+OUT=${1:-deplete_out}; T=${2:-$(nproc)}; SAMPLE=${3:-30000}; PCT=${4:-50}
 mkdir -p "$OUT"; cd "$OUT"
 
 python3 "$HERE/simulate.py" all --divergence 0.08 --sizes 30000,20000,15000,12500,10000,7500,4900,100 --seed 11
@@ -41,14 +45,15 @@ evaluate "round 1 (sample of $SAMPLE)" round1 r1 r1.fasta
 echo "== assign all copies to the round-1 consensuses and deplete"
 vsearch --usearch_global all.fasta --db round1/r1.cons.fasta --id 0.5 --iddef 2 --strand plus \
     --maxaccepts 4 --maxrejects 32 --threads "$T" --quiet --userout hits1.tsv --userfields query+target+id
-python3 - <<'PY'
-import collections, numpy as np
+PCT=$PCT python3 - <<'PY'
+import collections, os, numpy as np
+pct = float(os.environ["PCT"])
 hits = {}
 for line in open("hits1.tsv"):
     q, t, i = line.split("\t"); hits[q] = (t, float(i))
 by_cons = collections.defaultdict(list)
 for q, (t, i) in hits.items(): by_cons[t].append(i)
-floor = {t: np.percentile(v, 5) for t, v in by_cons.items()}
+floor = {t: np.percentile(v, pct) for t, v in by_cons.items()}
 ids = [l[1:].split()[0] for l in open("all.fasta") if l.startswith(">")]
 truth = dict(l.split() for l in open("all.truth.tsv"))
 explained = {q for q, (t, i) in hits.items() if i >= floor[t]}
