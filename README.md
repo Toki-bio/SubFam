@@ -13,14 +13,14 @@ The output is a short alignment (for example 40 rows for 2,000 copies) where eve
 ## How it works
 
 ```
- 2,000 copies         guide-tree order        chunks of N        chunk consensus       final alignment
- (unordered)    ─►    (similar copies    ─►   neighbours    ─►   (mafft + EMBOSS  ─►   (mafft L-INS-i)
-                       end up adjacent)       N = 50             cons, plurality)
+ 2,000 copies         k-mer tree order        chunks of N        chunk consensus       final alignment
+ (unordered)    ─►    (similar copies    ─►   neighbours    ─►   (mafft + plurality ─► (mafft L-INS-i)
+                       end up adjacent)       N = 50             consensus)
 ```
 
-1. **Order** all sequences along the MAFFT guide tree (`mafft --retree 0 --reorder`). This step computes no alignment, only an order in which related copies sit next to each other.
+1. **Order** all sequences along a k-mer guide tree. The distance between two copies is the weighted Jaccard distance of their k-mer counts (default k = 6). The tree is built by UPGMA, and at every merge the two subtrees are flipped so that their closest ends meet. No alignment is computed in this step, only an order in which related copies sit next to each other. The method is a port of the "Reorder by similarity" guide tree in [ViewAlign](https://github.com/Toki-bio/MSA-viewer) (`kmer-tree.js`). `-m` uses the MAFFT guide tree instead (`mafft --retree 0 --reorder`, as in SubFam 1.0).
 2. **Chunk** that order into consecutive blocks of *N* sequences. Leftover sequences (fewer than *N*) join the last chunk, so nothing is dropped.
-3. **Consensus**: align each chunk (in parallel) and call its plurality consensus. A base is called when at least `-p` × chunk size of the sequences agree.
+3. **Consensus**: align each chunk (MAFFT, in parallel) and call its plurality consensus. A base is called when at least `-p` × chunk size of the sequences agree. The consensus is EMBOSS `cons` reimplemented in awk (EDNAFULL scores, the same tie rules). Its output is byte-identical to `cons`, which is no longer needed.
 4. **Align** the chunk consensuses with MAFFT L-INS-i.
 
 ### Why chunks and not clusters?
@@ -37,10 +37,10 @@ SubFam never asks "are these two copies X% identical?". It only asks "which copi
 
 ## Installation
 
-Requirements: `bash`, `awk`, [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and [EMBOSS](https://emboss.sourceforge.net/) (`cons`, `seqret`).
+Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required.
 
 ```bash
-conda install -c conda-forge -c bioconda mafft emboss
+conda install -c conda-forge -c bioconda mafft numpy
 git clone https://github.com/toki-bio/SubFam && cd SubFam
 ./SubFam.sh -h
 ```
@@ -55,13 +55,15 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 |---|---|---|
 | `-n INT` | 50 | sequences per chunk |
 | `-p FLOAT` | 0.36 | fraction of a chunk that must agree to call a base |
+| `-k INT` | 6 | k-mer size of the ordering tree (3–12) |
 | `-t INT` | all cores | threads |
 | `-o DIR` | `.` | output directory |
 | `-x STR` | input name | output prefix |
-| `-r` | off | copies may be on both strands (MAFFT `--adjustdirection`) |
-| `-P` | off | MAFFT PartTree ordering, for more than about 10,000 sequences |
+| `-r` | off | copies may be on both strands: strand-independent (canonical) k-mers for the tree, then each copy is oriented like its neighbour in the order |
+| `-m` | off | order with the MAFFT guide tree instead of k-mers |
+| `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
 | `-a` | off | keep no-consensus positions as `N` (by default they are removed) |
-| `-k` | off | keep intermediate chunk files |
+| `-K` | off | keep intermediate chunk files |
 
 Outputs:
 
@@ -98,7 +100,7 @@ They differ from SubFam in two ways. First, every one of them needs `--id`/`-c` 
 `benchmark/` contains a simulator and a script that runs every method on the same input:
 
 ```bash
-benchmark/run_benchmark.sh bench_out 8      # needs mafft, emboss, cd-hit, vsearch, mmseqs2
+benchmark/run_benchmark.sh bench_out 8      # needs mafft, numpy, emboss (reference consensus for the clustering tools), cd-hit, vsearch, mmseqs2
 ```
 
 **Simulated families.** Each family starts from a 300 bp ancestor and evolves along a tree into 8 subfamilies. Every branch adds 4 diagnostic substitutions, so sister subfamilies differ at 8 positions (2.7%). The subfamilies have 600, 400, 300, 250, 200, 150, 60 and 40 copies (2,000 in total). Each copy then decays independently from its subfamily source (85% substitutions, 15% short indels) by 3% (young), 8% (middle) or 15% (old). Copies are shuffled and renamed, so no method sees the labels.

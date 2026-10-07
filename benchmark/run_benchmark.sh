@@ -21,11 +21,11 @@ for scen in young:0.03 middle:0.08 old:0.15; do
     S=${scen%%:*}
     python3 "$HERE/simulate.py" "$S" --divergence "${scen#*:}"
     {
-    # SubFam
-    for n in 50 20; do
-        t=$(now)
-        "$HERE/../SubFam.sh" -n $n -t "$T" -o "subfam_n$n" -x "$S" "$S.fasta" > /dev/null
-        run "SubFam -n $n" "subfam_n$n/$S.cons.fasta" "subfam_n$n/$S.chunks.tsv" "$t"
+    # SubFam: default k-mer ordering, and the MAFFT guide-tree ordering (-m)
+    for opt in "-n 50" "-n 20" "-m -n 50" "-m -n 20"; do
+        t=$(now); d=subfam${opt// /}
+        "$HERE/../SubFam.sh" $opt -t "$T" -o "$d" -x "$S" "$S.fasta" > /dev/null
+        run "SubFam $opt" "$d/$S.cons.fasta" "$d/$S.chunks.tsv" "$t"
     done
 
     for id in 0.95 0.90 0.80; do
