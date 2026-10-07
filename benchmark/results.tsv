@@ -1,55 +1,61 @@
 scenario	method	reps	reps_ge10	singleton_frac	purity	median_id	subfam_recovered	seconds
-young	SubFam -n 50	40	40	0.00	0.993	100.0	8/8	9.2
-young	SubFam -n 20	100	100	0.00	0.993	100.0	8/8	15.4
-young	VSEARCH --id 0.95 --consout	1306	19	0.57	1.000	100.0	8/8	1.0
-young	CD-HIT-EST -c 0.95 (centroids)	650	25	0.29	0.999	95.8	0/8	0.9
-young	CD-HIT-EST -c 0.95 + mafft/cons	650	25	0.29	0.999	100.0	8/8	26.5
-young	MMseqs2 --min-seq-id 0.95 (centroids)	684	16	0.31	0.997	98.2	3/8	50.1
-young	VSEARCH --id 0.90 --consout	97	22	0.02	1.000	100.0	8/8	0.7
-young	CD-HIT-EST -c 0.90 (centroids)	10	6	0.00	0.547	94.2	0/8	0.3
-young	CD-HIT-EST -c 0.90 + mafft/cons	10	6	0.00	0.547	99.7	4/8	15.5
-young	MMseqs2 --min-seq-id 0.90 (centroids)	54	17	0.01	0.919	94.5	0/8	53.8
-young	VSEARCH --id 0.80 --consout	1	1	0.00	0.300	98.7	0/8	0.4
+young	SubFam -n 50	40	40	0.00	0.987	100.0	8/8	7.1
+young	SubFam -n 20	100	100	0.00	0.975	100.0	8/8	12.2
+young	SubFam -m -n 50	40	40	0.00	0.993	100.0	8/8	6.9
+young	SubFam -m -n 20	100	100	0.00	0.993	100.0	8/8	11.7
+young	VSEARCH --id 0.95 --consout	1306	19	0.57	1.000	100.0	8/8	1.1
+young	CD-HIT-EST -c 0.95 (centroids)	650	25	0.29	0.999	95.8	0/8	0.6
+young	CD-HIT-EST -c 0.95 + mafft/cons	650	25	0.29	0.999	100.0	8/8	27.3
+young	MMseqs2 --min-seq-id 0.95 (centroids)	684	16	0.31	0.997	98.2	3/8	53.7
+young	VSEARCH --id 0.90 --consout	97	22	0.02	1.000	100.0	8/8	0.5
+young	CD-HIT-EST -c 0.90 (centroids)	10	6	0.00	0.547	94.2	0/8	0.4
+young	CD-HIT-EST -c 0.90 + mafft/cons	10	6	0.00	0.547	99.7	4/8	16.5
+young	MMseqs2 --min-seq-id 0.90 (centroids)	54	17	0.01	0.919	94.5	0/8	51.1
+young	VSEARCH --id 0.80 --consout	1	1	0.00	0.300	98.7	0/8	0.6
 young	CD-HIT-EST -c 0.80 (centroids)	1	1	0.00	0.300	95.2	0/8	0.2
-young	CD-HIT-EST -c 0.80 + mafft/cons	1	1	0.00	0.300	98.0	0/8	35.9
-young	MMseqs2 --min-seq-id 0.80 (centroids)	1	1	0.00	0.300	95.2	0/8	54.0
+young	CD-HIT-EST -c 0.80 + mafft/cons	1	1	0.00	0.300	98.0	0/8	33.8
+young	MMseqs2 --min-seq-id 0.80 (centroids)	1	1	0.00	0.300	95.2	0/8	53.5
 young	VSEARCH --id 0.85 --consout	6	6	0.00	0.646	100.0	6/8	0.5
-young	VSEARCH --id 0.75 --consout	1	1	0.00	0.300	98.7	0/8	0.5
-young	VSEARCH --id 0.70 --consout	1	1	0.00	0.300	98.7	0/8	0.6
-young	VSEARCH --id 0.65 --consout	1	1	0.00	0.300	98.7	0/8	0.6
-middle	SubFam -n 50	40	40	0.00	0.879	100.0	8/8	7.2
-middle	SubFam -n 20	100	100	0.00	0.930	100.0	8/8	13.1
-middle	VSEARCH --id 0.95 --consout	2000	0	1.00	1.000	NA	0/8	1.3
-middle	CD-HIT-EST -c 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	1.3
-middle	CD-HIT-EST -c 0.95 + mafft/cons	2000	0	1.00	1.000	NA	0/8	19.9
-middle	MMseqs2 --min-seq-id 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	56.0
-middle	VSEARCH --id 0.90 --consout	1961	0	0.97	1.000	NA	1/8	1.4
-middle	CD-HIT-EST -c 0.90 (centroids)	1660	11	0.79	0.999	93.4	0/8	4.6
-middle	CD-HIT-EST -c 0.90 + mafft/cons	1660	11	0.79	0.999	100.0	7/8	39.2
-middle	MMseqs2 --min-seq-id 0.90 (centroids)	1813	4	0.90	0.999	96.3	0/8	57.0
-middle	VSEARCH --id 0.80 --consout	210	50	0.04	0.945	99.7	8/8	0.7
-middle	CD-HIT-EST -c 0.80 (centroids)	21	7	0.00	0.425	87.2	0/8	0.3
-middle	CD-HIT-EST -c 0.80 + mafft/cons	21	7	0.00	0.425	99.3	6/8	26.3
-middle	MMseqs2 --min-seq-id 0.80 (centroids)	167	37	0.02	0.899	89.5	0/8	53.9
-middle	VSEARCH --id 0.85 --consout	1133	22	0.45	0.996	100.0	8/8	1.1
-middle	VSEARCH --id 0.75 --consout	15	11	0.00	0.701	100.0	7/8	0.6
+young	VSEARCH --id 0.75 --consout	1	1	0.00	0.300	98.7	0/8	0.7
+young	VSEARCH --id 0.70 --consout	1	1	0.00	0.300	98.7	0/8	0.5
+young	VSEARCH --id 0.65 --consout	1	1	0.00	0.300	98.7	0/8	0.5
+middle	SubFam -n 50	40	40	0.00	0.908	100.0	8/8	10.7
+middle	SubFam -n 20	100	100	0.00	0.927	100.0	8/8	16.4
+middle	SubFam -m -n 50	40	40	0.00	0.879	100.0	8/8	8.8
+middle	SubFam -m -n 20	100	100	0.00	0.930	100.0	8/8	15.7
+middle	VSEARCH --id 0.95 --consout	2000	0	1.00	1.000	NA	0/8	1.4
+middle	CD-HIT-EST -c 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	1.1
+middle	CD-HIT-EST -c 0.95 + mafft/cons	2000	0	1.00	1.000	NA	0/8	19.7
+middle	MMseqs2 --min-seq-id 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	57.0
+middle	VSEARCH --id 0.90 --consout	1961	0	0.97	1.000	NA	1/8	1.9
+middle	CD-HIT-EST -c 0.90 (centroids)	1660	11	0.79	0.999	93.4	0/8	8.4
+middle	CD-HIT-EST -c 0.90 + mafft/cons	1660	11	0.79	0.999	100.0	7/8	60.2
+middle	MMseqs2 --min-seq-id 0.90 (centroids)	1813	4	0.90	0.999	96.3	0/8	50.9
+middle	VSEARCH --id 0.80 --consout	210	50	0.04	0.945	99.7	8/8	0.9
+middle	CD-HIT-EST -c 0.80 (centroids)	21	7	0.00	0.425	87.2	0/8	0.7
+middle	CD-HIT-EST -c 0.80 + mafft/cons	21	7	0.00	0.425	99.3	6/8	27.1
+middle	MMseqs2 --min-seq-id 0.80 (centroids)	167	37	0.02	0.899	89.5	0/8	45.0
+middle	VSEARCH --id 0.85 --consout	1133	22	0.45	0.996	100.0	8/8	1.3
+middle	VSEARCH --id 0.75 --consout	15	11	0.00	0.701	100.0	7/8	0.7
 middle	VSEARCH --id 0.70 --consout	3	3	0.00	0.414	98.3	0/8	0.5
 middle	VSEARCH --id 0.65 --consout	2	2	0.00	0.320	98.0	0/8	0.6
-old	SubFam -n 50	40	40	0.00	0.602	100.0	7/8	7.5
-old	SubFam -n 20	100	100	0.00	0.688	100.0	7/8	14.2
-old	VSEARCH --id 0.95 --consout	2000	0	1.00	1.000	NA	0/8	1.6
-old	CD-HIT-EST -c 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	1.0
-old	CD-HIT-EST -c 0.95 + mafft/cons	2000	0	1.00	1.000	NA	0/8	20.4
-old	MMseqs2 --min-seq-id 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	55.6
-old	VSEARCH --id 0.90 --consout	2000	0	1.00	1.000	NA	0/8	1.6
-old	CD-HIT-EST -c 0.90 (centroids)	2000	0	1.00	1.000	NA	0/8	1.1
-old	CD-HIT-EST -c 0.90 + mafft/cons	2000	0	1.00	1.000	NA	0/8	20.1
-old	MMseqs2 --min-seq-id 0.90 (centroids)	2000	0	1.00	1.000	NA	0/8	54.0
+old	SubFam -n 50	40	40	0.00	0.710	100.0	7/8	10.1
+old	SubFam -n 20	100	100	0.00	0.764	100.0	8/8	17.3
+old	SubFam -m -n 50	40	40	0.00	0.602	100.0	7/8	8.4
+old	SubFam -m -n 20	100	100	0.00	0.688	100.0	7/8	15.4
+old	VSEARCH --id 0.95 --consout	2000	0	1.00	1.000	NA	0/8	1.3
+old	CD-HIT-EST -c 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	1.1
+old	CD-HIT-EST -c 0.95 + mafft/cons	2000	0	1.00	1.000	NA	0/8	18.8
+old	MMseqs2 --min-seq-id 0.95 (centroids)	2000	0	1.00	1.000	NA	0/8	45.4
+old	VSEARCH --id 0.90 --consout	2000	0	1.00	1.000	NA	0/8	1.3
+old	CD-HIT-EST -c 0.90 (centroids)	2000	0	1.00	1.000	NA	0/8	1.2
+old	CD-HIT-EST -c 0.90 + mafft/cons	2000	0	1.00	1.000	NA	0/8	19.2
+old	MMseqs2 --min-seq-id 0.90 (centroids)	2000	0	1.00	1.000	NA	0/8	45.8
 old	VSEARCH --id 0.80 --consout	1988	0	0.99	1.000	NA	0/8	1.3
-old	CD-HIT-EST -c 0.80 (centroids)	1559	7	0.73	0.974	85.9	0/8	33.4
-old	CD-HIT-EST -c 0.80 + mafft/cons	1559	7	0.73	0.974	100.0	4/8	72.5
-old	MMseqs2 --min-seq-id 0.80 (centroids)	1946	0	0.96	0.998	NA	0/8	55.8
-old	VSEARCH --id 0.85 --consout	2000	0	1.00	1.000	NA	0/8	1.7
-old	VSEARCH --id 0.75 --consout	1536	7	0.68	0.986	99.0	3/8	1.5
-old	VSEARCH --id 0.70 --consout	571	41	0.16	0.874	98.3	7/8	1.0
+old	CD-HIT-EST -c 0.80 (centroids)	1559	7	0.73	0.974	85.9	0/8	38.4
+old	CD-HIT-EST -c 0.80 + mafft/cons	1559	7	0.73	0.974	100.0	4/8	73.7
+old	MMseqs2 --min-seq-id 0.80 (centroids)	1946	0	0.96	0.998	NA	0/8	44.7
+old	VSEARCH --id 0.85 --consout	2000	0	1.00	1.000	NA	0/8	1.6
+old	VSEARCH --id 0.75 --consout	1536	7	0.68	0.986	99.0	3/8	1.2
+old	VSEARCH --id 0.70 --consout	571	41	0.16	0.874	98.3	7/8	0.8
 old	VSEARCH --id 0.65 --consout	73	34	0.00	0.606	97.0	2/8	0.6
