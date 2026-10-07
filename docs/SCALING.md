@@ -188,3 +188,31 @@ step 4 is SubFam called twice. The only new code is the coverage-relative plural
 one-line change in the awk consensus. The sparse k-mer neighbour tree (§2, "counter scan") would
 later remove the partition step and the 20k cap of the k-mer tree, but it is not needed to get
 to a million copies.
+
+## 6. Rare subfamilies: deplete and resample (measured)
+
+With a fixed 30,000-copy sample, a subfamily needs roughly ≥ N copies *in the sample* to get
+its own consensus. Depleting the pool of the copies the current consensuses explain, then
+sampling again, is a cheap second round (`benchmark/deplete_loop.sh`). Simulation: 100,000
+copies, 7 abundant subfamilies and one planted at 100 copies (0.1 %), 8 % divergence.
+
+Round 1 (30k sample, 27 rare copies, `-P -n 50`): 7/8, the rare one missing. Every copy was
+then assigned to its best round-1 consensus (`vsearch --usearch_global --iddef 2`) and a copy
+was called "explained" when its identity was at or above a percentile of its consensus's copies:
+
+| explained = identity ≥ … of that consensus's copies | residual | rare copies kept (of 100) | round 2 `-n 50` | round 2 `-n 20` |
+|---|---|---|---|---|
+| 5th percentile | 4,804 | 22 | 7/8 | **8/8** (two chunks of 10 + 9) |
+| 25th percentile | 24,371 | 65 | 7/8 (scattered, ≤ 10 per chunk) | **8/8** |
+| 50th / 75th percentile | 49,060 / 73,333 | 84 / 94 | not run | |
+
+Rare copies are only ~2.6 identity points below their sister's copies (medians 88.5 vs 91.1 %
+to the sister's consensus): they are the lower tail of the sister's distribution, not a
+separable shoulder, so a cut inside the mode keeps only part of them. What works is the
+combination **deplete, then chunk small**: a residual is dominated by the far tails of the
+abundant subfamilies, which is harder to order than the full set, and `-n 20` lets a few dozen
+adjacent rare copies win their chunks. Both round-2 runs took 2–4 minutes.
+
+In SINEderella this is `step1c_deplete.sh`: residual = `unassigned.fasta` + assigned copies
+below the per-subfamily percentile of step3's `sim_ratio`; SubFam with bin size 20 on the
+residual; the result goes through the same manual review as step1's `input.clw`.
