@@ -28,14 +28,16 @@ Whole pipeline with `-P -n 50`:
 | copies | ordering | chunk alignments + consensus | final L-INS-i of the consensuses | total |
 |---|---|---|---|---|
 | 20,000 (400 consensuses) | 61 s | 112 s | 47 s | 3 m 40 s |
-| 100,000 (2,000 consensuses) | 6 m 14 s | 6 m 12 s | see §1.1 | |
+| 100,000 (2,000 consensuses) | 6 m 14 s | 6 m 12 s | 17 m 35 s | 30 m 4 s |
 
 Chunk alignment is linear and embarrassingly parallel. The ordering is no longer the bottleneck.
+The 100,000-copy run recovered all 8 subfamilies with purity 0.944 and consensuses at 100 %
+identity to the true sources.
 
 ### 1.1 The next wall: the final alignment
 
-L-INS-i is O(m²·L²) in the number m of consensuses. 400 consensuses take 47 s; 2,000 take a
-large multiple of that; 20,000 (a million copies) is out of reach. Two ways out, both cheap:
+L-INS-i is O(m²·L²) in the number m of consensuses. 400 consensuses take 47 s, 2,000 take
+17.5 min (22× for 5× the rows); 20,000 (a million copies) would take days. Two ways out, both cheap:
 
 - **Hierarchical SubFam.** Treat the consensuses as a new input and run SubFam again
   (`-n 20`–`50`). Consensuses of consensuses converge to the subfamilies; `chunks.tsv` of both
