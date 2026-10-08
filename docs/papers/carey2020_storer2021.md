@@ -1,6 +1,6 @@
 # Notes: Carey et al. (Research Square preprint, 2020) and Storer et al. (Curr Protoc 2021)
 
-Both read from PDFs supplied by the owner. Carey: all 17 pages. Storer: pages 1-20 of 40 (main protocol; the rest not read).
+Both read from PDFs supplied by the owner. Carey: all 17 pages. Storer: all 40 pages (protocol, commentary, figures, tables).
 
 ## Carey, Patterson, Wheeler - "TE subfamily annotation has a reproducibility problem"
 NOT peer reviewed (preprint v3, 14 Dec 2020, CC BY). hg19 / hg38-panTro4, RepeatMasker open-4.0.5, Repbase 20140131.
@@ -24,3 +24,11 @@ NOT peer reviewed (preprint v3, 14 Dec 2020, CC BY). hg19 / hg38-panTro4, Repeat
 
 ## Where the Price 213 consensuses are (UNVERIFIED location)
 Price et al. say the consensuses, full tree and subfamily list are in "Supplemental material … online at www.genome.org" (pp. 2245, 2247, 2249). Not reachable from the container. The COSEG repo's ALU.cons holds only AluSx.
+
+## Storer, remaining pages (21-40)
+- Subfamily analysis "has an arbitrary stopping point". A 90/90 rule (90 % identity over 90 % coverage) has been used (Wicker 2018); the preferred splitting level depends on abundance, phylogenetic relevance, age, and detection improvement. Comparative genomics should ideally confirm or reject a subfamily.
+- A wide MSA of highly diverged copies "probably indicates a mixture of TE families"; redundant de novo models should be combined before subfamily analysis.
+- Do not collect several copies of the same insertion (tandem arrays, segmental duplications): they are far more similar over a longer region than average copies and should be removed. (SINEderella's array flag and flank-twin check address exactly this.)
+- Scale of the examples: COSEG example = mouse SINE, 117 alignments (99 after filtering, window 14-135 of a 242 bp consensus); cd-hit example = 133 solo LTRs, only 94 ended in clusters and "some copies may have ended up in the wrong cluster".
+- Fig. 7: COSEG output subfamily0 still contains a possible subfamily visible by eye that COSEG missed.
+- COSEG run time on example2: 10-20 min; whole manual process for example1: 35-85 min. These are hundreds of copies, not tens of thousands.
