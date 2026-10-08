@@ -1,0 +1,26 @@
+  trimmed to columns 2165-6889 of 6922
+round 1: 111 seqs, 4725 columns, 589 features, 18 blocks, 18 candidate groups
+  PEEL  14 seqs  76 feats  excl 0.958 (in 0.97 / out 0.01)  mostly L1PA7  36% pure
+  PEEL  13 seqs  24 feats  excl 0.928 (in 0.96 / out 0.03)  mostly L1PA3  69% pure
+  PEEL  27 seqs  29 feats  excl 0.813 (in 0.89 / out 0.07)  mostly L1PA7  89% pure
+  PEEL  35 seqs   4 feats  excl 0.801 (in 0.90 / out 0.10)  mostly L1PA4  46% pure
+  peeled 89, 22 remain; below re-align trigger
+  trimmed to columns 4162-6192 of 6224
+round 2: 22 seqs, 2031 columns, 81 features, 6 blocks, 6 candidate groups
+  PEEL   5 seqs   6 feats  excl 1.000 (in 1.00 / out 0.00)  mostly L1PA6  60% pure
+  PEEL   5 seqs   3 feats  excl 0.875 (in 0.93 / out 0.06)  mostly L1PA3  60% pure
+  peeled 10, 12 remain; below re-align trigger
+  trimmed to columns 1248-2976 of 3007
+round 3: 12 seqs, 1729 columns, 12 features, 2 blocks, 1 candidate groups
+  PEEL   6 seqs   5 feats  excl 0.633 (in 0.77 / out 0.13)  mostly L1PA3  100% pure
+  peeled 6, 6 remain; below re-align trigger
+
+peeled 7 groups over 3 rounds
+weighted mean purity: 0.628 over 105 seqs
+
+group      size purity
+L1PA3        13   0.69
+L1PA4        35   0.46
+L1PA6         5   0.60
+L1PA7        27   0.89
+residue: 6 {'L1PA3': 3, 'L1PA4': 3}

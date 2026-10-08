@@ -1,0 +1,9 @@
+SubFam 1.2.0: 2222 sequences -> 111 chunks of ~20
+Ordering sequences along the 6-mer guide tree
+  done in 0h 0m 11s
+Aligning chunks and calling consensus sequences
+  done in 0h 1m 0s
+Aligning consensus sequences
+  done in 0h 3m 51s
+Job completed: sf20c/l1.{cons.fasta,aln.fasta,msf,chunks.tsv}
+  done in 0h 5m 2s
