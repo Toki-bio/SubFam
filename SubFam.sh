@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.1.0
+VERSION=1.2.0
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -29,6 +29,8 @@ BOTH=
 PARTTREE=
 KEEP_N=
 KEEP_TMP=
+RELCOV=
+MINCOV=3       # with -c: fewest covering sequences for a consensus base
 
 usage() {
     cat <<EOF
@@ -47,6 +49,11 @@ Options:
             is oriented like its neighbour
   -m        order with the MAFFT guide tree (mafft --retree 0 --reorder) instead of k-mers
   -P        order with MAFFT PartTree (implies -m; for very large inputs, >20,000 sequences)
+  -c        coverage-relative plurality, for truncated copies (fragments, 5'-truncated LINEs):
+            a base needs -p of the sequences that span that column (internal gaps count,
+            end gaps do not) instead of -p of the whole chunk, with at least 3 spanning
+            sequences. Default: -p of the whole chunk, which cuts a consensus down to the
+            region most copies cover.
   -a        keep no-consensus positions as N (default: drop them from the consensus)
   -K        keep intermediate files (chunks, chunk alignments)
   -v        print version
@@ -66,7 +73,7 @@ EOF
 die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
-while getopts ":n:p:k:t:o:x:rmPaKvh" opt; do
+while getopts ":n:p:k:t:o:x:rmPcaKvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
         p) PLURALITY=$OPTARG ;;
@@ -77,6 +84,7 @@ while getopts ":n:p:k:t:o:x:rmPaKvh" opt; do
         r) BOTH=1 ;;
         m) ORDER=mafft ;;
         P) ORDER=mafft; PARTTREE=--parttree ;;
+        c) RELCOV=1 ;;
         a) KEEP_N=1 ;;
         K) KEEP_TMP=1 ;;
         v) echo "SubFam $VERSION"; exit 0 ;;
@@ -292,6 +300,8 @@ CONS_AWK=$(cat <<'AWK'
 # Plurality consensus of an aligned nucleotide FASTA: EMBOSS cons (embConsCalc) with its
 # defaults (EDNAFULL matrix, unit weights), reimplemented. Variables: plur (plurality,
 # absolute count), setcase (default: half the number of sequences), name.
+# rel=1 (SubFam -c): the threshold is frac * (sequences spanning the column) instead of plur,
+# needs mincov spanning sequences, and end gaps do not take part in the base choice.
 BEGIN {
     sym = "A T G C S W R Y K M B V H D N U"
     nsym = split(sym, S, " ")
@@ -321,12 +331,22 @@ BEGIN {
 END {
     if (setcase == "") setcase = n / 2
     for (i = 1; i <= n; i++) if (length(seq[i]) > L) L = length(seq[i])
+    if (rel) for (i = 1; i <= n; i++) {          # span of each sequence: first..last residue
+        t = seq[i]; fi[i] = 0; la[i] = -1
+        if (match(t, /[^-]/)) { fi[i] = RSTART; sub(/-+$/, "", t); la[i] = length(t) }
+    }
     out = ""
     for (k = 1; k <= L; k++) {
-        delete cnt
+        delete cnt; ncov = 0
         for (i = 1; i <= n; i++) {
             c = substr(seq[i], k, 1); col[i] = c
             if (c in isym) cnt[c]++
+            if (rel && k >= fi[i] && k <= la[i]) ncov++
+        }
+        if (rel) {
+            need = frac * ncov; need = (need == int(need)) ? need : int(need) + 1
+            mc = (mincov < n) ? mincov : n
+            if (ncov < mc) { out = out "N"; continue }
         }
         delete sc; delete mt
         for (s in cnt) {                       # score of one sequence with symbol s, and its +ve matches
@@ -336,11 +356,12 @@ END {
         }
         hi = 0; max = "unset"
         for (i = 1; i <= n; i++) {             # first sequence with the top score; a gap yields ties
+            if (rel && !(col[i] in isym) && (k < fi[i] || k > la[i])) continue   # end gap: not a candidate
             v = (col[i] in isym) ? sc[col[i]] : 0
             if (max == "unset" || v > max || (v == max && col[hi] == "-")) { hi = i; max = v }
         }
         r = col[hi]; m = (r in isym) ? mt[r] : 0
-        res = (m >= plur) ? r : "N"
+        res = (m >= (rel ? need : plur)) ? r : "N"
         if (m <= setcase) res = tolower(res)
         out = out res
     }
@@ -428,14 +449,14 @@ rm -f "$WORK/ordered.fasta"
 
 echo "Aligning chunks and calling consensus sequences"
 T1=$(date +%s)
-export PLURALITY KEEP_N CONS_AWK
+export PLURALITY KEEP_N CONS_AWK RELCOV MINCOV
 find "$WORK" -maxdepth 1 -name "${NAME}_*.fasta" -print0 | sort -z |
     xargs -0 -P "$THREADS" -I {} sh -c '
         set -e; f=$1; name=$(basename "$f" .fasta)
         n=$(grep -c "^>" "$f")
         plur=$(awk -v n="$n" -v p="$PLURALITY" "BEGIN { x = n * p; print (x == int(x)) ? x : int(x) + 1 }")
         if [ "$n" -ge 2 ]; then mafft --thread 1 --nuc --quiet "$f" > "$f.aln"; else cp "$f" "$f.aln"; fi
-        awk -v plur="$plur" -v name="$name" "$CONS_AWK" "$f.aln" |
+        awk -v plur="$plur" -v name="$name" -v rel="$RELCOV" -v frac="$PLURALITY" -v mincov="$MINCOV" "$CONS_AWK" "$f.aln" |
             awk -v keep="$KEEP_N" "!/^>/ && !keep { gsub(/[Nn]/, \"\") } 1" > "$f.cons"
     ' _ {}
 find "$WORK" -maxdepth 1 -name "${NAME}_*.fasta.cons" -print0 | sort -z | xargs -0 cat > "$OUTDIR/$PREFIX.cons.fasta"

@@ -62,6 +62,7 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 | `-r` | off | copies may be on both strands: strand-independent (canonical) k-mers for the tree, then each copy is oriented like its neighbour in the order |
 | `-m` | off | order with the MAFFT guide tree instead of k-mers |
 | `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
+| `-c` | off | coverage-relative plurality for truncated copies: a base needs `-p` of the sequences that span that column (end gaps excluded, at least 3 spanning), not of the whole chunk |
 | `-a` | off | keep no-consensus positions as `N` (by default they are removed) |
 | `-K` | off | keep intermediate chunk files |
 
@@ -141,7 +142,7 @@ What the table shows:
 
 - Fixed-size chunks do not follow subfamily boundaries. Expect some redundant rows (an abundant subfamily filling several chunks) and some mixed rows (a chunk straddling two subfamilies). Use `PREFIX.chunks.tsv` to see which copies built each row.
 - Subfamilies with fewer than about *N* copies may be absorbed by a neighbour. Lower `-n` if rare variants matter.
-- Consensus calling assumes the copies are roughly collinear. Strongly truncated or rearranged copies (for example 5′-truncated LINEs) should be trimmed or filtered first.
+- Consensus calling assumes the copies are roughly collinear. Rearranged copies should be filtered. For truncated copies (for example 5′-truncated LINEs) use `-c`, otherwise the consensus is cut down to the region most copies cover; on simulated 5′-truncated copies `-c` recovers full-length consensuses where the default does not. Chunks of very short fragments still make poor rows: discover from long copies, then assign fragments (see docs/SCALING.md).
 - The ordering step builds an all-against-all distance matrix. Use `-P` (PartTree) for very large inputs.
 
 ## Authors
