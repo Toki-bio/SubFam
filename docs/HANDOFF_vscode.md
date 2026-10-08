@@ -74,6 +74,9 @@ I had first scored SubFam chunks by V-measure against class labels (COSEG looked
 - `-c` (implemented here, fixed minimum of 3 spanning copies) differs from the SCALING.md design (`-c MIN`) and has no benchmark beyond one small simulated check: benchmark it on the SCALING section 4 LINE simulation or leave it out of the paper.
 - Real-data options for the SubFam paper: Timema SINE copies with the owner's curated subfamilies (chunk purity 0.953 for 8 groups per SINE-discriminator FINDINGS; labels derive partly from SINEderella's own assignment, so circular), hg38 Alu vs Dfam + Price (benchmark/alu_hg38, not run), Konkel (illustration).
 
+## 4.9 The owner's selling point (2026-10-08, night): narrow claim, wide utility
+"SubFam does not give tidy subfamilies and does not resolve orphan copies; it brings an unorganised multitude to order and to the eye, at any scale." Metrics that match that claim: compression (copies per row), recovery of known consensuses, fidelity of rows to their copies (benchmark/multiseed/fidelity.py: own row is a copy's best row 98 % / 87 % / 57 % young / middle / old at -n 50; ceiling ~100 %), time and memory at scale (100k in 30 min). State plainly that fidelity falls with age because chunks mix sisters. Not claimed: subfamily calls, orphan resolution, per-copy attribution.
+
 ## 5. Paper notes in docs/papers/
 price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 

@@ -14,3 +14,16 @@ Reading: the identity that works for VSEARCH moves with the age of the family (0
 `-n 50` loses the smallest subfamilies (40 and 60 copies, below N) in some old and middle runs: N is the resolution parameter, in copies.
 Limits: the simulation is star-like (each copy decays independently from its subfamily master), balanced tree, 2.7 % between sister subfamilies, no CpG effect, no recombination,
 no truncation, one family length (300 bp). "Oracle id" = for each seed the threshold with the most subfamilies recovered, ties broken by fewest rows (uses the truth, so it is the best case for VSEARCH).
+
+## How faithfully do rows stand for their copies? (seeds 1-4, 8,000 copies per scenario)
+`fidelity.py`: every copy is aligned (vsearch --usearch_global, --iddef 1) against all SubFam consensuses of its run. "Own row is best" = the row built from the copy's own chunk gives its highest identity.
+Ceiling = the same test against the 8 true subfamily masters (is the copy nearest its true master).
+
+| scenario | -n | own row is the copy's best row | median identity copy -> own row | 5th percentile | ceiling (true master nearest) |
+|---|---|---|---|---|---|
+| young (3 %) | 50 / 20 | 98.1 % / 95.0 % | 96.7 % | 94.1 % | 100.0 % |
+| middle (8 %) | 50 / 20 | 87.3 % / 88.0 % | 91.0 % | 86.2 % | 100.0 % |
+| old (15 %) | 50 / 20 | 57.5 % / 48.9 % | 82.6 % | 76.3 % | 99.8 % |
+
+Reading: the rows are faithful summaries for young and middle families and much less so for old ones, where chunks mix sister subfamilies (chunk purity 0.71 in the README), even though every row still
+contains its source consensus. A copy that is not nearest to its own row is still represented in `chunks.tsv`; the claim is organisation, not per-copy attribution.
