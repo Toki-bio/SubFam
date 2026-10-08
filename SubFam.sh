@@ -499,7 +499,10 @@ if [ "$NCHUNK" -ge 2 ]; then
 else
     cp "$OUTDIR/$PREFIX.cons.fasta" "$OUTDIR/$PREFIX.aln.fasta"
 fi
-awk -v file="$OUTDIR/$PREFIX.msf" -v date="$(date +%d/%m/%y)" "$MSF_AWK" "$OUTDIR/$PREFIX.aln.fasta" > "$OUTDIR/$PREFIX.msf"
+# header: file name without the directory, and the date of SOURCE_DATE_EPOCH when set, so that the same
+# input gives the same MSF file wherever and whenever it is run
+MSF_DATE=$(date -u -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%d/%m/%y 2>/dev/null || date +%d/%m/%y)
+awk -v file="$PREFIX.msf" -v date="$MSF_DATE" "$MSF_AWK" "$OUTDIR/$PREFIX.aln.fasta" > "$OUTDIR/$PREFIX.msf"
 elapsed "$T1"
 
 [ -z "$KEEP_TMP" ] || echo "Intermediate files kept in $WORK"

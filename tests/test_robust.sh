@@ -26,7 +26,9 @@ fam() {   # fam N prefix -> FASTA on stdout
 
 run_case() {   # name, expected-ids-file or "-", args...  (input is in-<name>.fa)
     local name=$1; shift
-    local in=in-$name.fa out=out-$name
+    local in=${IN:-in-$name.fa} out=out-$name
+    [ -s "$in" ] || { fail=$((fail + 1)); printf 'FAIL  %-22s harness: input %s missing
+' "$name" "$in"; return; }
     rm -rf "$out"
     timeout 300 bash "$SUBFAM" "$@" -o "$out" "$in" > "log-$name.txt" 2> "err-$name.txt"
     local rc=$?
@@ -70,18 +72,18 @@ awk -v s="$BASE" 'BEGIN{for(i=0;i<120;i++) printf ">i%d\n%s\n", i, s}' > in-all_
 fam 30 a | awk '/^>/{print; next} {print substr($0,1,40) "---" substr($0,41)}' > in-gapped_input.fa; run_case gapped_input -n 10
 fam 30 a | awk 'BEGIN{srand(3)} /^>/{h=$0; next} {print h; print substr($0,1,6)}' > in-shorter_than_k.fa; run_case shorter_than_k -n 10
 { i=0; fam 30 a | while IFS= read -r h && IFS= read -r s; do i=$((i + 1)); echo "$h"; if ((i % 2)); then echo "$s"; else revcomp "$s"; fi; done; } > in-mixed_strand.fa
-run_case mixed_strand_r -n 10 -r
-run_case mixed_strand_no_r -n 10
-cp in-plain60.fa in-protein.fa; awk '/^>/{print;next}{gsub(/A/,"L");gsub(/C/,"K");gsub(/G/,"E");gsub(/T/,"W");print}' in-plain60.fa > in-protein.fa
-run_case protein_m -n 20 -m
-run_case coverage -n 20 -c
+IN=in-mixed_strand.fa run_case mixed_strand_r -n 10 -r
+IN=in-mixed_strand.fa run_case mixed_strand_no_r -n 10
+awk '/^>/{print;next}{gsub(/A/,"L");gsub(/C/,"K");gsub(/G/,"E");gsub(/T/,"W");print}' in-plain60.fa > in-protein.fa
+IN=in-protein.fa run_case protein_m -n 20 -m
+IN=in-plain60.fa run_case coverage -n 20 -c
 mkdir -p "dir with space"; cp in-plain60.fa "dir with space/in.fa"
 rm -rf "dir with space/out"; timeout 300 bash "$SUBFAM" -n 20 -o "dir with space/out" "dir with space/in.fa" > log-space.txt 2> err-space.txt \
     && [ -s "dir with space/out/in.msf" ] && { pass=$((pass + 1)); echo "PASS  dir_with_space         ok"; } || { fail=$((fail + 1)); echo "FAIL  dir_with_space         rc/outputs ($(head -c 100 err-space.txt))"; }
 
 # determinism: same input, different thread counts, twice
 fam 120 a > in-det.fa
-for t in 1 8; do for rep in 1 2; do rm -rf det-$t-$rep; bash "$SUBFAM" -n 20 -t $t -o det-$t-$rep in-det.fa > /dev/null 2>&1; done; done
+for t in 1 8; do for rep in 1 2; do rm -rf det-$t-$rep; SOURCE_DATE_EPOCH=0 bash "$SUBFAM" -n 20 -t $t -o det-$t-$rep in-det.fa > /dev/null 2>&1; done; done
 same() { diff -q "$1" "$2" > /dev/null; }
 for f in in-det.cons.fasta in-det.chunks.tsv in-det.aln.fasta in-det.msf; do
     if same det-1-1/$f det-1-2/$f && same det-1-1/$f det-8-1/$f && same det-8-1/$f det-8-2/$f; then
