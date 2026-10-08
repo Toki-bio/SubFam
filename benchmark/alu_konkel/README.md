@@ -91,3 +91,32 @@ This view is biased against SubFam: chunks have a fixed size, so 3 chunks of ~98
 Reading: COSEG tells Yb8 from the rest with two rows, which SubFam's fixed chunks do not do; COSEG's group-0 consensus is dominated by Ya5, so AluY itself is not contained (0.979) and neither is Yb8 (0.972).
 SubFam's 15 rows contain AluY, Ya5 and Yb8 exactly. The two tools answer different questions (which copies form a lineage, versus which consensuses are present in the data).
 Limits: one data set, similarity-derived labels, our own COSEG input conversion, SubFam run on 316 copies and COSEG on 295 (COSEG's edge filter drops 21).
+
+## Correction: scored the way SubFam is meant to be scored, and the whole route (2026-10-08)
+The two views above were the wrong way to judge SubFam. Its README defines the task: reduce copies to a short alignment of consensuses, where a
+subfamily is *recovered* if some output row matches its source consensus at >= 99 % identity and the copies in that row are mostly that subfamily
+(`benchmark/evaluate.py`, columns reps, reps>=10, singleton fraction, purity, median identity, recovered). A V-measure of fixed-size chunks against class labels
+asks something else, and in SubFam's use the chunks are an intermediate step: in SINEderella the chunk consensuses are then grouped (the peel,
+SINE-discriminator/peel_features.py) and each group's consensus is rebuilt from its member copies. Scored with `evaluate.py`, 284 non-ambiguous copies,
+three lineages (AluY, AluYa5, AluYb8; "recovered" counts out of 3, the script prints "/8" by default), `route_eval.py` reproduces the table:
+
+| method | rows | rows from >= 10 copies | singleton fraction | purity | median identity of those rows | lineages recovered (of 3) |
+|---|---|---|---|---|---|---|
+| SubFam -n 20 (chunks only) | 14 | 14 | 0.00 | 0.972 | 100.0 | 3 |
+| SubFam -n 5 (chunks only) | 58 | 0 | 0.00 | 0.989 | n/a | 3 |
+| **SubFam -n 5, then the peel (default parameters), group consensus rebuilt from member copies** | **3** | 3 | 0.00 | 0.972 | 100.0 | **3** |
+| COSEG -k -m 50 | 2 | 2 | 0.00 | 0.778 | 98.4 | 1 |
+| COSEG -k -m 5 | 4 | 3 | 0.00 | 0.806 | 97.2 | 1 |
+| VSEARCH --id 0.90 | 4 | 3 | 0.00 | 0.785 | 97.6 | 0 |
+| VSEARCH --id 0.95 | 16 | 4 | 0.02 | 0.979 | 97.5 | 0 |
+| VSEARCH --id 0.98 | 64 | 8 | 0.13 | 0.996 | 98.9 | 2 |
+| VSEARCH --id 0.99 | 121 | 4 | 0.30 | 1.000 | 99.4 | 3 |
+
+The three route groups: peel1 = AluYb8 67 + AluY 3; peel2 = AluY 54; the residue left after two peels = AluYa5 155 + AluY 5 (59 chunk consensuses, peel stopped after 2 rounds; `peel_n5_default.json`).
+Partition agreement of that 3-group result: homogeneity 0.878, completeness 0.896, V 0.887 (COSEG -m 50: 0.678).
+
+What this supports: on these copies the SubFam + peel route gives three rows that contain the three lineages' consensuses at 100 % identity with purity 0.97, where COSEG's two to four rows
+contain one lineage and VSEARCH needs about 120 rows (30 % singletons) to contain all three.
+What it does not: the labels come from alignment score to the same Price consensuses, so any consensus-based method is favoured; one data set of 284 copies, Y lineage only;
+-n 5 was chosen so that the peel had enough chunk consensuses (MIN_SET 5), after seeing that -n 20 gives 14 rows, so this is exploratory, not a pre-registered test; the peel's parameters were left at their defaults (set on Timema SINEs);
+the residue row is counted as a group (the loop's last group). The independent test remains the hg38 protocol (../alu_hg38/).

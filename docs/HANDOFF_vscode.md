@@ -65,6 +65,9 @@ Worked example (benchmark/alu_konkel/README.md): 15 SubFam rows contain AluY/Ya5
 DO NOT claim: subfamily identification or definition, better than COSEG (on Konkel at equal granularity COSEG scored higher), Alu subfamily correctness, uniqueness. Alu adjudication is the SINEderella paper's job, not this one's.
 Network: the cloud container cannot reach the owner's servers (HTTPS proxy only; change Network access in the cloud environment settings if wanted; raw ssh unverified). Never put keys or passwords in repos or chat; if ssh is wanted, generate a keypair in the container and share only the public key.
 
+## 4.7 Correction (owner was right): evaluate SubFam on its own terms
+I had first scored SubFam chunks by V-measure against class labels (COSEG looked better). That is not SubFam's task. Its README metric is consensus recovery (evaluate.py: rows, rows from >=10 copies, purity, median identity, recovered) and in SINEderella the chunks are grouped by the peel and group consensuses rebuilt from member copies. Scored that way on 284 Konkel copies (benchmark/alu_konkel/README.md, route_eval.py): SubFam -n 5 + peel (default parameters) = 3 rows, purity 0.972, all 3 lineages recovered at 100 % identity; COSEG = 2-4 rows, purity 0.78-0.81, 1 lineage recovered; VSEARCH needs ~120 rows for all 3. Caveats: similarity-derived labels, one Y-lineage set, exploratory (-n 5 chosen after seeing -n 20), peel at defaults. Do not claim COSEG is better "at equal granularity"; do not claim SubFam is better in general either. The peel is not part of the SubFam paper's tool (it lives in SINE-discriminator).
+
 ## 5. Paper notes in docs/papers/
 price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 
