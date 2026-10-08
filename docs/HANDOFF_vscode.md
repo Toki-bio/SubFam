@@ -30,7 +30,8 @@ Last updated 2026-10-08. Keep it short; update after each exchange.
 - Ahmed 2013 (read in full, docs/papers/ahmed2013.md): Yb subfamilies defined by diagnostic mutations and nesting, no statistics; 75/8/16 reference copies of Yb8a1/Yb10/Yb11; supplement (Table S1) is on the publisher site.
 - Styles & Brookfield 2009 (read in full, docs/papers/styles2009.md): hand-inferred source genes and gene conversion (Yh, Yi6, Yg6); supplementary alignments S1-S7 at http://www.biomedcentral.com/content/supplementary/1471-2148-9-102-S1.zip (S2..S7 likewise). CORRECTION: the earlier '10-20 % gene conversion' figure was wrong (it is the share of secondary source genes); fixed in docs/REALDATA_BENCHMARK.md.
 - Kryatova 2017, Konkel 2015, Gardner/MELT 2017 read in full (docs/papers/kryatova2017_konkel2015_gardner2017.md). Orthology (flank/polymorphism evidence) is a separate dimension; owner has SINE_orth_loc/ComPair tools.
-- Still blocked: Price supplement (213 consensuses), alucode (403 on cse/cs/bioalgorithms.ucsd.edu), Wheeler lab data.
+- Price supplement RECEIVED (213 consensuses, parsed and checked against Table 2; file kept in scratchpad, not in repo; details in docs/papers/price2004.md). Konkel GenBank record KT305395 received (one of KT305395-KT305737; NCBI efetch blocked from the container).
+- Still blocked: alucode (403 on cse/cs/bioalgorithms.ucsd.edu), Wheeler lab data.
 
 ## Owner's positions (NOT verified claims)
 - No good instrument for subfamilies exists; SINEderella's aim is to give the expert the best recalculated data, the expert looks anyway.

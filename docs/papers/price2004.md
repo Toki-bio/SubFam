@@ -59,13 +59,22 @@ subfamilies (vs 14 for the 31 Repbase subfamilies). Age scale: 4 My per 1 % dive
 - Repbase had 31 Alu subfamilies (+3 monomeric ancestors ~140 bp, outside the study).
 - Their 213 include only 19 of the 31 Repbase subfamilies; the other 12 are minor AluY branches.
   213 + 12 = 225 subfamilies "previously and presently identified".
-- Table 2 (size / P): AluJo 7,266 / 8e-1841; AluSx 39,724 / 6e-4770; AluSq 4,035 / 2e-62;
+- Table 2 (size / P): AluJo 7,266 / 5e-11262 (corrected from the supplement; an earlier version of this line gave 8e-1841, which belongs to AluSx_3); AluSx 39,724 / 6e-4770; AluSq 4,035 / 2e-62;
   AluSp 28,063 / 7e-4520; AluY 27,023 / 2e-6924; AluYa5 3,257 / 4e-2813; AluSx_3 3,292 / 8e-1841;
   AluSx_5 401 / 3e-150; AluSq_3 1,956 / 2e-779; AluSg_4 1,904 / 1e-679; AluSc_8 9,588 / 1e-5959;
   AluY_8 107 / 1e-48. Repbase AluSq is smaller in their allocation (elements moved to novel neighbours).
 - Their consensuses differ from Repbase mostly at CpG positions (ill-determined).
 - Novel names (AluSx_3 etc.) are THEIR labels, given by attaching to the nearest Repbase name.
   They are not known to be the same as Dfam's AluSx1/AluSx3 (UNVERIFIED, do not equate).
+
+## Supplement (SUBFAMILIES.FINAL.txt, supplied by the owner; checked 2026-10-08)
+Not committed (publisher file; kept outside the repo). Verified by parsing:
+- 213 subfamilies, ids 0-212, no duplicate names; 60 without a parent P-value (the scaffold), 153 with one (pass 2). Sizes sum to 476,152 copies; smallest 53, largest 58,050 (AluSz); consistent with the 50-copy minimum.
+- Consensus lengths 279-288 (mostly 280-283); consensuses are therefore not all one length (they carry indels relative to AluSx).
+- Matches the paper's Table 2 for AluSx 39,724; AluY 27,023; AluYa5 3,257; AluYb8 2,285; AluSx_3 3,292; AluSc_8 9,588; AluY_8 107; AluSx_5 401.
+- The 12 Repbase subfamilies not found: AluYa8, Yc2, Yd2, Yd3, Yd3a1, Yd8, Ya4, Yf1, Yh9, Ybc3a, Ye2, Yf2.
+- The six novel names with underscores shown in Table 2: Sx_3 (id 12), Sq_3 (15), Sx_5 (21), Y_8 (30), Sg_4 (53), Sc_8 (56).
+- Tree image supplied (appears to be the minimum spanning tree over these ids; roots of the three boxes: 60 AluJo, 0 AluSx, 1 AluY). The caption/legend was not supplied, so the colour meaning is inferred: pink nodes are exactly the six novel subfamilies above.
 
 ## Authors' stated limitations
 Excludes indels, frequent CpG mutations, and mutations already present in other subfamilies, so
