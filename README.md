@@ -147,7 +147,11 @@ What the table shows:
 
 ## Authors
 
-Original idea: Toki. Parallel chunk alignment: Nikita.
+Idea and code: Toki.
+
+## Acknowledgements
+
+Nikita, for ideas at the start of the project, among them aligning the chunks in parallel.
 
 ## License
 
