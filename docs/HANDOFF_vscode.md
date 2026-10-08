@@ -48,6 +48,11 @@ Written 2026-10-08 at the end of a long cloud session. Read this first. Everythi
 - SINEderella: step 2 = flat-bank 10-cycle `ssearch36` vote (unanimous + 0.45 x 10th-best), alignments not stored; the subfamily call is made by a person on SubFam output (MANUAL 6.1) or the peel in SINE-discriminator (`SUBFAMILY_METHOD.md`: features = (position, character incl. gap), Jaccard blocks, peel; purity 0.937 on Timema vs his curation, ceiling 0.882; `best` split/merge threshold calibrated on two cases). docs/FAMILY_SUBFAMILY_ASSIGNMENT.md states whole-length bitscore is the wrong instrument for subfamilies. No repo cites Price or COSEG. CpG handling is only an open divergence decision (D2); not found in the peel.
 - The owner's view: no good instrument exists; the aim is to hand an expert the best recalculated data.
 
+## 4.4 Addendum (later in the same day): the Alu history doc and COSEG source
+- The owner's living doc "Alu subfamily definitions and how they are told apart" is a Claude Docs artifact: https://claude.ai/artifact/U5kNLaQtKsZByEy5sr6fRD (read and edited through the Claude Docs connector, not the Artifact tool; doc id db5071ff-dd92-4565-8716-30e2a2e83eec). Added sections 3A (COSEG at source level) and 8A (code-level comparison with the peel and the assignment vote), corrected section 8 (the split/merge rule is in pairsurvey.py, not the peel; 0.80 in code vs 0.85 in docs), updated section 9 (sources not read). Details: docs/papers/coseg_source.md.
+- COSEG default p-value: integer division makes the correction constant 1 (verified by running an instrumented copy; no effect on tested data). Not reported to the authors.
+- Peel code facts (read, not run on Alu): see coseg_source.md last paragraph.
+
 ## 5. Paper notes in docs/papers/
 price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 
