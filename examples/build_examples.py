@@ -88,4 +88,5 @@ def main():
         for k in rows: o.write('>%s\n%s\n' % (k, aln[k]))
     print('wrote', a.out, len(rows), 'rows', file=sys.stderr)
 
-main()
+if __name__ == '__main__':
+    main()
