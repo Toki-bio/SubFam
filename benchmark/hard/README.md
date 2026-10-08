@@ -49,7 +49,17 @@ recovered at coverage C = a row from >= 3 copies, mostly one subfamily, identity
 Placing every copy by best hit (iddef 2) in the rows of the long-only run (n=10) puts 41 % of copies under 500 bp, 54 % of 500-1,000 bp and 56 % of 1-2 kb in a row whose majority is their own subfamily (8 subfamilies: chance is about 12-25 %).
 Reading (one seed, so exploratory): truncated L1-like copies are hard for every method. Chunk purity stays at 0.35-0.46 because length confounds the k-mer order (SCALING.md section 4 saw the same). `-c` is what makes the rows reach beyond the 3' end (5 versus 2 recovered at 0.2 coverage)
 and the k-mer order is far better than the MAFFT order here too. Rows cover 13-16 % of the master by default and about half of it from the long copies. Identity-threshold clustering recovers essentially none, with 570-1,980 rows.
-Seeds 2 and 3 are being run; they will be added below.
+
+Seeds 1-3 (new simulations of the same design; copies >= 2 kb: 304, 329, 327; median length 813, 838, 839 bp). Recovered subfamilies of 8 at coverage 0.2 / 0.5 / 0.9, per seed and mean:
+
+| method | seed 1 | seed 2 | seed 3 | mean |
+|---|---|---|---|---|
+| SubFam -n 20 | 2 / 1 / 1 | 3 / 2 / 2 | 2 / 1 / 1 | 2.3 / 1.3 / 1.3 |
+| SubFam -n 20 -c | 5 / 3 / 2 | 5 / 2 / 2 | 4 / 1 / 1 | **4.7** / 2.0 / 1.7 |
+| long copies only (>= 2 kb), -n 20 -c (15-16 rows) | 4 / 2 / 1 | 4 / 2 / 2 | 3 / 3 / 2 | 3.7 / 2.3 / 1.7 |
+
+Chunk purity of the 100-row runs: 0.451, 0.467, 0.432. Seed 1 VSEARCH (0.90 to 0.75, 570-1,984 rows) recovered 0-1 of 8 at every coverage; VSEARCH was not run on seeds 2 and 3 (about ten minutes per setting on 6 kb copies, and the batch job was lost before it got there).
+So the seed 1 picture holds in three simulations: `-c` roughly doubles the number of sources whose 3' part is recovered (4.7 against 2.3 at coverage 0.2), but the rows cover only about 15 % of the master (half from the long copies only), chunk purity stays at 0.43-0.47, and few sources are recovered over their full length (1.3-2.3 of 8 at 0.9).
 
 ## Per-chunk quality statistics (`chunk_stats.py`): prototype, one simulation
 Question: can a chunk's name or table carry what kind of chunk it is (one lineage, two lineages, one lineage plus junk) and how good its alignment is?
