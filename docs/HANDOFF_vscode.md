@@ -59,6 +59,12 @@ Written 2026-10-08 at the end of a long cloud session. Read this first. Everythi
 - Words: "adjudicate" (decide which call independent evidence supports), "better supported" (not "right"), "demonstrable claim".
 - NOT yet run: nothing in benchmark/alu_hg38 has been run on hg38 (needs the server). recover.py was only script-checked on the Konkel loci.
 
+## 4.6 SubFam paper: claims (saved 2026-10-08, late)
+MAKE and defend: (1) threshold-free reduction of N copies to a short alignment of consensuses, no reference needed; (2) consensus recovery: simulated families (README benchmark: 8/8, 8/8, 7-8/8 vs VSEARCH only at a per-family --id; CD-HIT/MMseqs2 centroids never recover sources) and, once run, hg38 Alu against Dfam + Price 213 (benchmark/alu_hg38); (3) scales: 100k copies in 30 min (docs/SCALING.md); (4) portable and verifiable: no EMBOSS, byte-identical consensus to EMBOSS cons, k-mer order identical to ViewAlign; (5) -c for truncated copies (simulated).
+Worked example (benchmark/alu_konkel/README.md): 15 SubFam rows contain AluY/Ya5/Yb8 exactly; VSEARCH needs ~140 rows, CD-HIT-EST ~125, for similar identity (illustration, labels not independent).
+DO NOT claim: subfamily identification or definition, better than COSEG (on Konkel at equal granularity COSEG scored higher), Alu subfamily correctness, uniqueness. Alu adjudication is the SINEderella paper's job, not this one's.
+Network: the cloud container cannot reach the owner's servers (HTTPS proxy only; change Network access in the cloud environment settings if wanted; raw ssh unverified). Never put keys or passwords in repos or chat; if ssh is wanted, generate a keypair in the container and share only the public key.
+
 ## 5. Paper notes in docs/papers/
 price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 

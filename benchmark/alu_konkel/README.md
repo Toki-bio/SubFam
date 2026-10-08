@@ -40,3 +40,22 @@ Reading (what the numbers support and what they do not):
 - SubFam chunks of fixed size give homogeneous but numerous rows (homogeneity 0.93 at -n 20, completeness 0.36): by design one lineage fills several chunks. At the same granularity (2-5 groups) COSEG scores higher than SubFam chunks; at -n 20 SubFam is far more homogeneous but over-split.
 - SubFam chunks are not the end product of the SINEderella workflow (a person or the peel merges them), so this compares COSEG with the chunk step only, not with the peel.
 - Limits: 295 copies, three coarse labels derived by similarity (not independent truth), one COSEG run per setting, minimum subfamily size below COSEG's design point (-m 50 was meant for ~480,000 copies), our own alignment conversion.
+
+## Worked example: rows needed to contain a known consensus (2026-10-08)
+Same 316 Konkel Alu bodies. For each method, the identity of the best output sequence to four Price et al. consensuses
+(`recover.py`, coverage >= 0.90). SubFam rows are consensuses; VSEARCH and CD-HIT-EST rows are single copies (centroids / representatives).
+
+| method | output rows | AluY | AluYa5 | AluYb8 | AluYb9 |
+|---|---|---|---|---|---|
+| SubFam -n 20 | 15 | 1.000 | 1.000 | 1.000 | 0.993 |
+| SubFam -n 10 | 31 | 0.997 | 1.000 | 1.000 | 0.993 |
+| VSEARCH --id 0.90 | 4 | 0.965 | 0.982 | 0.976 | 0.969 |
+| VSEARCH --id 0.95 | 18 | 0.975 | 0.982 | 0.976 | 0.969 |
+| VSEARCH --id 0.98 | 70 | 0.993 | 0.989 | 0.990 | 0.990 |
+| VSEARCH --id 0.99 | 140 | 0.996 | 0.996 | 0.997 | 0.993 |
+| CD-HIT-EST 0.90 / 0.95 / 0.98 / 0.99 | 3 / 9 / 46 / 125 | 0.933 / 0.964 / 0.989 / 0.993 | 0.929 / 0.962 / 0.986 / 0.993 | 0.979 / 0.976 / 0.990 / 0.993 | 0.973 / 0.969 / 0.983 / 0.990 |
+
+Reading: 15 SubFam rows contain the AluY, AluYa5 and AluYb8 consensuses exactly and AluYb9 at 0.993; VSEARCH needs about 140 rows to reach a similar identity
+(0.993-0.997) and CD-HIT-EST 125. A centroid is one copy and carries that copy's private mutations; a chunk consensus averages them away, which is the point of the method.
+Limits: 316 copies, Y lineage only, one run per setting; the four references are Price's consensuses, the same ones used to label these copies, so this illustrates the
+metric and the mechanism, it is not a validation. The independent test is the hg38 protocol in ../alu_hg38/. Tool versions: VSEARCH 2.27.0; CD-HIT-EST from Ubuntu's `cd-hit` package (parameters -n 8 at 0.90, -n 10 otherwise).
