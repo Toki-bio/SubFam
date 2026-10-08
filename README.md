@@ -37,7 +37,7 @@ SubFam never asks "are these two copies X% identical?". It only asks "which copi
 
 ## Installation
 
-Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required.
+Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and, for the k-mer ordering (not needed with `-m`), a C compiler: `kmer_order.c` (next to `SubFam.sh`) is compiled into the work directory on every run; without a compiler SubFam falls back to an embedded Python script (Python ≥ 3.6 with `numpy`; `KMER_IMPL=c|py` forces one). The C and Python versions give byte-identical orders (`tests/test_kmer_order.sh`: 292 synthetic cases plus real SINE sets). EMBOSS is no longer required.
 
 ```bash
 conda install -c conda-forge -c bioconda mafft numpy
