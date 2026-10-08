@@ -1,65 +1,78 @@
-# Handoff for Claude Code in VS Code (living file; newest facts first in each section)
+# Handoff to Claude Code in VS Code
 
-Last updated 2026-10-08. Keep it short; update after each exchange.
+Written 2026-10-08 at the end of a long cloud session. Read this first. Everything marked VERIFIED was read in a source or run; UNVERIFIED is a belief.
 
-## How to work with the owner
-- Short answers. Verify from the source text/code, never from memory or general words.
-- Separate VERIFIED (source read) from UNVERIFIED. Do not flatter; do not claim "unique/better" without a test.
-- The owner corrects mistakes quickly: check repos before asserting that something is missing.
-- Do not put model IDs in repo content. Commit trailers per the session system reminder.
-- Compute runs on the servers (DRAGEN, KIT: see SINE-discriminator/CLAUDE.md), not on a laptop.
+## 0. How to work with the owner (Toki / Sergei)
+- Short answers. Verify from source text or code, never from memory. Separate VERIFIED from UNVERIFIED.
+- Do not flatter. "SINEderella is much better than COSEG" is the owner's hypothesis, not a result.
+- The owner corrects mistakes quickly. Check repos before saying something is missing (twice in this session a "missing" thing was in a repo or a different tool).
+- When naming something that must be fetched, give a link.
+- No model IDs in repo content. Commit trailers per the session system reminder. Do not open a PR unless asked.
+- Compute runs on the owner's servers (DRAGEN, KIT: see SINE-discriminator/CLAUDE.md). The cloud container is ephemeral and cannot reach NCBI, UCSC, Dfam, Wayback, publishers; GitHub and apt work.
+- Update this file after each exchange.
 
-## Repos (all Toki-bio, GitHub)
-- SubFam: branch `claude/practical-dijkstra-a0xv8i` (v1.2.0 = v1.1.0 + `-c`, docs/papers/price2004.md, docs/REALDATA_BENCHMARK.md, this file). Earlier work: `ccr-85af825c-on1o5u`. No PR.
-- SINEderella (repo name `sinederella`): branch `step1c-deplete` (a2253adb), main untouched (d418439f).
-- SINE-discriminator: read (docs only, not code). Subfamily method: SUBFAMILY_METHOD.md (peel on shared (position, character incl. gap) features).
-- COSEG (rmhubley/coseg), read-only reference.
-- The cloud container is ephemeral: re-clone, do not expect old paths.
+## 1. Repos and branches (all github.com/Toki-bio)
+| repo | branch | state |
+|---|---|---|
+| SubFam | `claude/practical-dijkstra-a0xv8i` | SubFam 1.2.0 + docs + benchmark/alu_konkel; no PR. Earlier work (v1.1.0) is also on `ccr-85af825c-on1o5u`. |
+| sinederella | `subfam-1.2` | SubFam wrapper (see 3). From main d418439. No PR. `step1c-deplete` (a2253adb, deplete loop + SubFam patch) is untouched; main untouched. |
+| SINE-discriminator | main (read only) | docs read, code not. |
+| coseg (rmhubley) | read only | built and run here. |
 
-## What was verified this session
-- Price et al. 2004 (full text read, notes in docs/papers/price2004.md): one reference (AluSx), copies missing >5 bases at either end dropped (~480k of >1M), indels excluded from the tests, scaffold 60 -> 213 subfamilies, assignment rule and age-bias formula NOT given in the text.
-- COSEG README (read): "derived from … programs … written by Alkes Price"; extended to 3 co-segregating mutations; alternative p-value model 2008 (Siegel); "input sequences must be full length alignments to a *single* reference"; `-k` approximates Price's original p-value; repo contains Price's sample data ALU.seqs/ALU.ins/ALU.cons (4,000 copies).
-- COSEG built and run here on that sample (`runcoseg.pl -k -d -m 50 -c ALU.cons -s ALU.seqs -i ALU.ins`): scaffold 3 subfamilies (2096/1000/904), 4 overall. NOT yet compared with Price's tables.
-- SINEderella: step 2 = flat bank, 10 `ssearch36 -m 8` cycles, unanimous vote + 0.45 threshold; alignments are not stored (m8 has no per-column states). Manual §6.1 = SubFam + human review. docs/FAMILY_SUBFAMILY_ASSIGNMENT.md states whole-length bitscore is the wrong instrument for subfamilies.
-- CpG: handled only as a divergence question (decision D2 pending; tools/cpg_div/, docs/CPG_DIVERGENCE_TEST.md, SINE-discriminator/cpg_divergence_review/). Not found in the pipeline or in the peel code/docs. (Owner remembers it as "already in the working": check where.)
-- No repo (SubFam, SINEderella, SINE-discriminator) cites Price or COSEG.
+## 2. SubFam 1.2.0 (what exists)
+`SubFam.sh`: k-mer guide-tree ordering (port of ViewAlign kmer-tree.js), chunks of N, MAFFT per chunk, plurality consensus (fraction -p 0.36), final L-INS-i alignment of consensuses. Options: -n -p -k -t -o -x -r -m -P -a -K -v -h, and new `-c` (coverage-relative plurality for truncated copies).
+- `-c` VERIFIED on simulated 5'-truncated copies (consensus lengths 462-1493 bp default vs 513-1499 with -c; full-length input gives 1500 bp for every chunk); default path VERIFIED unchanged against v1.1.0 (consensus sequences identical, headers differ by prefix only). EMBOSS equivalence test (`tests/check_equivalence.sh`) was NOT re-run (EMBOSS not installed here).
+- Other docs: README.md, docs/SCALING.md, docs/REALDATA_BENCHMARK.md (benchmark plan, partly superseded by this file), docs/papers/*.md (paper notes, section 5).
+- No LICENSE (owner and Nikita to choose; options MIT/BSD-3 permissive, GPL-3 copyleft; ViewAlign is MIT). Name "SubFam": no other software of that name found in web search (GitHub itself could not be searched from the container; check manually).
 
-## Read since (details in docs/papers/carey2020_storer2021.md)
-- Carey et al. preprint (read in full): >10 % of replicate Alu/L1 copies get different RepeatMasker subfamilies (Alu 12.4 % in segmental duplications, 14.95 % human-chimp).
-- Storer et al. 2021 (pp. 1-20 of 40): Dfam curators say COSEG uses one reference and a consensus window and "is not appropriate" for truncated/indel-structured sets; cd-hit-based clustering is their alternative for length variants (nearly identical copies).
-- Ahmed 2013 (read in full, docs/papers/ahmed2013.md): Yb subfamilies defined by diagnostic mutations and nesting, no statistics; 75/8/16 reference copies of Yb8a1/Yb10/Yb11; supplement (Table S1) is on the publisher site.
-- Styles & Brookfield 2009 (read in full, docs/papers/styles2009.md): hand-inferred source genes and gene conversion (Yh, Yi6, Yg6); supplementary alignments S1-S7 at http://www.biomedcentral.com/content/supplementary/1471-2148-9-102-S1.zip (S2..S7 likewise). CORRECTION: the earlier '10-20 % gene conversion' figure was wrong (it is the share of secondary source genes); fixed in docs/REALDATA_BENCHMARK.md.
-- Kryatova 2017, Konkel 2015, Gardner/MELT 2017 read in full (docs/papers/kryatova2017_konkel2015_gardner2017.md). Orthology (flank/polymorphism evidence) is a separate dimension; owner has SINE_orth_loc/ComPair tools.
-- Price supplement RECEIVED (213 consensuses, parsed and checked against Table 2; file kept in scratchpad, not in repo; details in docs/papers/price2004.md). Konkel GenBank record KT305395 received (one of KT305395-KT305737; NCBI efetch blocked from the container).
-- Styles & Brookfield supplements S3-S7 received (counts in docs/papers/styles2009.md; S1, S2 missing). Files kept in scratchpad, not in repo.
-- NCBI (eutils, www.ncbi.nlm.nih.gov, api.ncbi) returns connection failures from the cloud container (tested 2026-10-08); no efetch binary installed.
-- Still blocked: alucode (403 on cse/cs/bioalgorithms.ucsd.edu), Wheeler lab data.
+## 3. SINEderella change (branch subfam-1.2)
+`SubFam` is now a wrapper around vendored SubFam 1.2.0 (`tools/vendor/SubFam.sh`) with the old contract: run in the working directory as `SubFam input.fasta [BIN]`; writes `input_NNN.bnk` (chunk sequences), `input_NNN.cons` (consensus, '-' where none), `input.clw` (consensuses concatenated, unaligned), `input.msf`, plus new `input.chunks.tsv`. Old script kept as `tools/vendor/SubFam.old.sh`. Env: THREADS, SUBFAM_ORDER=mafft (old ordering), SUBFAM_PLURALITY, SUBFAM_COVERAGE=1. README and MANUAL 6.1.1 updated.
+- VERIFIED: runs in a scratch dir on 316 Alu bodies, default and SUBFAM_ORDER=mafft, files and names as above.
+- NOT tested: inside a full SINEderella run (step1, step8a, extract_alignments call `SubFam input.fasta 50`); comparison with the old script's output (needs EMBOSS); behaviour with `-r` strands. Default k-mer ordering changes chunk composition vs old runs (SUBFAM_ORDER=mafft restores it).
+- Decision for the owner: merge this branch? And merge `step1c-deplete` (only its plurality change alters results, only for bin sizes other than 50)?
 
-## Done 2026-10-08 (latest)
-- Konkel 2015: all 343 GenBank records received (NCBI.ZIP from the owner; 343 records). benchmark/alu_konkel/ (prep.py, loci_labels.tsv, README with results): 316 full-length Alu bodies, labelled by best Price consensus (AluY/Ya5/Yb8/Yb9); SubFam k-mer chunks purity 0.918 (n=20), 0.937 (n=10) vs ~0.53 random. COARSE only; labels are similarity-based (not independent); fine-level truth needs the authors' S3 table.
-- SINEderella branch `subfam-1.2` (pushed, from main d418439, no PR): `SubFam` is now a wrapper around vendored SubFam 1.2.0 (tools/vendor/SubFam.sh) with the old contract (input_NNN.bnk/.cons, input.clw, input.msf + input.chunks.tsv); old script kept as tools/vendor/SubFam.old.sh; README and MANUAL §6.1.1 updated. Tested on the Alu loci in a scratch dir only (default and SUBFAM_ORDER=mafft); NOT tested inside a full SINEderella run; EMBOSS-based old output not compared (EMBOSS not installed here). Default ordering changes chunk composition vs old runs.
-- The SubFam "manuscript": no draft exists in any repo or upload; verdict given from the literature only.
-- Next candidate test: COSEG vs SubFam on the Konkel full-length bodies (COSEG needs ALU.seqs-style input aligned to AluSx).
+## 4. Findings from this session
+### 4.1 The literature (details in docs/papers/)
+- Price, Eskin, Pevzner 2004 (full text read): one reference (AluSx), copies missing >5 bases at either end dropped (~480k of >1M), indels excluded from the tests, de novo split from one subfamily to a 60-subfamily scaffold, then 213 (+153 by single mutations). Owner's criticism (one collinear reference, no truncated copies, no indels) CONFIRMED from the Methods. "Only works for tight known families" is not demonstrated by the paper either way. The assignment rule and the age-bias formula are not in the text. Supplement (213 consensuses) received and parsed (213 subfamilies, 476,152 copies, matches Table 2).
+- COSEG (README read, run here) is Price's code, maintained by Hubley/Smit/Siegel; needs alignments to one reference; Dfam curators say it is "not appropriate" for truncated-looking sets and recommend visual review; cd-hit pipeline is their alternative for length variants (owner: cd-hit is the wrong tool for diverged SINEs).
+- Carey et al. 2020 (preprint, not peer reviewed): >10 % of replicate Alu/L1 copies get different RepeatMasker subfamilies.
+- Ahmed 2013, Styles & Brookfield 2009, Kryatova 2017, Konkel 2015, Gardner/MELT 2017: young subfamilies defined by one or two diagnostic changes plus a minimum number of independent copies, no statistical tests; gene conversion and homoplasy documented; nomenclature inconsistent (Konkel: one name with several consensuses, one consensus with several names). Orthology/polymorphism evidence is a separate dimension (owner has SINE_orth_loc/ComPair).
+- Correction made: an earlier "10-20 % gene conversion" figure was wrong (it is the share of secondary source genes); fixed in docs/REALDATA_BENCHMARK.md.
 
-## Owner's positions (NOT verified claims)
-- No good instrument for subfamilies exists; SINEderella's aim is to give the expert the best recalculated data, the expert looks anyway.
-- The peel is meant to be smart and unique but is "not working well enough" yet.
-- Believes SINEderella is much better than COSEG. TREAT AS A HYPOTHESIS TO TEST.
+### 4.2 Real-data tests (benchmark/alu_konkel/, README there has the tables)
+- Data: the 343 GenBank records KT305395-KT305737 (Konkel 2015 Sanger loci). Fetch: see section 7.
+- SubFam chunks vs lineage labels (labels = best Price consensus among AluY/Ya5/Yb8/Yb9; similarity-based, NOT independent truth): purity 0.918 (n=20), 0.937 (n=10) vs ~0.53 random.
+- COSEG (-k -d, our own alignment conversion, 295 copies) vs SubFam chunks on the same copies: COSEG separates Yb8 from the rest but never Ya5 from AluY (even at -m 5); at equal granularity COSEG scores higher (V 0.62-0.68 vs 0.45-0.50), SubFam -n 20 is very homogeneous (0.93) but over-split by design (completeness 0.36). This does NOT show SINEderella is better than COSEG; it tests only the chunk step, not the peel. Reason COSEG missed Ya5 not investigated.
 
-## Plan: careful comparison with COSEG (draft, to agree with the owner)
-1. Reproduce: COSEG `-k` on the Price sample vs Price Table 1/2 (Ya5 at 0.7%, linkage 12x).
-2. Pools: (a) Price/COSEG sample (4,000 Alu); (b) larger Alu from hg16/hg38 (needs server); (c) a curated SINE set, e.g. Timema (13 curated subfamilies; COSEG needs copies projected to one reference, truncated ones dropped: shows the cost).
-3. Methods: COSEG (-k and default model, 2 and 3 sites) vs SubFam+peel (+ SINEderella assignment). No tuning on the test pools.
-4. Metrics fixed BEFORE running: agreement with curated labels (ARI, per-subfamily recovery incl. small nested ones), fraction of copies classified, runtime.
-5. Blind manual review of disagreements in MSA-viewer. Report where COSEG wins as well.
+### 4.3 SINEderella and SINE-discriminator (docs read, not code)
+- SINEderella: step 2 = flat-bank 10-cycle `ssearch36` vote (unanimous + 0.45 x 10th-best), alignments not stored; the subfamily call is made by a person on SubFam output (MANUAL 6.1) or the peel in SINE-discriminator (`SUBFAMILY_METHOD.md`: features = (position, character incl. gap), Jaccard blocks, peel; purity 0.937 on Timema vs his curation, ceiling 0.882; `best` split/merge threshold calibrated on two cases). docs/FAMILY_SUBFAMILY_ASSIGNMENT.md states whole-length bitscore is the wrong instrument for subfamilies. No repo cites Price or COSEG. CpG handling is only an open divergence decision (D2); not found in the peel.
+- The owner's view: no good instrument exists; the aim is to hand an expert the best recalculated data.
 
-## Blocked from the cloud container (owner offered to fetch; upload PDFs/text)
-- Dfam curation guidelines, PMC9191830 (COSEG guidance and the cd-hit-based subfamily pipeline; to be read and cited, even if cd-hit is the wrong tool).
-- Research Square rs-86308 (Alu subfamily label reproducibility: >10% of replicates labelled differently, per a search snippet only).
-- http://www.cse.ucsd.edu/~ppevzner/download/alucode.tar.gz (403), Price supplement (213 consensuses), Dfam AluSx consensus, UCSC hg16 data.
-- GitHub works; apt works (mafft, gawk installed).
+## 5. Paper notes in docs/papers/
+price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 
-## Open items
-- LICENSE (owner + Nikita), GitHub name-clash check for "SubFam", merge decision for step1c-deplete (only the plurality change alters results), CpG decision D2.
-- SubFam README/SINEderella README wording: SubFam compresses copies; subfamily calls are made by a person.
-- Remaining papers to read one by one: Ahmed 2013 (Yb), Styles & Brookfield 2009, MELT, 1000G Alu subfamilies, AluS polymorphisms.
+## 6. Verdict given on a SubFam manuscript (no draft exists in any repo)
+Defensible now: a threshold-free compression tool for large copy sets, simulated benchmarks, 100k scaling run, first coarse real-data result. Not yet supported: calling it "subfamily identification", superiority to COSEG, fine-level recovery on real loci, old (AluS/AluJ) families. Reviewer questions to expect: why Price/COSEG are not cited, what independent truth was used, chunk smoothing of minority diagnostics (documented in the owner's own notes). If a draft exists, ask the owner to upload it.
+
+## 7. Reproducing / data that is NOT in the repo
+- Konkel loci (NCBI blocked in the container; the owner's server works with retries):
+  ```
+  mkdir -p konkel && cd konkel
+  for i in $(seq 395 737); do for try in 1 2 3 4 5; do
+    curl -sf -m 60 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=KT305$i&rettype=gb&retmode=text" -o KT305$i.gb && break; sleep $((try*2)); done; sleep 0.4; done
+  ```
+  (343 records, ESearch count verified = 343.) The owner already did this once (NCBI.ZIP).
+- Price supplement `SUBFAMILIES.FINAL.txt` (publisher file, not committed; owner has it; article page DOI 10.1101/gr.2693004 "Supplemental Material").
+- COSEG: `git clone https://github.com/rmhubley/coseg; make`; needs perl. Its `ALU.cons` is the AluSx consensus used for the Konkel run.
+- Pipeline: `prep.py GB_DIR PRICE_SUPPLEMENT OUT` (needs biopython) -> `SubFam.sh -n 20 alu_bodies.fa`; `to_coseg.py ALU.cons alu_bodies.fa konkel` -> `runcoseg.pl -k -d -m M -c ALU.cons -s konkel.seqs -i konkel.ins`; `compare.py loci_labels.tsv names295.txt FILE:LABEL ...`.
+- Container tools were installed with apt (mafft, gawk) and pip (biopython); mawk is the default awk.
+
+## 8. Not done / open
+1. Fine-level Alu truth: the authors' per-locus subfamily table (Konkel supplementary S3) or our own diagnostic-position calls; needed for Yb7a3/Yb8b1/Ya4a1/Yb10/Yb11 (3-16 copies, below SubFam's default chunk of 50).
+2. Test the peel (not just chunks) against COSEG and Price's partition on the same copies; full-genome Alu (hg16/hg38) needs the owner's server and is where Price's 480k-copy scale applies. Metrics were fixed after the first look this time; for the next test fix them in advance and do blind manual review of disagreements in MSA-viewer.
+3. Why COSEG did not split Ya5 from AluY on the Konkel data (alignment conversion, blacklist, minimum size?).
+4. Run the SINEderella branch inside a full run; compare with old output.
+5. CpG decision D2; whether the peel needs a CpG rule.
+6. LICENSE, name check on GitHub, Zenodo DOI, optional Bioconda recipe; reword the SINEderella README line that said SubFam does "subfamily identification" (done on the branch).
+7. Blocked sources still wanted: Wheeler lab data (Carey), alucode tarball (403 on every mirror tried; its code is inside COSEG), Dfam pages, Styles S1/S2 alignments, Konkel S3 table.
+8. Coverage-relative plurality is implemented; hierarchical second pass for >100k inputs and a sparse k-mer neighbour tree (>20k) are not.

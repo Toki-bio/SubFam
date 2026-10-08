@@ -1,5 +1,5 @@
 # Compares COSEG assignments and SubFam chunks against the lineage labels (loci_labels.tsv), ambiguous labels removed.
-# usage: compare.py loci_labels.tsv names.txt NAME  [coseg_dir:label ...] [subfam_chunks.tsv:label ...]
+# usage: compare.py loci_labels.tsv names.txt  FILE:LABEL ...   (FILE = COSEG .assign file or SubFam .chunks.tsv)
 # Metrics: groups, purity (majority label share), homogeneity, completeness, V-measure.
 import sys, collections, math
 labf, namesf = sys.argv[1:3]
