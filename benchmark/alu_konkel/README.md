@@ -59,3 +59,35 @@ Reading: 15 SubFam rows contain the AluY, AluYa5 and AluYb8 consensuses exactly 
 (0.993-0.997) and CD-HIT-EST 125. A centroid is one copy and carries that copy's private mutations; a chunk consensus averages them away, which is the point of the method.
 Limits: 316 copies, Y lineage only, one run per setting; the four references are Price's consensuses, the same ones used to label these copies, so this illustrates the
 metric and the mechanism, it is not a validation. The independent test is the hg38 protocol in ../alu_hg38/. Tool versions: VSEARCH 2.27.0; CD-HIT-EST from Ubuntu's `cd-hit` package (parameters -n 8 at 0.90, -n 10 otherwise).
+
+## COSEG vs SubFam: the raw data behind the comparison (295 copies, 2026-10-08)
+Labels (best Price consensus, similarity-derived): 155 AluYa5, 67 AluYb8, 62 AluY, 11 ambiguous.
+
+**COSEG groups** (`runcoseg.pl -k -d -m M`, our alignment conversion; group = COSEG's own assignment):
+
+| -m | group | size | composition |
+|---|---|---|---|
+| 50 and 20 | 0 | 219 | AluY 62, AluYa5 155, AluYb8 1, ambiguous 1 |
+| | 1 | 76 | AluYb8 66, ambiguous 10 |
+| 10 | 0 / 1 / 2 | 219 / 59 / 17 | as above; Yb8 split 49 + 17 (+10 ambiguous with the 49) |
+| 5 | 0 / 1 / 2 / 3 | 211 / 59 / 8 / 17 | group 0: AluY 54, Ya5 155, Yb8 1, ambig. 1; group 1: Yb8 49, ambig. 10; group 2: AluY 8; group 3: Yb8 17 |
+
+COSEG separates Yb8 from the rest with 2 rows and never separates Ya5 from AluY.
+
+**Two ways to score the same outputs.**
+
+(a) Partition agreement (V-measure against the labels, ambiguous removed): COSEG -m 50: 0.678; SubFam -n 75 (3 chunks): 0.500; SubFam -n 20 (14 chunks): 0.515.
+This view is biased against SubFam: chunks have a fixed size, so 3 chunks of ~98 copies cannot match classes of 155, 67 and 62.
+
+(b) Consensus containment (identity of the best output row to four Price consensuses; COSEG consensus = per-position majority of its group, which is what its M-step computes; our reconstruction):
+
+| method | rows | AluY | AluYa5 | AluYb8 | AluYb9 |
+|---|---|---|---|---|---|
+| SubFam -n 20 (316 copies) | 15 | 1.000 | 1.000 | 1.000 | 0.993 |
+| COSEG -m 50 | 2 | 0.979 | 0.996 | 0.972 | 0.969 |
+| COSEG -m 10 | 3 | 0.979 | 0.996 | 0.972 | 0.969 |
+| COSEG -m 5 | 4 | 0.979 | 0.996 | 0.972 | 0.969 |
+
+Reading: COSEG tells Yb8 from the rest with two rows, which SubFam's fixed chunks do not do; COSEG's group-0 consensus is dominated by Ya5, so AluY itself is not contained (0.979) and neither is Yb8 (0.972).
+SubFam's 15 rows contain AluY, Ya5 and Yb8 exactly. The two tools answer different questions (which copies form a lineage, versus which consensuses are present in the data).
+Limits: one data set, similarity-derived labels, our own COSEG input conversion, SubFam run on 316 copies and COSEG on 295 (COSEG's edge filter drops 21).
