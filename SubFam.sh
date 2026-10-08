@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.2.2
+VERSION=1.2.3
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -29,6 +29,7 @@ BOTH=
 PARTTREE=
 KEEP_N=
 KEEP_TMP=
+THREADIT=0     # iterative refinement of the final alignment: 0 = one thread (reproducible), -F = all threads
 RELCOV=
 MINCOV=3       # with -c: fewest covering sequences for a consensus base
 
@@ -56,6 +57,8 @@ Options:
             region most copies cover.
   -a        keep no-consensus positions as N (default: drop them from the consensus)
   -K        keep intermediate files (chunks, chunk alignments)
+  -F        refine the final alignment on all threads: faster for hundreds of consensuses, but the
+            alignment may differ between runs (default: one thread, identical output every time)
   -v        print version
   -h        show this help
 
@@ -73,7 +76,7 @@ EOF
 die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
-while getopts ":n:p:k:t:o:x:rmPcaKvh" opt; do
+while getopts ":n:p:k:t:o:x:rmPcaKFvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
         p) PLURALITY=$OPTARG ;;
@@ -87,6 +90,7 @@ while getopts ":n:p:k:t:o:x:rmPcaKvh" opt; do
         c) RELCOV=1 ;;
         a) KEEP_N=1 ;;
         K) KEEP_TMP=1 ;;
+        F) THREADIT=-1 ;;
         v) echo "SubFam $VERSION"; exit 0 ;;
         h) usage; exit 0 ;;
         :) die "option -$OPTARG needs a value" ;;
@@ -499,8 +503,9 @@ elapsed "$T1"
 echo "Aligning consensus sequences"
 T1=$(date +%s)
 if [ "$NCHUNK" -ge 2 ]; then
-    # --threadit 0: iterative refinement on one thread, so the alignment does not depend on thread timing
-    mafft --thread "$THREADS" --threadit 0 --localpair --maxiterate 1000 --ep 0.123 --nuc --reorder --quiet \
+    # --threadit 0: iterative refinement on one thread, so the alignment does not depend on thread timing (-F: all threads)
+    [ "$THREADIT" = -1 ] && THREADIT=$THREADS
+    mafft --thread "$THREADS" --threadit "$THREADIT" --localpair --maxiterate 1000 --ep 0.123 --nuc --reorder --quiet \
         "$OUTDIR/$PREFIX.cons.fasta" > "$OUTDIR/$PREFIX.aln.fasta"
 else
     cp "$OUTDIR/$PREFIX.cons.fasta" "$OUTDIR/$PREFIX.aln.fasta"
