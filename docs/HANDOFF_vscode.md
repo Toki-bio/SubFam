@@ -27,6 +27,7 @@ Last updated 2026-10-08. Keep it short; update after each exchange.
 ## Read since (details in docs/papers/carey2020_storer2021.md)
 - Carey et al. preprint (read in full): >10 % of replicate Alu/L1 copies get different RepeatMasker subfamilies (Alu 12.4 % in segmental duplications, 14.95 % human-chimp).
 - Storer et al. 2021 (pp. 1-20 of 40): Dfam curators say COSEG uses one reference and a consensus window and "is not appropriate" for truncated/indel-structured sets; cd-hit-based clustering is their alternative for length variants (nearly identical copies).
+- Ahmed 2013 (read in full, docs/papers/ahmed2013.md): Yb subfamilies defined by diagnostic mutations and nesting, no statistics; 75/8/16 reference copies of Yb8a1/Yb10/Yb11; supplement (Table S1) is on the publisher site.
 - Still blocked: Price supplement (213 consensuses), alucode (403 on cse/cs/bioalgorithms.ucsd.edu), Wheeler lab data.
 
 ## Owner's positions (NOT verified claims)
