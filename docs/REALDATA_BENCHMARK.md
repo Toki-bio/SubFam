@@ -24,7 +24,7 @@ Documented failure modes:
 - RepeatMasker, UCSC and 1000 Genomes labels agreed fully for only 22 of 49 AluS polymorphisms; disagreements were mostly S vs Y, and three 5′-truncated copies could not be classified (PMC5402677).
 - Some Ya5-lineage insertions carry only 2 or 3 of the 5 Ya5 diagnostic changes; one with all five was labelled AluYk3 by RepeatMasker (Genome Biol Evol 2015, 7:2608).
 - Gene conversion can replace an Alu body by a younger subfamily's sequence while the flanks keep their old phylogeny; body-only calls are then wrong. Reported to contribute 10-20 % of variation among recent Ya5-related elements (*check* which paper).
-- Price, Eskin & Pevzner 2004 (Genome Res 14:2245) found 213 statistically separable subfamilies from the 31 in Repbase at the time, and their consensuses differ from Repbase mainly at CpG sites: sub-subfamily structure is closer to a continuum than to discrete classes.
+- Price, Eskin & Pevzner 2004 (Genome Res 14:2245; full notes in docs/papers/price2004.md) split ~480,000 full-length Alus de novo (starting from one subfamily, not from Repbase) into 213 statistically validated subfamilies, using over-represented pairs of non-consensus nucleotides and a second pass on individual mutations. Their consensuses differ from Repbase mainly at CpG sites. They state the partition need not be unique. 'Continuum' is our reading, not their claim.
 - Labels depend on the library version, so every label must be stored with the exact Dfam / RepeatMasker version.
 - Not covered by the pass: Konkel 2010, Salem 2003, Kojima, any 2020-2025 T2T or pangenome re-derivation of Alu subfamilies, AluScan-type classifiers.
 
