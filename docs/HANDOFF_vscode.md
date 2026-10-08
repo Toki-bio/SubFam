@@ -35,6 +35,12 @@ Last updated 2026-10-08. Keep it short; update after each exchange.
 - NCBI (eutils, www.ncbi.nlm.nih.gov, api.ncbi) returns connection failures from the cloud container (tested 2026-10-08); no efetch binary installed.
 - Still blocked: alucode (403 on cse/cs/bioalgorithms.ucsd.edu), Wheeler lab data.
 
+## Done 2026-10-08 (latest)
+- Konkel 2015: all 343 GenBank records received (NCBI.ZIP from the owner; 343 records). benchmark/alu_konkel/ (prep.py, loci_labels.tsv, README with results): 316 full-length Alu bodies, labelled by best Price consensus (AluY/Ya5/Yb8/Yb9); SubFam k-mer chunks purity 0.918 (n=20), 0.937 (n=10) vs ~0.53 random. COARSE only; labels are similarity-based (not independent); fine-level truth needs the authors' S3 table.
+- SINEderella branch `subfam-1.2` (pushed, from main d418439, no PR): `SubFam` is now a wrapper around vendored SubFam 1.2.0 (tools/vendor/SubFam.sh) with the old contract (input_NNN.bnk/.cons, input.clw, input.msf + input.chunks.tsv); old script kept as tools/vendor/SubFam.old.sh; README and MANUAL §6.1.1 updated. Tested on the Alu loci in a scratch dir only (default and SUBFAM_ORDER=mafft); NOT tested inside a full SINEderella run; EMBOSS-based old output not compared (EMBOSS not installed here). Default ordering changes chunk composition vs old runs.
+- The SubFam "manuscript": no draft exists in any repo or upload; verdict given from the literature only.
+- Next candidate test: COSEG vs SubFam on the Konkel full-length bodies (COSEG needs ALU.seqs-style input aligned to AluSx).
+
 ## Owner's positions (NOT verified claims)
 - No good instrument for subfamilies exists; SINEderella's aim is to give the expert the best recalculated data, the expert looks anyway.
 - The peel is meant to be smart and unique but is "not working well enough" yet.
