@@ -26,3 +26,14 @@ BLASTN of the human genome with AluYh9 and AluYi6 consensuses (1,426 and 1,277 h
 - Truth for these lineages is inferred and the paper states its own uncertainty (polymorphism data "cannot conclusively determine" absence; parallel mutation cannot always be excluded).
 - Many derivative subfamilies (3-77 copies) are far below SubFam's default chunk of 50.
 - Additional files give complete element alignments in human and chimp: http://www.biomedcentral.com/content/supplementary/1471-2148-9-102-S1.zip (and -S2 ... -S7), URLs as printed on p. 11.
+
+## Supplementary alignments received (2026-10-08, from the owner; S3-S7 only, S1 and S2 missing)
+Unzipped and counted (aligned FASTA, all rows equal length):
+| file | records | paper's count | alignment width |
+|---|---|---|---|
+| S3 Chimp AluYh3a1 | 55 | 73 (chimp, Table 1) | 286 |
+| S4 Human AluYh3a3 | 3 | 3 | 262 |
+| S5 Chimp AluYh3a3 | 11 | 11 | 264 |
+| S6 Human AluYi6 | 233 | 237 (Table 2) | 309 |
+| S7 Chimp AluYi6 | 91 | 91 | 296 |
+Two files hold fewer records than the paper's tables (55 vs 73; 233 vs 237); reason unknown (older element lists or file differences); not resolved. Missing: S1 (human AluYh7), S2 (human AluYh3a1, 98 copies).
