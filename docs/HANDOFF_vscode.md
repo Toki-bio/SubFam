@@ -80,6 +80,9 @@ I had first scored SubFam chunks by V-measure against class labels (COSEG looked
 ## 4.10 Harder simulation built (2026-10-08, night): benchmark/hard/
 simulate2.py (CpG decay x6, 1-5 sources per subfamily, per-copy age mixture, ti/tv 2:1, 10 % indels, 5'-truncation), evaluate2.py (coverage + CpG-aware identity), run_hard.sh, results.tsv (4 seeds, 5 scenarios). Result: SubFam -n 20 recovers 6.25-7.75 of 8 (CpG-aware) with 100 rows, >= best fixed VSEARCH identity everywhere; -c helps only at 80 % truncation (6.5 -> 7.25); -m collapses under truncation. Identity over all columns is <99 % for almost all consensuses because of CpG decay: report both. PAPER_DRAFT.md updated (abstract hedged to "simple simulations 8/8; harder 6.3-7.8"). Only 4 seeds, parameters mine.
 
+## 4.11 Paper logistics (2026-10-08, evening)
+LICENSE = MIT, copyright line Sergei Kosushkin 2026 (confirmed by the owner). Nikita is not an author, only thanked (README). Target: BMC Bioinformatics, Software article (alt. Mobile DNA); waiver for Uzbekistan NOT verified (docs/JOURNAL.md). Manuscript in BMC layout: docs/MANUSCRIPT_BMC.md (journal guideline page was blocked: confirm headings against it); docs/MANUSCRIPT.md and docs/PAPER_DRAFT.md are the earlier drafts. Open: AI-use disclosure (Springer Nature policy), affiliation/funding/competing interests, Zenodo DOI, hg38 results, L1-like seeds 2-3 (a reminder was scheduled), references not opened (VSEARCH, CD-HIT, MMseqs2, MAFFT, EMBOSS).
+
 ## 5. Paper notes in docs/papers/
 price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 

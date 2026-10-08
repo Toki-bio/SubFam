@@ -16,4 +16,4 @@ Not Nature/BMC, mentioned only so they are not forgotten: Bioinformatics and NAR
 
 Before any submission: choose a LICENSE (the README says all rights are reserved until one is added; BMC wants free non-commercial availability and recommends open source), archive a release (Zenodo DOI), check the author list and the name "SubFam" for clashes.
 
-Update: Nikita is not an author; he is thanked in the acknowledgements (README updated). License: the owner is considering MIT, not yet decided; no LICENSE file added.
+Update: Nikita is not an author; he is thanked in the acknowledgements (README updated). License: MIT (LICENSE added, copyright line Sergei Kosushkin, 2026).

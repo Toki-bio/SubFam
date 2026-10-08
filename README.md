@@ -155,4 +155,4 @@ Nikita, for ideas at the start of the project, among them aligning the chunks in
 
 ## License
 
-Not yet chosen. Until a LICENSE file is added, all rights are reserved by the authors.
+MIT, see [LICENSE](LICENSE).
