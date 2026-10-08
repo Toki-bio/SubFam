@@ -53,6 +53,12 @@ Written 2026-10-08 at the end of a long cloud session. Read this first. Everythi
 - COSEG default p-value: integer division makes the correction constant 1 (verified by running an instrumented copy; no effect on tested data). Not reported to the authors.
 - Peel code facts (read, not run on Alu): see coseg_source.md last paragraph.
 
+## 4.5 Decisions of 2026-10-08 (evening)
+- Genome hg38. Reference sets for the SubFam paper's real-data claim: Dfam Alu families AND Price's 213 consensuses.
+- Paper split: SubFam paper = tool + simulated/scaling results + consensus recovery on hg38 Alu (benchmark/alu_hg38/, protocol and metrics fixed in its README before any run); no adjudication, no subfamily-calling claim, no COSEG claim. SINEderella paper = discovery/assignment, comparison with RepeatMasker (stated Dfam version), COSEG, adjudication of disagreements by independent evidence.
+- Words: "adjudicate" (decide which call independent evidence supports), "better supported" (not "right"), "demonstrable claim".
+- NOT yet run: nothing in benchmark/alu_hg38 has been run on hg38 (needs the server). recover.py was only script-checked on the Konkel loci.
+
 ## 5. Paper notes in docs/papers/
 price2004.md (incl. supplement check), carey2020_storer2021.md, ahmed2013.md, styles2009.md (incl. S3-S7 counts: 55/3/11/233/91 records; S1, S2 missing; two files hold fewer records than the paper's tables, unexplained), kryatova2017_konkel2015_gardner2017.md.
 
