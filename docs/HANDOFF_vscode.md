@@ -24,6 +24,11 @@ Last updated 2026-10-08. Keep it short; update after each exchange.
 - CpG: handled only as a divergence question (decision D2 pending; tools/cpg_div/, docs/CPG_DIVERGENCE_TEST.md, SINE-discriminator/cpg_divergence_review/). Not found in the pipeline or in the peel code/docs. (Owner remembers it as "already in the working": check where.)
 - No repo (SubFam, SINEderella, SINE-discriminator) cites Price or COSEG.
 
+## Read since (details in docs/papers/carey2020_storer2021.md)
+- Carey et al. preprint (read in full): >10 % of replicate Alu/L1 copies get different RepeatMasker subfamilies (Alu 12.4 % in segmental duplications, 14.95 % human-chimp).
+- Storer et al. 2021 (pp. 1-20 of 40): Dfam curators say COSEG uses one reference and a consensus window and "is not appropriate" for truncated/indel-structured sets; cd-hit-based clustering is their alternative for length variants (nearly identical copies).
+- Still blocked: Price supplement (213 consensuses), alucode (403 on cse/cs/bioalgorithms.ucsd.edu), Wheeler lab data.
+
 ## Owner's positions (NOT verified claims)
 - No good instrument for subfamilies exists; SINEderella's aim is to give the expert the best recalculated data, the expert looks anyway.
 - The peel is meant to be smart and unique but is "not working well enough" yet.
