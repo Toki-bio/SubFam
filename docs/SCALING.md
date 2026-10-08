@@ -213,6 +213,18 @@ combination **deplete, then chunk small**: a residual is dominated by the far ta
 abundant subfamilies, which is harder to order than the full set, and `-n 20` lets a few dozen
 adjacent rare copies win their chunks. Both round-2 runs took 2–4 minutes.
 
+### 6.1 A hard-coded plurality does not survive a change of bin size
+
+SINEderella's `SubFam` called `cons -plurality 18` whatever the bank size: 18 of 50 is the
+intended 36 % agreement, but 18 of 20 is 90 %, and at bin size 20 the chunk consensuses collapsed
+to 137–273 bp of a 300 bp element (the rest called `N`, written as gaps). Compared chunk by
+chunk on the same 2,000 copies, the original and SubFam 1.1 `-m` give identical chunk membership
+at both bin sizes and identical consensus sequences at bin 50; at bin 20 only the scaled
+plurality (`-p 0.36`, i.e. 8 of 20) gives full-length consensuses. SINEderella's copy now scales
+the plurality with the bank size (`(BnkSz*36+99)/100`, still 18 at 50), aligns chunks with one
+thread per parallel job, and switches to PartTree above 30,000 sequences, so its output at the
+default bin size is byte-identical to before.
+
 In SINEderella this is `step1c_deplete.sh`: residual = `unassigned.fasta` + assigned copies
 below the per-subfamily percentile of step3's `sim_ratio`; SubFam with bin size 20 on the
 residual; the result goes through the same manual review as step1's `input.clw`.
