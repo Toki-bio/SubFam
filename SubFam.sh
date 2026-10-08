@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.2.1
+VERSION=1.2.2
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
