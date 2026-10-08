@@ -1,0 +1,344 @@
+acc	strand	locus_len	body_start	body_end	cov_vs_AluY	label	sAluY	sYa5	sYb8	sYb9	def
+KT305395	+	538	187	468	1.0	AluY	512.0	497.0	470.0	470.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 1 NA18953 hg18 49778223 genomic sequence.
+KT305396	+	1273	217	507	1.0	AluYb8	500.0	475.0	559.0	549.0	Homo sapiens chromosome 9 1000 genomes pilot1 Alu locus 2 NA18912 hg18 11421372 genomic sequence.
+KT305397	+	1144	327	606	1.0	AluYa5	516.0	541.0	461.0	461.0	Homo sapiens chromosome 21 1000 genomes pilot1 Alu locus 4 NA07347 hg18 40373935 genomic sequence.
+KT305398	+	1178	338	619	1.0	AluYa5	537.0	552.0	482.0	482.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 6 NA18870 hg18 125640182 genomic sequence.
+KT305399	+	734	95	383	1.0	AluYb8	497.0	472.0	556.0	546.0	Homo sapiens chromosome 22 1000 genomes pilot1 Alu locus 8 NA18870 hg18 45618022 genomic sequence.
+KT305400	+	511	178	459	1.0	AluY	547.0	522.0	497.0	492.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 10 NA06986 hg18 56866478 genomic sequence.
+KT305401	+	1137	756	1037	1.0	AluYa5	542.0	557.0	487.0	482.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 15 NA07346 hg18 72938680 genomic sequence.
+KT305402	+	436	66	348	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 18 NA07346 hg18 216068449 genomic sequence.
+KT305403	+	636	272	553	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome X 1000 genomes pilot1 Alu locus 23 NA12828 hg18 145346811 genomic sequence.
+KT305404	+	545	132	412	1.0	AluY	512.0	487.0	472.0	467.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 25 NA18542 hg18 82413599 genomic sequence.
+KT305405	+	603	201	489	1.0	AluYb8	512.0	487.0	571.0	561.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 27 NA11894 hg18 141250525 genomic sequence.
+KT305406	+	544	10	291	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 28 NA19210 hg18 91189894 genomic sequence.
+KT305407	+	672	113	394	1.0	AluY	557.0	532.0	502.0	497.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 32 NA18504 hg18 67996583 genomic sequence.
+KT305408	+	549	203	491	1.0	AluYb8	512.0	487.0	571.0	561.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 36 NA18504 hg18 92862269 genomic sequence.
+KT305409	+	542	6	287	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 39 NA07347 hg18 44679354 genomic sequence.
+KT305410	+	816	411	692	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 40 NA19210 hg18 31559696 genomic sequence.
+KT305411	+	703	346	628	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 20 1000 genomes pilot1 Alu locus 48 NA18942 hg18 16176656 genomic sequence.
+KT305412	+	838	262	543	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 52 NA18563 hg18 142335179 genomic sequence.
+KT305413	+	558	373	495	0.41	AluYb8	190.0	180.0	239.0	229.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 53 NA18504 deletion hg18 28274806 genomic sequence.
+KT305414	+	683	138	419	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 54 NA11831 hg18 78289515 genomic sequence.
+KT305415	+	810	280	560	1.0	AluY	517.0	492.0	477.0	472.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 56 NA18563 hg18 111686589 genomic sequence.
+KT305416	+	855	71	352	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 57 NA11831 hg18 29151682 genomic sequence.
+KT305417	+	496	162	450	1.0	AluYb8	502.0	477.0	561.0	551.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 58 NA18572 hg18 155630111 genomic sequence.
+KT305418	+	822	56	303	0.88	AluYa5	454.0	479.0	404.0	404.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 61 NA06986 hg18 37724568 genomic sequence.
+KT305419	+	780	22	289	0.94	AluY	518.0	503.0	463.0	458.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 63 NA18870 hg18 84827141 genomic sequence.
+KT305420	+	798	273	554	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 65 NA11831 hg18 13441791 genomic sequence.
+KT305421	+	768	272	555	1.0	AluYa5	525.0	550.0	470.0	470.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 69 NA06986 hg18 97948589 genomic sequence.
+KT305422	+	451	34	291	0.91	AluY	454.0	429.0	414.0	407.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 72 NA07357 hg18 186619140 genomic sequence.
+KT305423	+	479	20	300	1.0	AluYa5	530.0	555.0	475.0	475.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 74 NA18870 hg18 71280181 genomic sequence.
+KT305424	+	1041	635	916	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 78 NA18953 hg18 142901045 genomic sequence.
+KT305425	+	547	31	296	0.91	AluYb8	441.0	416.0	500.0	490.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 80 NA07346 hg18 168177598 genomic sequence.
+KT305426	+	577	136	416	1.0	AluY	517.0	492.0	477.0	472.0	Homo sapiens chromosome 16 1000 genomes pilot1 Alu locus 81 NA18504 hg18 70682702 genomic sequence.
+KT305427	+	453	92	372	1.0	AluY	510.0	485.0	455.0	450.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 87 NA18504 hg18 175733605 genomic sequence.
+KT305428	+	529	23	304	1.0	AluYa5	542.0	547.0	497.0	497.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 92 NA18563 hg18 84851738 genomic sequence.
+KT305429	+	782	57	345	1.0	AluYa5	510.0	535.0	455.0	455.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 93 NA07346 hg18 148273400 genomic sequence.
+KT305430	+	681	254	499	0.85	AluYb8	411.0	396.0	470.0	460.0	Homo sapiens chromosome 9 1000 genomes pilot1 Alu locus 94 NA12003 hg18 74640439 genomic sequence.
+KT305431	+	937	161	442	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 97 NA12003 hg18 4188310 genomic sequence.
+KT305432	+	757	95	376	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 99 NA18563 hg18 67754654 genomic sequence.
+KT305433	+	519	191	479	1.0	AluYb8	507.0	482.0	571.0	561.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 100 NA18504 hg18 159277909 genomic sequence.
+KT305434	+	894	248	529	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 102 NA11831 hg18 157722567 genomic sequence.
+KT305435	+	884	299	587	1.0	AluYb8	495.0	470.0	559.0	549.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 107 NA07347 hg18 18222902 genomic sequence.
+KT305436	+	534	59	340	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 109 NA18504 hg18 67990091 genomic sequence.
+KT305437	+	600	84	365	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 111 NA18504 hg18 32862090 genomic sequence.
+KT305438	+	492	44	325	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 113 NA11881 hg18 224063056 genomic sequence.
+KT305439	+	633	264	552	1.0	AluYb8	492.0	467.0	551.0	541.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 116 NA07347 hg18 51555374 genomic sequence.
+KT305440	+	831	478	759	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 122 NA18504 hg18 105675691 genomic sequence.
+KT305441	+	517	175	463	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 123 NA18953 hg18 4707790 genomic sequence.
+KT305442	+	736	87	368	1.0	AluY	547.0	522.0	492.0	487.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 139 NA11894 hg18 108720926 genomic sequence.
+KT305443	+	845	323	604	1.0	AluY	527.0	502.0	497.0	492.0	Homo sapiens chromosome 12 1000 genomes pilot1 Alu locus 143 NA12003 hg18 14995914 genomic sequence.
+KT305444	+	770	190	478	1.0	ambig	502.0	482.0	571.0	571.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 144 NA11831 hg18 195781360 genomic sequence.
+KT305445	+	694	38	223	0.66	AluYa5	350.0	365.0	306.0	306.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 145 NA07357 hg18 101853522 genomic sequence.
+KT305446	+	613	155	445	1.0	AluYb8	491.0	466.0	560.0	550.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 155 NA18912 hg18 45935702 genomic sequence.
+KT305447	+	849	248	536	1.0	AluY	535.0	510.0	490.0	485.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 156 NA12828 hg18 126446340 genomic sequence.
+KT305448	+	711	351	639	1.0	ambig	502.0	482.0	571.0	571.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 159 NA18504 hg18 87672271 genomic sequence.
+KT305449	+	850	118	399	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 160 NA18537 hg18 43178721 genomic sequence.
+KT305450	+	915	246	534	1.0	AluYb8	497.0	472.0	561.0	551.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 161 NA18945 hg18 84037705 genomic sequence.
+KT305451	+	886	231	513	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 162 NA12003 hg18 24749518 genomic sequence.
+KT305452	+	518	167	447	1.0	AluY	522.0	497.0	482.0	477.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 163 NA18537 hg18 05819157 genomic sequence.
+KT305453	+	659	324	605	1.0	AluYa5	537.0	552.0	492.0	492.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 168 NA11881 hg18 124865259 genomic sequence.
+KT305454	+	734	105	385	1.0	AluY	540.0	515.0	485.0	480.0	Homo sapiens chromosome 17 1000 genomes pilot1 Alu locus 169 NA18577 hg18 12694440 genomic sequence.
+KT305455	+	360	196	284	0.31	AluYa5	171.0	176.0	136.0	136.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 170 NA70347 hg18 157736386 genomic sequence.
+KT305456	+	741	328	609	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 171 NA12003 hg18 44792048 genomic sequence.
+KT305457	+	438	38	319	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 174 NA11894 hg18 11271158 genomic sequence.
+KT305458	+	485	152	402	0.86	AluYb8	436.0	411.0	495.0	485.0	Homo sapiens chromosome 17 1000 genomes pilot1 Alu locus 181 NA18870 hg18 14358654 genomic sequence.
+KT305459	+	729	70	358	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 185 NA18504 hg18 56925976 genomic sequence.
+KT305460	+	823	147	428	1.0	AluYa5	517.0	542.0	467.0	467.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 189 NA18504 hg18 50570168 genomic sequence.
+KT305461	+	774	187	468	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 191 NA18572 hg18 60873090 genomic sequence.
+KT305462	+	642	196	476	1.0	AluYa5	535.0	560.0	480.0	480.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 197 NA11831 hg18 188149973 genomic sequence.
+KT305463	+	450	133	413	1.0	AluY	505.0	480.0	450.0	445.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 199 NA11881 hg18 130181038 genomic sequence.
+KT305464	+	943	169	450	1.0	AluY	557.0	542.0	502.0	497.0	Homo sapiens chromosome 17 1000 genomes pilot1 Alu locus 204 NA19210 hg18 10019291 genomic sequence.
+KT305465	+	584	30	311	1.0	AluYa5	537.0	552.0	492.0	492.0	Homo sapiens chromosome 9 1000 genomes pilot1 Alu locus 205 NA12043 hg18 30724684 genomic sequence.
+KT305466	+	1068	55	336	1.0	AluY	492.0	477.0	472.0	467.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 206 NA07346 hg18 106427928 genomic sequence.
+KT305467	+	520	190	471	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 208 NA11881 hg18 77575128 genomic sequence.
+KT305468	+	782	51	332	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 209 NA12043 deletion hg18 44083830 genomic sequence.
+KT305469	+	526	12	300	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 211 NA12828 hg18 41838088 genomic sequence.
+KT305470	+	440	55	336	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 212 NA18504 hg18 237492890 genomic sequence.
+KT305471	+	621	61	313	0.87	AluYb8	435.0	410.0	504.0	494.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 213 NA12043 hg18 104512921 genomic sequence.
+KT305472	+	1036	670	931	0.93	AluYa5	492.0	507.0	447.0	447.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 214 NA12828 hg18 113936195 genomic sequence.
+KT305473	+	526	59	346	1.0	AluYb8	515.0	500.0	549.0	539.0	Homo sapiens chromosome X 1000 genomes pilot1 Alu locus 216 NA18944 hg18 1643502 genomic sequence.
+KT305474	+	570	203	483	1.0	AluYa5	535.0	560.0	480.0	480.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 217 NA12043 hg18 33883600 genomic sequence.
+KT305475	+	849	74	355	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 218 NA07357 hg18 233554137 genomic sequence.
+KT305476	+	642	104	379	0.98	AluYa5	508.0	523.0	453.0	453.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 219 NA07347 hg18 43981512 genomic sequence.
+KT305477	+	576	170	451	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 220 NA07347 hg18 29502162 genomic sequence.
+KT305478	+	768	414	695	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 221 NA07346 hg18 104964050 genomic sequence.
+KT305479	+	512	177	459	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 222 NA07346 hg18 141830619 genomic sequence.
+KT305480	+	633	138	419	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 223 NA11894 hg18 163387376 genomic sequence.
+KT305481	+	585	127	415	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 224 NA12043 hg18 179593739 genomic sequence.
+KT305482	+	1422	69	357	1.0	ambig	492.0	472.0	561.0	561.0	Homo sapiens chromosome 9 1000 genomes pilot1 Alu locus 226 NA18572 hg18 119430554 genomic sequence.
+KT305483	+	615	65	346	1.0	AluYa5	537.0	542.0	492.0	487.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 228 NA11881 hg18 139097257 genomic sequence.
+KT305484	+	601	52	340	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 229 NA07347 hg18 23351011 genomic sequence.
+KT305485	+	525	166	420	0.9	AluY	503.0	478.0	448.0	443.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 234 NA12043 hg18 146170558 genomic sequence.
+KT305486	+	415	73	359	1.0	AluYa5	524.0	539.0	474.0	474.0	Homo sapiens chromosome 21 1000 genomes pilot1 Alu locus 235 NA11831 hg18 32320390 genomic sequence.
+KT305487	+	496	32	300	1.0	AluY	469.0	464.0	441.0	436.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 236 NA11881 hg18 21650332 genomic sequence.
+KT305488	+	555	192	480	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 239 NA07346 hg18 41389615 genomic sequence.
+KT305489	+	528	86	374	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 240 NA07346 hg18 139575322 genomic sequence.
+KT305490	+	521	67	355	1.0	AluYb8	487.0	472.0	556.0	551.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 242 NA07346 hg18 213685311 genomic sequence.
+KT305491	+	681	292	579	1.0	ambig	495.0	475.0	554.0	554.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 243 NA07347 hg18 141738826 genomic sequence.
+KT305492	+	847	122	403	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 245 NA12043 hg18 129080282 genomic sequence.
+KT305493	+	529	159	440	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 21 1000 genomes pilot1 Alu locus 246 NA12003 hg18 36159798 genomic sequence.
+KT305494	+	1052	78	360	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 247 NA18572 hg18 33260906 genomic sequence.
+KT305495	+	643	171	459	1.0	AluYa5	505.0	530.0	450.0	450.0	Homo sapiens chromosome 12 1000 genomes pilot1 Alu locus 248 NA12043 hg18 25354215 genomic sequence.
+KT305496	+	1207	582	863	1.0	AluY	517.0	502.0	462.0	462.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 249 NA12828 hg18 137131387 genomic sequence.
+KT305497	+	655	60	341	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 250 NA07346 hg18 158649735 genomic sequence.
+KT305498	+	529	158	440	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 251 NA12828 hg18 102327256 genomic sequence.
+KT305499	+	608	151	441	1.0	AluYb8	495.0	470.0	559.0	549.0	Homo sapiens chromosome 16 1000 genomes pilot1 Alu locus 252 NA11831 hg18 52432481 genomic sequence.
+KT305500	+	504	57	337	1.0	AluYa5	530.0	555.0	475.0	475.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 254 NA12043 hg18 71280181 genomic sequence.
+KT305501	+	570	238	519	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 255 NA07357 hg18 20129669 genomic sequence.
+KT305502	+	578	69	350	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 258 NA18504 hg18 18311849 genomic sequence.
+KT305503	+	609	290	571	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 261 NA07357 hg18 57864699 genomic sequence.
+KT305504	+	845	35	323	1.0	AluYb8	507.0	482.0	566.0	556.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 262 NA11881 hg18 72311092 genomic sequence.
+KT305505	+	915	190	478	1.0	AluYb8	497.0	472.0	561.0	551.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 264 NA07346 hg18 170957017 genomic sequence.
+KT305506	+	1319	465	753	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 265 NA18563 hg18 41469560 genomic sequence.
+KT305507	+	854	261	542	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 266 NA18577 hg18 142335179 genomic sequence.
+KT305508	+	496	73	354	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 267 NA12828 hg18 50788750 genomic sequence.
+KT305509	+	938	300	565	0.94	AluYa5	505.0	520.0	450.0	450.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 268 NA11881 hg18 48039949 genomic sequence.
+KT305510	+	884	370	639	0.95	AluY	513.0	488.0	478.0	473.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 269 NA18572 hg18 87953286 genomic sequence.
+KT305511	+	723	101	390	1.0	AluYa5	513.0	528.0	468.0	468.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 270 NA12828 hg18 45517656 genomic sequence.
+KT305512	+	644	73	360	1.0	AluY	537.0	512.0	482.0	477.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 271 NA11894 hg18 70978754 genomic sequence.
+KT305513	+	552	59	350	1.0	AluYb8	483.0	458.0	552.0	542.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 274 NA11894 hg18 68006764 genomic sequence.
+KT305514	+	514	86	374	1.0	AluYb8	497.0	472.0	561.0	551.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 275 NA07347 hg18 95011235 genomic sequence.
+KT305515	+	1207	448	728	1.0	AluY	520.0	495.0	475.0	470.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 276 NA18577 hg18 91059287 genomic sequence.
+KT305516	+	818	45	333	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 277 NA11894 hg18 190365905 genomic sequence.
+KT305517	+	808	297	577	1.0	AluYa5	530.0	550.0	475.0	475.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 278 NA07346 hg18 105952059 genomic sequence.
+KT305518	+	563	157	439	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 279 NA18870 hg18 173024968 genomic sequence.
+KT305519	+	597	84	365	1.0	AluY	557.0	542.0	502.0	497.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 280 NA07346 hg18 227026542 genomic sequence.
+KT305520	+	541	209	492	1.0	AluYa5	525.0	550.0	475.0	475.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 281 NA07357 hg18 196249806 genomic sequence.
+KT305521	+	749	184	465	1.0	AluYa5	522.0	547.0	472.0	472.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 282 NA12828 hg18 179435305 genomic sequence.
+KT305522	+	910	324	605	1.0	AluYa5	537.0	552.0	492.0	492.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 283 NA07346 hg18 73978987 genomic sequence.
+KT305523	+	541	205	493	1.0	ambig	492.0	472.0	561.0	561.0	Homo sapiens chromosome 17 1000 genomes pilot1 Alu locus 284 NA11831 hg18 69195116 genomic sequence.
+KT305524	+	570	82	363	1.0	AluYa5	532.0	547.0	477.0	472.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 285 NA07347 hg18 61074139 genomic sequence.
+KT305525	+	1100	70	352	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 286 NA12003 hg18 155223223 genomic sequence.
+KT305526	+	576	209	492	1.0	AluYa5	515.0	540.0	460.0	460.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 287 NA06986 hg18 173109067 genomic sequence.
+KT305527	+	513	154	436	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 289 NA12043 hg18 112917873 genomic sequence.
+KT305528	+	486	127	396	1.0	AluY	471.0	466.0	443.0	438.0	Homo sapiens chromosome 20 1000 genomes pilot1 Alu locus 290 NA07347 hg18 8618603 genomic sequence.
+KT305529	+	669	278	560	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 291 NA12828 hg18 61486959 genomic sequence.
+KT305530	+	397	71	331	0.9	AluYb8	436.0	411.0	495.0	485.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 292 NA07346 hg18 38374712 genomic sequence.
+KT305531	+	495	30	318	1.0	AluYb8	510.0	485.0	561.0	551.0	Homo sapiens chromosome 12 1000 genomes pilot1 Alu locus 293 NA11831 hg18 75347189 genomic sequence.
+KT305532	+	673	257	545	1.0	AluYb8	497.0	472.0	566.0	556.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 296 NA18577 hg18 36633627 genomic sequence.
+KT305533	+	988	249	531	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 19 1000 genomes pilot1 Alu locus 297 NA07346 hg18 61715391 genomic sequence.
+KT305534	+	1255	80	368	1.0	AluYb8	502.0	477.0	566.0	556.0	Homo sapiens chromosome 12 1000 genomes pilot1 Alu locus 298 NA12828 hg18 42004195 genomic sequence.
+KT305535	+	490	161	449	1.0	AluYb8	492.0	467.0	556.0	546.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 300 NA11894 hg18 107517809 genomic sequence.
+KT305536	+	620	79	360	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 22 1000 genomes pilot1 Alu locus 301 NA07346 hg18 20864136 genomic sequence.
+KT305537	+	468	80	361	1.0	AluY	552.0	537.0	497.0	492.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 302 NA18577 hg18 54865605 genomic sequence.
+KT305538	+	774	228	482	0.9	AluYa5	478.0	503.0	423.0	423.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 303 NA07346 hg18 91311981 genomic sequence.
+KT305539	+	432	38	319	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 307 NA11894 hg18 11271158 genomic sequence.
+KT305540	+	1260	361	642	1.0	AluYa5	527.0	552.0	482.0	482.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 309 NA07346 hg18 74569319 genomic sequence.
+KT305541	+	1476	1144	1425	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 310 NA11894 hg18129314110 genomic sequence.
+KT305542	+	603	211	499	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 313 NA12043 hg18 64084788 genomic sequence.
+KT305543	+	519	48	329	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 314 NA12828 hg18 15437004 genomic sequence.
+KT305544	+	861	124	412	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 315 NA18563 hg18 115240276 genomic sequence.
+KT305545	+	542	216	498	1.0	AluYa5	532.0	557.0	482.0	482.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 316 NA19201 hg18 125878458 genomic sequence.
+KT305546	+	527	157	438	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 317 NA07347 hg18 40395496 genomic sequence.
+KT305547	+	549	30	310	1.0	AluY	520.0	495.0	465.0	460.0	Homo sapiens chromosome 15 1000 genomes pilot1 Alu locus 318 NA19210 hg18 52236283 genomic sequence.
+KT305548	+	513	44	332	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 319 NA07346 hg18 70448262 genomic sequence.
+KT305549	+	1325	735	1016	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 320 NA18563 hg18 105549791 genomic sequence.
+KT305550	+	592	202	482	1.0	AluY	510.0	485.0	455.0	450.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 321 NA11881 hg18 58294880 genomic sequence.
+KT305551	+	515	84	372	1.0	AluYb8	507.0	482.0	571.0	561.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 323 NA07347 hg18 157439366 genomic sequence.
+KT305552	+	421	105	386	1.0	AluYa5	527.0	537.0	472.0	472.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 324 NA12828 hg18 205360170 genomic sequence.
+KT305553	+	878	282	526	0.84	ambig	414.0	394.0	473.0	473.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 325 NA07346 hg18 80071684 genomic sequence.
+KT305554	+	607	256	539	1.0	AluYa5	525.0	550.0	470.0	470.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 326 NA11881 hg18 28436875 genomic sequence.
+KT305555	+	1380	574	862	1.0	AluYb8	497.0	472.0	556.0	546.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 327 NA12828 hg18 51908814 genomic sequence.
+KT305556	+	547	242	508	0.92	AluYb8	463.0	438.0	532.0	522.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 328 NA12828 hg18 4345867 genomic sequence.
+KT305557	+	1072	329	610	1.0	AluYa5	527.0	552.0	482.0	482.0	Homo sapiens chromosome 18 1000 genomes pilot1 Alu locus 329 NA12828 hg18 34766544 genomic sequence.
+KT305558	+	590	242	486	0.87	AluY	483.0	458.0	428.0	423.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 330 NA19201 hg18 86318328 genomic sequence.
+KT305559	+	589	215	496	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 21 1000 genomes pilot1 Alu locus 331 NA12828 hg18 36242953 genomic sequence.
+KT305560	+	503	144	412	1.0	AluY	469.0	464.0	431.0	426.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 332 NA07346 hg18 47517601 genomic sequence.
+KT305561	+	788	67	348	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 333 NA07346 hg18 42614168 genomic sequence.
+KT305562	+	592	10	291	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 334 NA06986 hg18 62665899 genomic sequence.
+KT305563	+	1204	499	779	1.0	AluY	517.0	492.0	477.0	472.0	Homo sapiens chromosome 17 1000 genomes pilot1 Alu locus336 NA18942 hg18 29758534 genomic sequence.
+KT305564	+	579	235	521	0.99	ambig	478.0	458.0	547.0	547.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 337 NA18572 hg18 95425080 genomic sequence.
+KT305565	+	774	266	548	1.0	AluY	482.0	472.0	427.0	427.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 338 NA07347 hg18 47172784 genomic sequence.
+KT305566	+	796	302	586	1.0	AluYa5	523.0	548.0	468.0	468.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 339 NA11894 hg18 56577759 genomic sequence.
+KT305567	+	959	419	700	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 340 NA07346 hg18 219284837 genomic sequence.
+KT305568	+	702	112	406	1.0	AluYb8	487.0	462.0	556.0	546.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 341 NA12003 hg18 64730649 genomic sequence.
+KT305569	+	550	169	450	1.0	AluYa5	537.0	542.0	482.0	477.0	Homo sapiens chromosome 3 1000 genomes pilot1 Alu locus 342 NA12003 hg18 40216612 genomic sequence.
+KT305570	+	551	51	339	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 343 NA12003 hg18 82084642 genomic sequence.
+KT305571	+	488	166	447	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 344 NA19201 hg18 134707581 genomic sequence.
+KT305572	+	940	414	694	1.0	AluYa5	515.0	530.0	465.0	465.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 345 NA11881 hg18 187513662 genomic sequence.
+KT305573	+	628	249	537	1.0	AluYb8	492.0	467.0	551.0	541.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 346 NA07347 hg18 51555374 genomic sequence.
+KT305574	+	536	44	333	1.0	AluYb8	487.0	462.0	551.0	541.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 348 NA07346 hg18 56212412 genomic sequence.
+KT305575	+	496	186	438	0.87	AluYb8	430.0	405.0	499.0	489.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 349 NA07346 hg18 80516625 genomic sequence.
+KT305576	+	832	514	795	1.0	AluYa5	537.0	552.0	492.0	492.0	Homo sapiens chromosome 16 1000 genomes pilot1 Alu locus 350 NA12043 hg18 58598648 genomic sequence.
+KT305577	+	751	13	294	1.0	AluYa5	537.0	557.0	482.0	482.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 351 NA11881 hg18 60654927 genomic sequence.
+KT305578	+	524	159	447	1.0	AluYb8	507.0	482.0	571.0	561.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 352 NA07346 hg18 46905838 genomic sequence.
+KT305579	+	1116	274	555	1.0	AluYa5	532.0	547.0	487.0	487.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 353 NA18572 hg18 71998570 genomic sequence.
+KT305580	+	667	226	508	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 354 NA12043 hg18 48130038 genomic sequence.
+KT305581	+	865	162	450	1.0	AluYb8	492.0	467.0	556.0	546.0	Homo sapiens chromosome 12 1000 genomes pilot1 Alu locus 356 NA07347 hg18 96074889 genomic sequence.
+KT305582	+	875	29	310	1.0	AluY	552.0	527.0	507.0	502.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 357 NA07357 hg18 91046810 genomic sequence.
+KT305583	+	1133	160	419	0.91	AluYa5	478.0	483.0	428.0	428.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 358 NA11881 hg18 198471693 genomic sequence.
+KT305584	+	540	242	523	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 10 1000 genomes pilot1 Alu locus 359 NA07346 hg18 129263571 genomic sequence.
+KT305585	+	588	67	348	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 360 NA18945 hg18 190084060 genomic sequence.
+KT305586	+	508	129	409	1.0	AluY	505.0	480.0	450.0	445.0	Homo sapiens chromosome 12 1000 genomes pilot1 Alu locus 361 NA07347 hg18 74217352 genomic sequence.
+KT305587	+	759	233	515	1.0	AluYa5	522.0	547.0	472.0	472.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 362 NA11894 hg18 4048199 genomic sequence.
+KT305588	+	682	245	528	1.0	AluYa5	535.0	540.0	480.0	475.0	Homo sapiens chromosome 14 1000 genomes pilot1 Alu locus 363 NA18563 hg18 39382699 genomic sequence.
+KT305589	+	1174	682	967	1.0	AluY	536.0	511.0	481.0	476.0	Homo sapiens chromosome 1 1000 genomes pilot1 Alu locus 364 NA11894 hg18 74920632 genomic sequence.
+KT305590	+	567	138	419	1.0	AluYa5	537.0	552.0	482.0	477.0	Homo sapiens chromosome 2 1000 genomes pilot1 Alu locus 365 NA12043 hg18 189667679 genomic sequence.
+KT305591	+	847	86	374	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 11 1000 genomes pilot1 Alu locus 366 NA12003 hg18 100286603 genomic sequence.
+KT305592	+	1167	549	828	1.0	AluY	533.0	508.0	478.0	473.0	Homo sapiens chromosome 13 1000 genomes pilot1 Alu locus 367 NA11881 hg18 97601298 genomic sequence.
+KT305593	+	674	239	520	1.0	AluYa5	532.0	547.0	487.0	487.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 368 NA07346 hg18 61689334 genomic sequence.
+KT305594	+	553	66	347	1.0	AluYa5	532.0	557.0	482.0	482.0	Homo sapiens chromosome 7 1000 genomes pilot1 Alu locus 369 NA18572 hg18 140660059 genomic sequence.
+KT305595	+	641	269	554	1.0	AluY	511.0	486.0	476.0	466.0	Homo sapiens chromosome 8 1000 genomes pilot1 Alu locus 370 NA18504 hg18 49208033 genomic sequence.
+KT305596	+	729	343	631	1.0	AluYb8	497.0	472.0	556.0	546.0	Homo sapiens chromosome 22 1000 genomes pilot1 Alu locus 371 NA11881 hg18 22202684 genomic sequence.
+KT305597	+	1011	615	903	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 9 1000 genomes pilot1 Alu locus 372 NA07346 hg18 80638484 genomic sequence.
+KT305598	+	647	78	360	1.0	AluYa5	522.0	547.0	477.0	477.0	Homo sapiens chromosome 5 1000 genomes pilot1 Alu locus 373 NA11894 hg18 106208792 genomic sequence.
+KT305599	+	711	210	491	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 4 1000 genomes pilot1 Alu locus 374 NA12043 hg18 83559717 genomic sequence.
+KT305600	+	517	104	352	0.88	AluYa5	461.0	486.0	406.0	406.0	Homo sapiens chromosome 6 1000 genomes pilot1 Alu locus 375 NA12003 hg18 116413789 genomic sequence.
+KT305601	+	650	164	275	0.4	AluYa5	207.0	217.0	172.0	172.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 378 NA19240 hg18 937723 genomic sequence.
+KT305602	+	773	182	467	1.0	AluY	508.0	483.0	468.0	463.0	Homo sapiens chromosome 4 1000 genomes pilot2 Alu locus 380 NA12878 hg18 174280789 genomic sequence.
+KT305603	+	463	129	417	1.0	AluYb8	502.0	477.0	561.0	551.0	Homo sapiens chromosome 7 1000 genomes pilot2 Alu locus 381 NA19239 hg18 108330210 genomic sequence.
+KT305604	+	597	94	382	1.0	AluYb8	507.0	482.0	571.0	561.0	Homo sapiens chromosome 14 1000 genomes pilot2 Alu locus 384 NA19238 hg18 33055053 genomic sequence.
+KT305605	+	689	22	310	1.0	AluYb8	502.0	477.0	571.0	561.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 385 NA19238 hg18 116925050 genomic sequence.
+KT305606	+	419	14	114	0.33	AluYb8	151.0	146.0	200.0	195.0	Homo sapiens chromosome 1 1000 genomes pilot2 Alu locus 387 NA12878 hg18 78881416 genomic sequence.
+KT305607	+	763	172	459	1.0	AluYb8	500.0	475.0	569.0	559.0	Homo sapiens chromosome 14 1000 genomes pilot2 Alu locus 390 NA19240 hg18 65332905 genomic sequence.
+KT305608	+	585	172	460	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 10 1000 genomes pilot2 Alu locus 393 NA19239 hg18 115240276 genomic sequence.
+KT305609	+	534	147	428	1.0	AluYa5	537.0	552.0	492.0	492.0	Homo sapiens chromosome 8 1000 genomes pilot2 Alu locus 394 NA19239 hg18 75564879 genomic sequence.
+KT305610	+	515	73	361	1.0	AluYb8	497.0	472.0	566.0	556.0	Homo sapiens chromosome 3 1000 genomes pilot2 Alu locus 395 NA19239 hg18 114529835 genomic sequence.
+KT305611	+	693	153	441	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 13 1000 genomes pilot2 Alu locus 401 NA12878 hg18 60060457 genomic sequence.
+KT305612	+	755	321	579	1.0	AluY	462.0	447.0	412.0	407.0	Homo sapiens chromosome 12 1000 genomes pilot2 Alu locus 408 NA19238 hg18 125519824 genomic sequence.
+KT305613	+	859	465	746	1.0	AluYa5	542.0	557.0	487.0	482.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 411 NA12891 hg18 41034806 genomic sequence.
+KT305614	+	504	132	420	1.0	AluYb8	502.0	477.0	566.0	556.0	Homo sapiens chromosome 13 1000 genomes pilot2 Alu locus 413 NA12891 hg18 45166080 genomic sequence.
+KT305615	+	537	178	460	1.0	AluY	517.0	492.0	462.0	457.0	Homo sapiens chromosome 10 1000 genomes pilot2 Alu locus 414 NA12878 hg18 3559025 genomic sequence.
+KT305616	+	774	436	717	1.0	AluYa5	537.0	552.0	482.0	482.0	Homo sapiens chromosome 7 1000 genomes pilot2 Alu locus 417 NA12892 hg18 89784750 genomic sequence.
+KT305617	+	451	139	420	1.0	AluYa5	527.0	552.0	477.0	477.0	Homo sapiens chromosome 13 1000 genomes pilot2 Alu locus 420 NA12878 hg18 61619075 genomic sequence.
+KT305618	+	708	240	511	0.96	AluYa5	522.0	537.0	467.0	467.0	Homo sapiens chromosome 4 1000 genomes pilot2 Alu locus 422 NA19238 hg18 99960820 genomic sequence.
+KT305619	+	719	466	598	0.47	ambig	189.0	179.0	189.0	189.0	Homo sapiens chromosome 12 1000 genomes pilot2 Alu locus 423 deletion NA12878 genomic sequence.
+KT305620	+	811	405	686	1.0	ambig	532.0	532.0	487.0	482.0	Homo sapiens chromosome 10 1000 genomes pilot2 Alu locus 429 NA12891 hg18 9944398 genomic sequence.
+KT305621	+	656	33	317	1.0	AluYa5	515.0	540.0	466.0	465.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 430 NA12878 hg18 159086290 genomic sequence.
+KT305622	+	580	156	446	1.0	AluYb8	500.0	475.0	559.0	549.0	Homo sapiens chromosome X 1000 genomes pilot2 Alu locus 441 NA12878 hg18 87863212 genomic sequence.
+KT305623	+	651	286	567	1.0	AluY	557.0	542.0	502.0	497.0	Homo sapiens chromosome 11 1000 genomes pilot2 Alu locus 445 NA12891 hg18 36296613 genomic sequence.
+KT305624	+	484	49	330	1.0	AluY	492.0	477.0	472.0	467.0	Homo sapiens chromosome 2 1000 genomes pilot2 Alu locus 448 NA12878 hg18 209968999 genomic sequence.
+KT305625	+	947	192	480	1.0	ambig	502.0	482.0	561.0	561.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 452 NA12891 hg18 55203418 genomic sequence.
+KT305626	+	805	38	319	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 11 1000 genomes pilot2 Alu locus 459 NA12892 hg18 84379379 genomic sequence.
+KT305627	+	819	145	426	1.0	AluYa5	542.0	557.0	487.0	482.0	Homo sapiens chromosome 2 1000 genomes pilot2 Alu locus 466 NA12878 hg18 185469801 genomic sequence.
+KT305628	+	593	77	358	1.0	AluYa5	542.0	547.0	487.0	482.0	Homo sapiens chromosome 1 1000 genomes pilot2 Alu locus 467 NA12878 hg18 236034235 genomic sequence.
+KT305629	+	691	111	393	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 15 1000 genomes pilot2 Alu locus 478 NA19238 hg18 33260906 genomic sequence.
+KT305630	+	724	226	508	1.0	AluYa5	517.0	542.0	462.0	462.0	Homo sapiens chromosome 15 1000 genomes pilot2 Alu locus 487 NA12878 hg18 23692325 genomic sequence.
+KT305631	+	781	150	432	1.0	AluYa5	517.0	542.0	462.0	462.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 491 NA12878 hg18 44003452 genomic sequence.
+KT305632	+	845	136	417	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 22 1000 genomes pilot2 Alu locus 504 NA12891 hg18 25327607 genomic sequence.
+KT305633	+	540	160	441	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 1 1000 genomes pilot2 Alu locus 507 NA12892 hg18 179124187 genomic sequence.
+KT305634	+	672	237	518	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 18 1000 genomes pilot2 Alu locus 509 NA12891 hg18 20355915 genomic sequence.
+KT305635	+	527	176	421	0.87	AluYa5	465.0	490.0	410.0	410.0	Homo sapiens chromosome 1 1000 genomes pilot2 Alu locus 512 NA12891 hg18 72979907 genomic sequence.
+KT305636	+	455	33	290	0.91	AluY	454.0	429.0	414.0	407.0	Homo sapiens chromosome 4 1000 genomes pilot2 Alu locus 522 NA12878 hg18 186619140 genomic sequence.
+KT305637	+	865	334	615	1.0	AluYa5	532.0	547.0	482.0	477.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 528 NA12892 hg18 9810236 genomic sequence.
+KT305638	+	618	147	438	1.0	AluYb8	498.0	473.0	562.0	552.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 529 NA12891 hg18 63968676 genomic sequence.
+KT305639	+	504	133	389	0.91	AluYa5	492.0	497.0	447.0	447.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 530 NA12878 hg18 118732842 genomic sequence.
+KT305640	+	770	75	359	1.0	AluY	506.0	481.0	466.0	461.0	Homo sapiens chromosome 2 1000 genomes pilot2 Alu locus 541 NA12878 hg18 112433013 genomic sequence.
+KT305641	+	538	166	408	0.86	AluY	479.0	454.0	424.0	419.0	Homo sapiens chromosome 14 1000 genomes pilot2 Alu locus 543 NA12878 hg18 96221588 genomic sequence.
+KT305642	+	666	216	497	1.0	AluY	552.0	537.0	499.0	492.0	Homo sapiens chromosome 8 1000 genomes pilot2 Alu locus 547 NA12878 hg18 38983234 genomic sequence.
+KT305643	+	675	134	422	1.0	ambig	502.0	482.0	571.0	571.0	Homo sapiens chromosome 7 1000 genomes pilot2 Alu locus 573 NA12892 hg18 138442152 genomic sequence.
+KT305644	+	490	177	460	1.0	AluYa5	525.0	550.0	475.0	475.0	Homo sapiens chromosome 3 1000 genomes pilot2 Alu locus 579 NA12892 hg18 196249806 genomic sequence.
+KT305645	+	699	117	399	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 10 1000 genomes pilot2 Alu locus 583 NA19240 hg18 20172021 genomic sequence.
+KT305646	+	763	249	537	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 13 1000 genomes pilot2 Alu locus 584 NA19238 hg18 79097993 genomic sequence.
+KT305647	+	929	349	630	1.0	AluY	547.0	532.0	502.0	497.0	Homo sapiens chromosome 1 1000 genomes pilot2 Alu locus 587 NA19238 hg18 43614992 genomic sequence.
+KT305648	+	454	91	334	0.86	AluYa5	446.0	471.0	391.0	391.0	Homo sapiens chromosome 3 1000 genomes pilot2 Alu locus 590 NA12891 hg18 87603173 genomic sequence.
+KT305649	+	681	75	365	1.0	AluYb8	500.0	475.0	564.0	554.0	Homo sapiens chromosome 15 1000 genomes pilot2 Alu locus 591 NA19239 hg18 68534369 genomic sequence.
+KT305650	+	543	151	432	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 21 1000 genomes pilot2 Alu locus 593 NA12878 hg18 36159798 genomic sequence.
+KT305651	+	1332	153	434	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 14 1000 genomes pilot2 Alu locus 595 NA12878 hg18 39649436 genomic sequence.
+KT305652	+	506	46	327	1.0	AluY	547.0	532.0	492.0	487.0	Homo sapiens chromosome 15 1000 genomes pilot2 Alu locus 597 NA12878 hg18 92966034 genomic sequence.
+KT305653	+	839	325	613	1.0	AluYb8	512.0	487.0	571.0	561.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 598 NA12891 hg18 117005364 genomic sequence.
+KT305654	+	727	184	466	1.0	AluYa5	522.0	547.0	472.0	472.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 604 NA12878 hg18 4048199 genomic sequence.
+KT305655	+	532	133	414	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 605 NA12891 hg18 39974310 genomic sequence.
+KT305656	+	1462	648	932	1.0	AluY	538.0	513.0	483.0	478.0	Homo sapiens chromosome 12 1000 genomes pilot2 Alu locus 611 NA12891 hg18 10125455 genomic sequence.
+KT305657	+	778	317	606	1.0	ambig	502.0	482.0	561.0	561.0	Homo sapiens chromosome 3 1000 genomes pilot2 Alu locus 613 NA12891 hg18 112709065 genomic sequence.
+KT305658	+	822	415	696	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 2 1000 genomes pilot2 Alu locus 614 NA12878 hg18 31413200 genomic sequence.
+KT305659	+	804	23	303	1.0	AluY	555.0	530.0	500.0	495.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 616 NA19240 hg18 109273847 genomic sequence.
+KT305660	+	549	171	452	1.0	AluYa5	522.0	547.0	472.0	470.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 620 NA19239 hg18 118125064 genomic sequence.
+KT305661	+	469	112	402	1.0	AluYb8	490.0	465.0	559.0	549.0	Homo sapiens chromosome 14 1000 genomes pilot2 Alu locus 621 NA19240 hg18 23582403 genomic sequence.
+KT305662	+	758	329	610	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 1 1000 genomes pilot2 Alu locus 624 NA19240 hg18 167605618 genomic sequence.
+KT305663	+	607	297	578	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 4 1000 genomes pilot2 Alu locus 627 NA12891 hg18 171071171 genomic sequence.
+KT305664	+	776	456	737	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 16 1000 genomes pilot2 Alu locus 634 NA12892 hg18 24235066 genomic sequence.
+KT305665	+	727	261	541	1.0	AluY	517.0	492.0	477.0	472.0	Homo sapiens chromosome 13 1000 genomes pilot2 Alu locus 639 NA12878 hg18 57659426 genomic sequence.
+KT305666	+	488	14	295	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 641 NA12892 hg18 19454433 genomic sequence.
+KT305667	+	517	150	431	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 18 1000 genomes pilot2 Alu locus 644 NA12878 hg18 55523738 genomic sequence.
+KT305668	+	438	102	383	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 7 1000 genomes pilot2 Alu locus 648 NA12878 hg18 15632811 genomic sequence.
+KT305669	+	892	310	570	0.92	AluY	499.0	474.0	444.0	439.0	Homo sapiens chromosome 9 1000 genomes pilot2 Alu locus 651 NA12891 hg18 116968102 genomic sequence.
+KT305670	+	783	169	450	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 5 1000 genomes pilot2 Alu locus 656 NA12878 hg18 55963737 genomic sequence.
+KT305671	+	576	255	536	1.0	AluYa5	537.0	552.0	482.0	482.0	Homo sapiens chromosome 6 1000 genomes pilot2 Alu locus 657 NA12878 hg18 18454364 genomic sequence.
+KT305672	+	1117	128	409	1.0	AluYa5	542.0	557.0	487.0	482.0	Homo sapiens chromosome 11 1000 genomes pilot2 Alu locus 662 NA19238 hg18 26996558 genomic sequence.
+KT305673	+	527	24	305	1.0	AluYa5	537.0	552.0	482.0	477.0	Homo sapiens chromosome 13 1000 genomes pilot2 Alu locus 663 NA19239 hg18 20165114 genomic sequence.
+KT305674	+	562	234	516	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 11 1000 genomes pilot2 Alu locus 669 NA19240 hg18 83580681 genomic sequence.
+KT305675	+	538	25	306	1.0	AluYa5	537.0	552.0	492.0	492.0	Homo sapiens chromosome 9 1000 genomes pilot2 Alu locus 671 NA19240 hg18 30724684 genomic sequence.
+KT305676	+	688	274	555	1.0	AluY	542.0	517.0	507.0	502.0	Homo sapiens chromosome 12 1000 genomes pilot2 Alu locus 672 NA12878 hg18 86394945 genomic sequence.
+KT305677	+	532	61	342	1.0	AluY	547.0	522.0	492.0	487.0	Homo sapiens chromosome 10 1000 genomes pilot2 Alu locus 673 deletion NA12891 hg18 124725994 genomic sequence.
+KT305678	+	1112	143	402	0.91	AluYa5	478.0	483.0	428.0	428.0	Homo sapiens chromosome 2 1000 genomes pilot2 Alu locus 674 NA12892 hg18 198471693 genomic sequence.
+KT305679	+	545	46	316	1.0	AluY	476.0	471.0	438.0	433.0	Homo sapiens chromosome 1 H1000 P2 Alu Locus 676 NA12878 hg18 168870075 genomic sequence.
+KT305680	+	773	26	302	0.96	AluYb8	473.0	448.0	542.0	532.0	Homo sapiens chromosome 6 H1000 P2 Alu Locus 677 NA12878 hg18 66872837 genomic sequence.
+KT305681	+	687	213	498	0.99	AluYb8	496.0	471.0	565.0	555.0	Homo sapiens chromosome 6 H1000 P2 Alu Locus 681 NA12891 hg18 68368016 genomic sequence.
+KT305682	+	626	54	336	1.0	AluY	522.0	497.0	487.0	477.0	Homo sapiens chromosome 4 H1000 P2 Alu Locus 684 NA12891 hg18 139444647 genomic sequence.
+KT305683	+	428	230	356	0.45	AluYa5	242.0	252.0	207.0	207.0	Homo sapiens chromosome 12 H1000 P2 Alu Locus 687 deletion NA12891 hg18 87103614 genomic sequence.
+KT305684	+	905	467	735	1.0	AluY	469.0	464.0	431.0	426.0	Homo sapiens chromosome 7 H1000 P2 Alu Locus 688 NA12892 hg18 47517601 genomic sequence.
+KT305685	+	1022	281	569	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 3 H1000 P2 Alu Locus 689 NA12892 hg18 42873411 genomic sequence.
+KT305686	+	521	5	287	1.0	AluYa5	532.0	547.0	477.0	472.0	Homo sapiens chromosome X H1000 P2 Alu Locus 690 NA19239 hg18 152536410 genomic sequence.
+KT305687	+	507	180	461	1.0	AluYa5	537.0	552.0	482.0	482.0	Homo sapiens chromosome 18 H1000 P2 Alu Locus 695 NA19238 hg18 5401651 genomic sequence.
+KT305688	+	895	197	478	1.0	AluY	532.0	507.0	477.0	472.0	Homo sapiens chromosome 12 H1000 P2 Alu Locus 696 NA12878 hg18 1221977221 genomic sequence.
+KT305689	+	680	35	298	0.94	AluY	491.0	466.0	446.0	441.0	Homo sapiens chromosome 17 H1000 P2 Alu Locus 702 NA12892 hg18 52302582 genomic sequence.
+KT305690	+	444	84	364	1.0	AluY	520.0	495.0	470.0	465.0	Homo sapiens chromosome 1 H1000 P2 Alu Locus 703 NA12891 hg18 202505097 genomic sequence.
+KT305691	+	507	132	421	1.0	AluYb8	507.0	482.0	566.0	556.0	Homo sapiens chromosome 8 H1000 P2 Alu Locus 704 NA19238 hg18 102834361 genomic sequence.
+KT305692	+	685	258	545	1.0	AluYb8	490.0	465.0	559.0	549.0	Homo sapiens chromosome 5 H1000 P2 Alu Locus 712 NA19240 hg18 51026374 genomic sequence.
+KT305693	+	627	152	440	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 13 H1000 P2 Alu Locus 715 NA19240 hg18 28929581 genomic sequence.
+KT305694	+	572	18	300	1.0	AluYa5	537.0	552.0	482.0	482.0	Homo sapiens chromosome 2 H1000 P2 Alu Locus 720 NA12891 hg18 44679354 genomic sequence.
+KT305695	+	598	57	342	1.0	AluY	531.0	506.0	486.0	481.0	Homo sapiens chromosome 18 H1000 P2 Alu Locus 726 NA12878 hg18 1225790 genomic sequence.
+KT305696	+	631	52	317	0.94	AluY	495.0	470.0	440.0	435.0	Homo sapiens chromosome 16 H1000 P2 Alu Locus 728 NA12891 hg18 80722187 genomic sequence.
+KT305697	+	562	202	465	0.93	AluYa5	489.0	514.0	434.0	434.0	Homo sapiens chromosome 17 H1000 P2 Alu Locus 729 NA19240 hg18 13377556 genomic sequence.
+KT305698	+	526	58	339	1.0	AluY	552.0	527.0	497.0	492.0	Homo sapiens chromosome 2 H1000 P2 Alu Locus 731 NA12891 hg18 15437004 genomic sequence.
+KT305699	+	610	158	439	1.0	AluYb8	517.0	492.0	522.0	517.0	Homo sapiens chromosome 11 H1000 P2 Alu Locus 733 NA12892 hg18 8843893 genomic sequence.
+KT305700	+	521	65	281	0.74	AluYb8	362.0	337.0	411.0	401.0	Homo sapiens chromosome 3 H1000 P2 Alu Locus 734 NA19240 hg18 62535059 genomic sequence.
+KT305701	+	551	69	350	1.0	AluYa5	532.0	557.0	482.0	482.0	Homo sapiens chromosome 7 H1000 P2 Alu Locus 740 NA12891 hg18 140660059 genomic sequence.
+KT305702	+	521	178	458	1.0	AluYa5	535.0	550.0	490.0	490.0	Homo sapiens chromosome 1 H1000 P2 Alu Locus 742 NA12891 hg18 180687463 genomic sequence.
+KT305703	+	544	89	342	0.87	ambig	420.0	400.0	489.0	489.0	Homo sapiens chromosome 7 H1000 P2 Alu Locus 743 NA19240 hg18 44952036 genomic sequence.
+KT305704	+	412	101	293	0.68	AluY	369.0	359.0	324.0	319.0	Homo sapiens chromosome 1 1000G TargetE Alu locus 1 NA12878 hg18 57844445 genomic sequence.
+KT305705	+	528	71	350	1.0	AluYa5	533.0	548.0	478.0	478.0	Homo sapiens chromosome 1 1000G TargetE Alu locus 2 NA18870 hg18 111833807 genomic sequence.
+KT305706	+	672	148	429	1.0	AluYa5	537.0	552.0	482.0	477.0	Homo sapiens chromosome 1 1000G TargetE Alu locus 3 NA12878 hg18 145124843 genomic sequence.
+KT305707	+	489	112	393	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 1 1000G TargetE Alu locus 4 NA07357 hg18 179124187 genomic sequence.
+KT305708	+	492	55	336	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 1 1000G TargetE Alu locus 6 NA18953 hg18 231585767 genomic sequence.
+KT305709	+	530	41	322	1.0	AluYa5	522.0	547.0	467.0	467.0	Homo sapiens chromosome 1 1000G TargetE Alu locus 7 NA19239 hg18 232872335 genomic sequence.
+KT305710	+	447	92	373	1.0	AluY	542.0	522.0	487.0	482.0	Homo sapiens chromosome 10 1000G TargetE Alu locus 8 NA07346 hg18 6311133 genomic sequence.
+KT305711	+	595	120	401	1.0	AluYa5	527.0	532.0	482.0	482.0	Homo sapiens chromosome 10 1000G TargetE Alu locus 10 NA12815 hg18 73663293 genomic sequence.
+KT305712	+	488	43	324	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 11 1000G TargetE Alu locus 12 NA19210 hg18 43834015 genomic sequence.
+KT305713	+	434	79	360	1.0	AluYa5	542.0	557.0	487.0	487.0	Homo sapiens chromosome 11 1000G TargetE Alu locus 14 NA19210 hg18 87879790 genomic sequence.
+KT305714	+	463	65	346	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 14 1000G TargetE Alu locus 17 NA12878 hg18 59645239 genomic sequence.
+KT305715	+	589	137	425	1.0	ambig	497.0	477.0	566.0	566.0	Homo sapiens chromosome 14 1000G TargetE Alu locus 18 NA12044 hg18 76364787 genomic sequence.
+KT305716	+	532	87	368	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 14 1000G TargetE Alu locus 19 NA19238 hg18 88002059 genomic sequence.
+KT305717	+	495	45	335	1.0	AluYb8	500.0	475.0	559.0	549.0	Homo sapiens chromosome 16 1000G TargetE Alu locus 25 NA19239 hg18 2352368 genomic sequence.
+KT305718	+	409	109	330	0.76	AluYb8	373.0	358.0	432.0	422.0	Homo sapiens chromosome 17 1000G TargetE Alu locus 30 NA11881 hg18 44727790 genomic sequence.
+KT305719	+	517	198	479	1.0	AluYa5	520.0	545.0	465.0	465.0	Homo sapiens chromosome 18 1000G TargetE Alu locus 32 NA19240 hg18 9391403 genomic sequence.
+KT305720	+	496	53	333	1.0	AluYa5	520.0	525.0	465.0	465.0	Homo sapiens chromosome 19 1000G TargetE Alu locus 34 NA12878 hg18 42723283 genomic sequence.
+KT305721	+	519	28	316	1.0	AluYb8	507.0	482.0	576.0	566.0	Homo sapiens chromosome 22 1000G TargetE Alu locus 36 NA12003 hg18 22600462 genomic sequence.
+KT305722	+	430	144	322	0.63	AluYa5	336.0	351.0	296.0	296.0	Homo sapiens chromosome 22 1000G TargetE Alu locus 38 NA18870 hg18 34891247 genomic sequence.
+KT305723	+	499	50	332	1.0	AluYa5	512.0	537.0	462.0	462.0	Homo sapiens chromosome 3 1000G TargetE Alu locus 39 NA19240 hg18 15269345 genomic sequence.
+KT305724	+	488	87	208	0.43	AluYa5	227.0	237.0	192.0	192.0	Homo sapiens chromosome 3 1000G TargetE Alu locus 40 NA12044 hg18 37336606 genomic sequence.
+KT305725	+	483	90	371	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 3 1000G TargetE Alu locus 41 NA19240 hg18 172801994 genomic sequence.
+KT305726	+	538	154	435	1.0	AluYa5	537.0	562.0	482.0	482.0	Homo sapiens chromosome 4 1000G TargetE Alu locus 42 NA12878 hg18 79092832 genomic sequence.
+KT305727	+	513	89	377	1.0	AluYb8	507.0	482.0	571.0	561.0	Homo sapiens chromosome 4 1000G TargetE Alu locus 44 NA18870 hg18 155726050 genomic sequence.
+KT305728	+	516	110	392	1.0	AluY	496.0	471.0	456.0	451.0	Homo sapiens chromosome 5 1000G TargetE Alu locus 48 NA18943 hg18 42755692 genomic sequence.
+KT305729	+	551	140	421	1.0	AluYa5	527.0	552.0	472.0	472.0	Homo sapiens chromosome 5 1000G TargetE Alu locus 49 NA19201 hg18 73181666 genomic sequence.
+KT305730	+	499	103	384	1.0	AluYa5	532.0	557.0	477.0	477.0	Homo sapiens chromosome 5 1000G TargetE Alu locus 50 NA19240 hg18 74359549 genomic sequence.
+KT305731	+	410	107	299	0.65	AluYb8	259.0	244.0	308.0	298.0	Homo sapiens chromosome 5 1000G TargetE Alu locus 51 NA18912 hg18 76404689 genomic sequence.
+KT305732	+	441	65	370	1.0	AluYa5	478.0	493.0	433.0	433.0	Homo sapiens chromosome 5 1000G TargetE Alu locus52 NA18944 hg18 95019966 genomic sequence.
+KT305733	+	496	145	428	1.0	AluY	527.0	502.0	482.0	477.0	Homo sapiens chromosome 6 1000G TargetE Alu locus54 NA19240 hg18 28401325 genomic sequence.
+KT305734	+	525	63	346	1.0	AluYa5	527.0	552.0	477.0	477.0	Homo sapiens chromosome 6 1000G TargetE Alu locus 55 NA11881 hg18 116950848 genomic sequence.
+KT305735	+	479	108	365	0.89	AluYb8	436.0	411.0	502.0	492.0	Homo sapiens chromosome 7 1000G TargetE Alu locus 56 NA11894 hg18 94939118 genomic sequence.
+KT305736	+	535	19	300	1.0	AluYa5	512.0	537.0	467.0	467.0	Homo sapiens chromosome 7 1000G TargetE Alu locus 57 NA18912 hg18 105351701 genomic sequence.
+KT305737	+	340	131	262	0.44	ambig	208.0	203.0	257.0	257.0	Homo sapiens chromosome 9 1000G TargetE Alu locus 62 NA19210 hg18 91137511 genomic sequence.
