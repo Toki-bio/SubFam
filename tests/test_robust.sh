@@ -82,6 +82,15 @@ rm -rf "dir with space/out"; timeout 300 bash "$SUBFAM" -n 20 -o "dir with space
     && [ -s "dir with space/out/in.msf" ] && { pass=$((pass + 1)); echo "PASS  dir_with_space         ok"; } || { fail=$((fail + 1)); echo "FAIL  dir_with_space         rc/outputs ($(head -c 100 err-space.txt))"; }
 
 # determinism: same input, different thread counts, twice
+# Divergent copies: chunks of unrelated sequences have almost no consensus (N). With -a the N must stay out of the
+# final alignment (it once ran >9 h on 595 consensuses that were half N), the run must stay fast and must warn.
+awk 'BEGIN{srand(7); b="ACGT"; for(i=0;i<300;i++){printf ">d%d\n", i; for(j=0;j<250;j++) printf "%s", substr(b,int(rand()*4)+1,1); print ""}}' > in-divergent_N.fa
+t0=$(date +%s); IN=in-divergent_N.fa run_case divergent_N_keep -n 20 -a; t1=$(date +%s)
+if [ $((t1 - t0)) -le 90 ] && grep -q 'no consensus' err-divergent_N_keep.txt; then
+    pass=$((pass + 1)); echo "PASS  divergent_N_keep       finished in $((t1 - t0)) s and warned about the N fraction"
+else
+    fail=$((fail + 1)); echo "FAIL  divergent_N_keep       took $((t1 - t0)) s or printed no warning"
+fi
 fam 120 a > in-det.fa
 for t in 1 8; do for rep in 1 2; do rm -rf det-$t-$rep; SOURCE_DATE_EPOCH=0 bash "$SUBFAM" -n 20 -t $t -o det-$t-$rep in-det.fa > /dev/null 2>&1; done; done
 same() { diff -q "$1" "$2" > /dev/null; }
