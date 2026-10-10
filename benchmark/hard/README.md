@@ -75,3 +75,5 @@ Test: harder-simulation middle family, seed 1, `-n 20`, 100 chunks, true composi
 
 Separating pure from mixed chunks: AUC 0.92 by `agree`, 0.90 by `id_med`, 0.76 by `best`, 0.60 by `outl`, 0.39 by `f2`. So a simple cohesion number carries most of the signal; the crude split and junk heuristics add little, and the T1/T2/TJ call as written is not reliable
 (38 % of pure chunks are called as split). Caveats: one simulation and one seed; cohesion depends on family age, so a threshold has to be relative to the run (for example a chunk's `agree` against the run's median), not absolute; thresholds untuned; no real junk was simulated (junk here = diffuse or old copies).
+
+Re-run 2026-10-10 with SubFam 1.3.0 (`run_hard.sh OUT "1 2 3 4" 8`): all 200 rows of `results.tsv` are byte-identical to the committed file.

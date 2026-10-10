@@ -27,3 +27,5 @@ Ceiling = the same test against the 8 true subfamily masters (is the copy neares
 
 Reading: the rows are faithful summaries for young and middle families and much less so for old ones, where chunks mix sister subfamilies (chunk purity 0.71 in the README), even though every row still
 contains its source consensus. A copy that is not nearest to its own row is still represented in `chunks.tsv`; the claim is organisation, not per-copy attribution.
+
+Re-run 2026-10-10 with SubFam 1.3.0 (`run.sh`, 8 threads): all 216 rows of `results.tsv` are byte-identical to the file above.
