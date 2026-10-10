@@ -1,0 +1,9 @@
+method                     groups med.sz  single | copies covered, n groups, purity rmsk, V2021 (groups of >= 10 copies) | all groups
+one family-wide consensus       1   3000       0 | 100.0%    1 0.422 0.392 | 0.422 0.392
+SubFam chunks (60)             60     50       0 | 100.0%   60 0.793 0.773 | 0.793 0.773
+vsearch --id 0.60             632      1     389 |  63.2%   43 0.666 0.849 | 0.761 0.843
+vsearch --id 0.70            1613      1    1488 |  39.7%   13 0.573 0.954 | 0.828 0.973
+vsearch --id 0.80            1992      1    1906 |  28.5%   20 0.796 0.999 | 0.938 0.998
+vsearch --id 0.90            2560      1    2474 |   9.4%    8 0.758 1.000 | 0.968 1.000
+vsearch --id 0.95            2868      1    2812 |   0.7%    1 0.818 1.000 | 0.995 1.000
+vsearch --id 0.98            2976      1    2960 |   0.0%    0 nan nan | 1.000 1.000

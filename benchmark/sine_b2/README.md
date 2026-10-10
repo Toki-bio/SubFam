@@ -96,3 +96,29 @@ guide-tree order), each named `<chunk>|rmsk:<label>_p<purity>|kram:<label>_p<pur
 look at: the 11-bp central deletion shared by B2a and B2b against B2c/d/e; the 28-bp 3' insertion of
 B2d; the τ/terminator region before the A-tail where B2a differs; the run of chunks 22–45 (B2a, from
 Mm2-like to Mm1a-like) and where the two B2b chunks (44–45) and the B2c chunks (13–14) sit.
+
+## Baseline: identity-threshold clustering (`vsearch_sweep.py`, output `vsearch_sweep.txt`)
+
+The same 3,000 copies, `vsearch --cluster_fast` (global identity, `--iddef 2`, plus strand) at six thresholds, against
+SubFam's 60 chunks and a single family-wide consensus. A group of at least 10 copies counts as a real group; purity
+is the fraction of copies carrying the majority label of their group.
+
+| method | groups | singletons | copies in groups ≥ 10 | purity (RepeatMasker label) of those groups |
+|---|---|---|---|---|
+| one family-wide consensus | 1 | 0 | 100 % | 0.422 |
+| SubFam chunks, N = 50 | 60 | 0 | 100 % | 0.793 |
+| vsearch id 0.60 | 632 | 389 | 63 % | 0.666 |
+| vsearch id 0.70 | 1,613 | 1,488 | 40 % | 0.573 |
+| vsearch id 0.80 | 1,992 | 1,906 | 29 % | 0.796 |
+| vsearch id 0.90 | 2,560 | 2,474 | 9 % | 0.758 |
+| vsearch id 0.95 | 2,868 | 2,812 | 1 % | 0.818 |
+| vsearch id 0.98 | 2,976 | 2,960 | 0 % | none |
+
+Reading: these copies are 25–30 % diverged from each other, so a threshold either makes thousands of singletons
+(0.80 and above: 1,906 to 2,960 of 3,000 copies alone) or, at 0.60, merges a third of the copies into 43 groups
+and leaves the rest alone, with lower purity than SubFam's chunks, which cover every copy. There is no threshold
+at which a threshold method gives a short alignment that includes all copies. Caveats: (1) purity against the 2021
+labels is not shown in the table because those labels are themselves best hits by the same vsearch identity, so
+a vsearch clustering matches them by construction (the full table in `vsearch_sweep.txt` has the column); (2) purity
+rewards small groups, which is why the coverage column is printed; (3) `cluster_fast` is greedy and
+order-dependent; (4) this is one chromosome and one family, so it illustrates the argument and is not a benchmark.

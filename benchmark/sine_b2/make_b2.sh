@@ -39,3 +39,12 @@ python3 "$TOP/examples/build_examples.py" b2_mm39_chr19_n50_kramerov.aln.fasta b
 python3 "$TOP/examples/check_rows.py" b2_mm39_chr19_n50_kramerov.aln.fasta > rows_kramerov.tsv
 python3 "$HERE/combine.py" b2_mm39_chr19_n50_both.aln.fasta b2_chr19_3000.fa sf50/b2.chunks.tsv sf50/b2.cons.fasta \
     b2_truth.tsv rmsk b2_truth_kramerov.tsv kram dfam_B2.fa kramerov2021_B2_consensus.fa --threads "$T" --tmp build_tmp_c
+
+# 5. the chaos-to-order figure: 390 hand-picked real copies (B2a 120, B2b 30, B2c 120, B2d 120), SubFam -n 20,
+#    random order / k-mer order / chunk consensuses on one alignment (needs matplotlib)
+python3 "$HERE/chaos_subset.py" b2_chr19_3000.fa b2_truth_kramerov.tsv chaos_subset.fa chaos_subset.tsv
+"$TOP/SubFam.sh" -n 20 -t "$T" -o sf_chaos -x sub chaos_subset.fa
+python3 "$HERE/figure_chaos_to_order.py" chaos_subset.fa chaos_subset.tsv sf_chaos/sub.chunks.tsv sf_chaos/sub.cons.fasta chaos_to_order_b2.png --threads "$T"
+
+# 6. the threshold baseline: vsearch --cluster_fast at 0.60-0.98 against SubFam's 60 chunks and one family consensus
+python3 "$HERE/vsearch_sweep.py" b2_chr19_3000.fa sf50/b2.chunks.tsv b2_truth.tsv rmsk b2_truth_kramerov.tsv V2021 --threads "$T" | tee vsearch_sweep.txt
