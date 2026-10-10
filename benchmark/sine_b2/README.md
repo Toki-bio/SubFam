@@ -49,7 +49,7 @@ predict for Mm1t. SubFam asserts nothing here; the rows are the data.
 - One chromosome, 3,000 of 5,972 copies; the labels are RepeatMasker's (2010 library, see
   `benchmark/line_real/README.md` §2 for the same caveat on hg38).
 - B2b, B2c, B2e of the 2021 scheme have no Repbase name and are labelled B2_Mm2/B3/B3A by
-  RepeatMasker; without the 2021 consensuses they cannot be marked in this file.
+  RepeatMasker; the next section labels the copies by the 2021 consensuses instead.
 - Purity is against rmsk labels, which are themselves uncertain between Mm1a/Mm1t/Mm2 (2 and 16
   nt apart over 193 bp).
 
