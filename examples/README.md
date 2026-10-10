@@ -4,7 +4,7 @@ Each link opens the file in [ViewAlign / MSA-viewer](https://toki-bio.github.io/
 The links point at a commit, so they keep working while that commit exists; once the files are on the `main` branch, replace the commit id by `main` in the address.
 
 How to read a file: the rows are in groups. Each group starts with one or two head rows and is followed by the SubFam rows that mostly come from that subfamily, in chunk order. All rows are aligned together with MAFFT `--auto`.
-- `TRUE_<sf>_consensus_of_<sf>_copies`: the plurality consensus of the real member copies of subfamily `<sf>` (coverage-relative, 36 %, as SubFam builds a consensus). This is the best a method can reach. It is not the master: CpG decay and truncation in the copies are in it, and no consensus can restore what the copies have lost. In the simulations the true subfamily of every copy is known; in the real data `<sf>` is the RepeatMasker label.
+- `CLASSCONS_<sf>_consensus_of_<sf>_copies`: the plurality consensus of the real member copies of subfamily `<sf>` (coverage-relative, 36 %, as SubFam builds a consensus). This is the best a method can reach. It is not the master: CpG decay and truncation in the copies are in it, and no consensus can restore what the copies have lost. In the simulations the true subfamily of every copy is known; in the real data `<sf>` is the RepeatMasker label.
 - `PUBLISHED_<source>_<sf>`: a published consensus (Price et al. 2004 for Alu, Dfam 4.0 for B2). It was not built from these copies. A `..._no_group_has_this_majority` row is a published consensus that no SubFam row has as its majority.
 - SubFam rows are named `<chunk>|<subfamily>|p<purity>`: the subfamily is the majority among the copies of that chunk, `p` is the fraction of the chunk's copies that belong to it (`p1.00` = all).
 - `<file>.rows.tsv`: for every SubFam row, the identity to its own group head over their shared residues, and whether another head is closer (`check_rows.py`).
@@ -21,3 +21,5 @@ How to read a file: the rows are in groups. Each group starts with one or two he
 
 How they were made, exactly: `rebuild.sh` (simulations from their seeds, Konkel, L1) and `benchmark/sine_b2/make_b2.sh` (B2, downloads its own data); the Konkel and L1 inputs come from `benchmark/alu_konkel/prep.py` and `benchmark/line_real/extract_l1.py` as described there. SubFam 1.3.0, MAFFT 7.505. `refs/price2004_alu_consensus.fa` holds the four Price et al. 2004 consensuses used as Alu heads.
 The viewer page itself could not be opened from the environment these links were written in, so the links are untested in the browser; the raw files were checked (HTTP 200, cross-origin allowed).
+
+Note on names: the `CLASSCONS_` head rows were called `TRUE_` in the files of earlier commits (and of the links above that are pinned to them). It is the same sequence; the new name says what it is, the consensus of the labelled member copies, not the truth.

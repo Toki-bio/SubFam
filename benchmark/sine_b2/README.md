@@ -22,7 +22,7 @@ Result file: `examples/b2_mm39_chr19_n50.aln.fasta` (the five Vassetzky 2021 con
 ## Run
 `SubFam.sh -n 50 -t 8 -x b2 b2_chr19_3000.fa`: 60 chunk consensuses, 19 s.
 `build_examples.py ... --refs dfam_B2.fa --both`: for each rmsk class the consensus of all its
-member copies (`TRUE_<class>_consensus_of_<class>_copies`, coverage-relative plurality 0.36), then
+member copies (`CLASSCONS_<class>_consensus_of_<class>_copies`, coverage-relative plurality 0.36), then
 the Dfam consensus, then the SubFam rows whose majority is that class, in chunk order.
 
 ## What it shows (`rows.tsv`, from `examples/check_rows.py`)

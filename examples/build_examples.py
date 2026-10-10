@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a viewer alignment: SubFam consensus rows grouped by the subfamily they mostly come from,
 each group headed by the consensus of its own member copies (the best consensus a method could reach,
-CpG decay and all), not the master. Reference rows are named TRUE_<sf>; SubFam rows <chunk>|<sf>|p<purity>.
+CpG decay and all), not the master. Reference rows are named CLASSCONS_<sf>; SubFam rows <chunk>|<sf>|p<purity>.
 
 usage: build_examples.py OUT.aln.fasta COPIES.fa TRUTH.tsv CONS.fa CHUNKS.tsv [--minspan N] [--threads T] [--tmp DIR]
   TRUTH.tsv   copy<TAB>subfamily       CHUNKS.tsv  copy<TAB>chunk<TAB>strand (SubFam's *.chunks.tsv)
@@ -50,7 +50,7 @@ def main():
     ap.add_argument('--minspan', type=int, default=0, help='use only copies at least this long for the reference consensus')
     ap.add_argument('--sample', type=int, default=0, help='build each member consensus from at most this many randomly chosen copies (seed 1); 0 = all')
     ap.add_argument('--threads', type=int, default=4); ap.add_argument('--tmp', default=None)
-    ap.add_argument('--prefix', default='TRUE')
+    ap.add_argument('--prefix', default='CLASSCONS')
     ap.add_argument('--refs', default=None, help='FASTA of published consensuses named <anything>_<subfamily>; used instead of member consensuses')
     ap.add_argument('--both', action='store_true', help='with --refs: build the member consensuses too, and put each published consensus right after the head of its group')
     ap.add_argument('--extra-heads', default=None, help='FASTA of further published consensuses, added as REFERENCE_<name> rows at the top, in file order; not tied to any group, ignored by check_rows.py')

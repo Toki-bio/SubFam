@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """check_rows.py EXAMPLE.aln.fasta  -  identity of every SubFam row to the head of its group.
 
-Rows are grouped as in the example files: a head row (TRUE_... or PUBLISHED_...) followed by the
+Rows are grouped as in the example files: a head row (CLASSCONS_... or PUBLISHED_...) followed by the
 SubFam rows of that group. Identity = matching columns / columns where both have a residue, over
 the span where both have residues (end gaps excluded). Prints one line per row and a summary
 (median, min, and how many rows are closer to another group's head).
@@ -26,8 +26,8 @@ def ident(a, b):
 
 
 rows = [r for r in rd(sys.argv[1]) if not r[0].startswith('REFERENCE_')]  # REFERENCE_ rows belong to no group
-is_head = [n.startswith(('TRUE_', 'PUBLISHED_', 'CONS_')) for n, _ in rows]
-# a group's head is the first head row of a block of head rows (TRUE_ followed by PUBLISHED_ with --both)
+is_head = [n.startswith(('CLASSCONS_', 'TRUE_', 'PUBLISHED_', 'CONS_')) for n, _ in rows]
+# a group's head is the first head row of a block of head rows (CLASSCONS_ followed by PUBLISHED_ with --both)
 heads = [(i, n, s) for i, (n, s) in enumerate(rows) if is_head[i] and not (i and is_head[i - 1])]
 ids, closer = [], 0
 for i, (n, s) in enumerate(rows):

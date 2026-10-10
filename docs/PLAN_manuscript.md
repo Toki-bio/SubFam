@@ -71,7 +71,7 @@ the 2021 paper already made the claim.
   or the "domestic script", so that copies can be labelled by the indel scheme independently of us.
   Fallback if not supplied: label copies by the diagnostic indels ourselves (11-bp deletion, 28-bp /
   9-bp insertions) after aligning to the B2 consensus — workable but it re-derives what the paper did.
-- Truth layout as in `examples/`: `TRUE_<group>_consensus_of_<group>_copies` from the real member
+- Truth layout as in `examples/`: `CLASSCONS_<group>_consensus_of_<group>_copies` from the real member
   copies, `PUBLISHED_<name>` for Dfam and for the 2021 consensuses.
 
 ### Expected result and what would count as failure
