@@ -2,7 +2,7 @@
 
 Run 2026-10-10 in the cloud session (8 threads, MAFFT 7.505, SubFam 1.3.0). Everything is made by
 `make_b2.sh WORKDIR` (downloads, extraction, sampling with seed 1, SubFam, grouped alignment).
-Result file: `examples/b2_mm39_chr19_n50.aln.fasta`.
+Result file: `examples/b2_mm39_chr19_n50.aln.fasta` (the five Vassetzky 2021 consensuses B2a–e are its first five rows, `REFERENCE_KRAMEROV_*`; the Dfam ones are likewise in the file grouped by B2a–e).
 
 ## Data
 - UCSC mm39 `rmsk.txt.gz` and `chr19.fa.gz`; every RepeatMasker copy named B2_Mm1a, B2_Mm1t,
@@ -27,15 +27,15 @@ the Dfam consensus, then the SubFam rows whose majority is that class, in chunk 
 
 ## What it shows (`rows.tsv`, from `examples/check_rows.py`)
 Rows per class (majority): B2_Mm1a 4, B2_Mm1t 6, B2_Mm2 14, B3 27, B3A 9. Identity of the 60 rows
-to the head of their own group: median 0.956, min 0.842; 6 rows are closer to another head.
+to the head of their own group: median 0.959, min 0.836; 5 rows are closer to another head.
 
 | class | rows | purity of the chunks (p) | identity to own head | reading |
 |---|---|---|---|---|
 | B2_Mm1a | 4 | 0.78–1.00 | 0.990–1.000 | clean |
-| B2_Mm2 | 14 | 0.44–1.00 (10 of 14 ≥ 0.76) | 0.867–1.000 | mostly clean |
+| B2_Mm2 | 14 | 0.44–1.00 (10 of 14 ≥ 0.76) | 0.867–1.000; 1 of 14 closer to the Mm1t head | mostly clean |
 | B2_Mm1t | 6 | 0.44–0.96 (5 of 6 ≤ 0.66) | 0.957–0.979; 3 of 6 closer to the Mm1a or Mm2 head | no chunk of its own: its copies sit between Mm1a and Mm2 |
 | B3 | 27 | 0.56–1.00 | 0.914–0.990 | clean blocks, old (the copies are 23–27 % diverged) |
-| B3A | 9 | 0.50–0.92 | 0.842–0.927; 2 of 9 closer to the B3 head | old and mixed with B3 |
+| B3A | 9 | 0.50–0.92 | 0.836–0.927; 1 of 9 closer to the B3 head | old and mixed with B3 |
 
 The chunk order puts B3/B3A first (chunks 1–21), then B2_Mm2 → Mm1t → Mm1a (22–45), then B3 again
 (46–60): the k-mer tree separates the B2 and B3 lineages and, inside B2, runs from the older Mm2 to
@@ -80,8 +80,8 @@ copies have no hit at 50 % with the stricter prefilter.
 **Grouped by the 2021 label** (`examples/b2_mm39_chr19_n50_kramerov.aln.fasta`, `rows_kramerov.tsv`):
 B2a 22 rows (purity 0.72–1.00, 20 of 22 ≥ 0.92), B2b 2 rows (0.48, 0.60), B2c 2 rows (0.92, 0.48),
 B2d 34 rows (0.48–0.86), B2e none: its 417 copies never form a chunk majority, they are spread over
-the B2d chunks. Identity to own head median 0.953, min 0.829; 13 rows closer to another head, 12 of
-them B2d rows closer to the B2c head.
+the B2d chunks. Identity to own head median 0.951, min 0.829; 12 rows closer to another head: 9 B2d rows
+closer to the B2c head, 2 to the B2e head, 1 B2a row to the B2b head.
 
 So the young, indel-defined subfamilies resolve (B2a as a block of 22 pure chunks; B2b and B2c as
 their own chunks, small because they are 4–7 % of the copies), and the old ones (B2d, B2e, at 67–70 %

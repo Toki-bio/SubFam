@@ -25,7 +25,7 @@ def ident(a, b):
     return m / t if t else 0.0
 
 
-rows = rd(sys.argv[1])
+rows = [r for r in rd(sys.argv[1]) if not r[0].startswith('REFERENCE_')]  # REFERENCE_ rows belong to no group
 is_head = [n.startswith(('TRUE_', 'PUBLISHED_', 'CONS_')) for n, _ in rows]
 # a group's head is the first head row of a block of head rows (TRUE_ followed by PUBLISHED_ with --both)
 heads = [(i, n, s) for i, (n, s) in enumerate(rows) if is_head[i] and not (i and is_head[i - 1])]

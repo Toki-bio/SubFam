@@ -53,6 +53,7 @@ def main():
     ap.add_argument('--prefix', default='TRUE')
     ap.add_argument('--refs', default=None, help='FASTA of published consensuses named <anything>_<subfamily>; used instead of member consensuses')
     ap.add_argument('--both', action='store_true', help='with --refs: build the member consensuses too, and put each published consensus right after the head of its group')
+    ap.add_argument('--extra-heads', default=None, help='FASTA of further published consensuses, added as REFERENCE_<name> rows at the top, in file order; not tied to any group, ignored by check_rows.py')
     a = ap.parse_args()
     tmp = a.tmp or tempfile.mkdtemp(); os.makedirs(tmp, exist_ok=True)
     copies = rd(a.copies); truth = dict(l.split()[:2] for l in open(a.truth) if l.strip())
@@ -82,6 +83,7 @@ def main():
         refs[sf] = plurality(aln)
         print(sf, len(mem), 'copies ->', len(refs[sf]), 'bp', file=sys.stderr)
     rows = collections.OrderedDict()
+    for k, v in (rd(a.extra_heads).items() if a.extra_heads else []): rows['REFERENCE_' + k] = v.upper()
     for sf in sfs:
         if sf in refs: rows[('PUBLISHED_%s' % pubname[sf]) if sf in pub and not a.both else ('%s_%s_consensus_of_%s_copies' % (a.prefix, sf, sf))] = refs[sf]
         if a.both and sf in pub: rows['PUBLISHED_%s' % pubname[sf]] = pub[sf]

@@ -22,19 +22,20 @@ fi
 python3 -I "$TOP/benchmark/line_real/extract_l1.py" dl/rmsk.txt.gz dl/chr19.fa.gz b2_chr19.fa 170 '^(B2_Mm1a|B2_Mm1t|B2_Mm2|B3|B3A)$'
 python3 -I "$HERE/subsample.py" b2_chr19.fa 3000 1 b2_chr19_3000.fa b2_truth.tsv
 
+# 2b. the five mouse B2 subfamily consensuses of Vassetzky et al. 2021 (Figure S2 of the supplement)
+bash "$HERE/kramerov_consensus.sh" kramerov2021_B2_consensus.fa supp
+
 # 3. SubFam, then the grouped alignment (member consensus of each rmsk class + Dfam consensus as heads)
 "$TOP/SubFam.sh" -n 50 -t "$T" -o sf50 -x b2 b2_chr19_3000.fa | tee sf50.log
 python3 "$TOP/examples/build_examples.py" b2_mm39_chr19_n50.aln.fasta b2_chr19_3000.fa b2_truth.tsv \
-    sf50/b2.cons.fasta sf50/b2.chunks.tsv --refs dfam_B2.fa --both --threads "$T" --tmp build_tmp
+    sf50/b2.cons.fasta sf50/b2.chunks.tsv --refs dfam_B2.fa --both --extra-heads kramerov2021_B2_consensus.fa --threads "$T" --tmp build_tmp
 python3 "$TOP/examples/check_rows.py" b2_mm39_chr19_n50.aln.fasta > rows.tsv
 
-# 4. the five mouse B2 subfamily consensuses of Vassetzky et al. 2021 (Figure S2 of the supplement),
-#    every copy labelled by its best hit to them, the same alignment grouped by that label, and one
+# 4. every copy labelled by its best hit to those consensuses, the same alignment grouped by that label, and one
 #    alignment with both labels on every row for manual inspection
-bash "$HERE/kramerov_consensus.sh" kramerov2021_B2_consensus.fa supp
 python3 "$HERE/label_by_consensus.py" b2_chr19_3000.fa kramerov2021_B2_consensus.fa b2_truth_kramerov.tsv b2_truth.tsv --threads "$T" 2>&1 | tee label.log
 python3 "$TOP/examples/build_examples.py" b2_mm39_chr19_n50_kramerov.aln.fasta b2_chr19_3000.fa b2_truth_kramerov.tsv \
-    sf50/b2.cons.fasta sf50/b2.chunks.tsv --refs kramerov2021_B2_consensus.fa --both --threads "$T" --tmp build_tmp_k
+    sf50/b2.cons.fasta sf50/b2.chunks.tsv --refs kramerov2021_B2_consensus.fa --both --extra-heads dfam_B2.fa --threads "$T" --tmp build_tmp_k
 python3 "$TOP/examples/check_rows.py" b2_mm39_chr19_n50_kramerov.aln.fasta > rows_kramerov.tsv
 python3 "$HERE/combine.py" b2_mm39_chr19_n50_both.aln.fasta b2_chr19_3000.fa sf50/b2.chunks.tsv sf50/b2.cons.fasta \
     b2_truth.tsv rmsk b2_truth_kramerov.tsv kram dfam_B2.fa kramerov2021_B2_consensus.fa --threads "$T" --tmp build_tmp_c
