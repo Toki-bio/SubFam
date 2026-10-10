@@ -44,3 +44,27 @@ Neither "SubFam recovers the L1PA subfamilies" nor the opposite follows from thi
 - **Order and names (p. 404-405).** The subfamilies are arranged by average divergence from their consensus (youngest first); the number counts from the subfamily derived from the most recently active source gene. The sample behind each subfamily is small: about 900 sequences for 47 subfamilies.
 - **Two resolutions (p. 403, 407, Table 2).** The same sequences were also classified by ORF2 alone, giving ten subfamilies, and the authors report that the two classifications are "fully in accord, ... comprise sets of consecutive subfamilies". Table 2 gives the correspondence: ORF2-based L1P1 = **L1PA2-3**, L1P2 = **L1PA4-6**, L1P3 = **L1PA7-9**, L1P4 = L1PA10-16, L1P5 = L1PB1-3. The 3'UTR is the finer instrument "because the 3'-UTRs of L1 source genes vary to a much larger extent than the coding regions".
 - **What this says about our groups.** The peel groups built from whole copies (which are mostly ORF-containing sequence, little 3'UTR) are G2 = PA2+PA3, G4 = PA4+PA5(+PA6), G3 = PA7+PA8(+PA6): almost exactly the coarser ORF2-level classes of Smit's Table 2 (PA2-3, PA4-6, PA7-9). The disagreement with the RepeatMasker names is therefore the difference between a classification by whole-copy sequence (ORF2 resolution) and one by the 3'UTR (the finer resolution that the names encode), as Smit already described in 1995. This is an observation of agreement in grouping, not a test that our groups are the ORF2 classes: the groups were not compared with the 1995 ORF2 consensuses.
+
+## 3. Re-run with SubFam 1.3.0, grouped by the RepeatMasker label, and the 3'-end control (2026-10-10)
+
+The peel-based grouping of section 1 is kept as a record but is no longer used for
+`examples/real_l1pa_chr4_n20c.aln.fasta`. That file is now built like the other examples
+(`examples/rebuild.sh`): `SubFam.sh -n 20 -c` on the same 2,222 copies (111 chunks; 1.3.0 gives
+the same chunking as 1.2.0 here, 2,222 / 20 is a whole number of chunks either way), then for
+each L1PA class the consensus of at most 60 randomly chosen member copies (seed 1) as the head row,
+followed by the SubFam rows whose majority is that class.
+
+**3'-end control.** The L1PA names are defined on the 3' end (Smit 1995, section 2). Running
+SubFam `-n 20` on the last 900 bp of the same copies (`l1_3p.fa`, 48 s) and scoring chunk purity
+against the rmsk labels:
+
+| input | chunks | mean purity | within one class | chunks with purity >= 0.9 |
+|---|---|---|---|---|
+| full-length copies, `-c` | 111 | 0.696 | 0.926 | 32 |
+| last 900 bp | 111 | 0.796 | 0.947 | 61 |
+
+So the same copies sort by their rmsk class markedly better when only the region the classes were
+defined on is used; the rest of the disagreement is of the order of the labels' own uncertainty
+(re-labelling by the 3' end reproduces rmsk for 91.6 % of copies, section 2). Full-length copies
+group at the coarser ORF2 resolution of Smit's Table 2; that is a property of the sequences, not an
+error of either classification.

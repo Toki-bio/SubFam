@@ -6,7 +6,7 @@ CpG decay and all), not the master. Reference rows are named TRUE_<sf>; SubFam r
 usage: build_examples.py OUT.aln.fasta COPIES.fa TRUTH.tsv CONS.fa CHUNKS.tsv [--minspan N] [--threads T] [--tmp DIR]
   TRUTH.tsv   copy<TAB>subfamily       CHUNKS.tsv  copy<TAB>chunk<TAB>strand (SubFam's *.chunks.tsv)
 """
-import sys, subprocess, collections, os, argparse, tempfile
+import random, sys, subprocess, collections, os, argparse, tempfile
 
 def rd(f):
     d = collections.OrderedDict(); n = None
@@ -48,9 +48,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('out'); ap.add_argument('copies'); ap.add_argument('truth'); ap.add_argument('cons'); ap.add_argument('chunks')
     ap.add_argument('--minspan', type=int, default=0, help='use only copies at least this long for the reference consensus')
+    ap.add_argument('--sample', type=int, default=0, help='build each member consensus from at most this many randomly chosen copies (seed 1); 0 = all')
     ap.add_argument('--threads', type=int, default=4); ap.add_argument('--tmp', default=None)
     ap.add_argument('--prefix', default='TRUE')
     ap.add_argument('--refs', default=None, help='FASTA of published consensuses named <anything>_<subfamily>; used instead of member consensuses')
+    ap.add_argument('--both', action='store_true', help='with --refs: build the member consensuses too, and put each published consensus right after the head of its group')
     a = ap.parse_args()
     tmp = a.tmp or tempfile.mkdtemp(); os.makedirs(tmp, exist_ok=True)
     copies = rd(a.copies); truth = dict(l.split()[:2] for l in open(a.truth) if l.strip())
@@ -64,23 +66,30 @@ def main():
         c = collections.Counter(labs); sf, n = c.most_common(1)[0]; rowinfo[ch] = (sf, n / len(labs))
     sfs = sorted({v[0] for v in rowinfo.values()})
     refs = collections.OrderedDict()
-    pub = {k.split('_')[-1]: v for k, v in rd(a.refs).items()} if a.refs else {}
+    pubname, pub = {}, {}
+    for k, v in (rd(a.refs).items() if a.refs else []):
+        sf = next((x for x in sfs if k == x or k.endswith('_' + x)), None)
+        if sf: pubname[sf] = k; pub[sf] = v.upper()
+        else: pubname[k] = k; pub[k] = v.upper()
     for sf in sfs:
-        if sf in pub: refs[sf] = pub[sf].upper(); continue
-        if a.refs: continue
+        if sf in pub and not a.both: refs[sf] = pub[sf]; continue
+        if a.refs and not a.both: continue
         mem = {k: copies[k] for k in copies if truth.get(k) == sf and len(copies[k]) >= a.minspan}
         if len(mem) < 3: continue
+        if a.sample and len(mem) > a.sample:
+            keep = sorted(random.Random(1).sample(sorted(mem), a.sample)); mem = {k: mem[k] for k in keep}
         aln = mafft(mem, a.threads, tmp, 'ref_' + sf, ('--auto',))
         refs[sf] = plurality(aln)
         print(sf, len(mem), 'copies ->', len(refs[sf]), 'bp', file=sys.stderr)
     rows = collections.OrderedDict()
     for sf in sfs:
-        if sf in refs: rows[('PUBLISHED_%s' % sf) if sf in pub else ('%s_%s_consensus_of_%s_copies' % (a.prefix, sf, sf))] = refs[sf]
+        if sf in refs: rows[('PUBLISHED_%s' % pubname[sf]) if sf in pub and not a.both else ('%s_%s_consensus_of_%s_copies' % (a.prefix, sf, sf))] = refs[sf]
+        if a.both and sf in pub: rows['PUBLISHED_%s' % pubname[sf]] = pub[sf]
         for ch in cons:
             if ch in rowinfo and rowinfo[ch][0] == sf:
                 rows['%s|%s|p%.2f' % (ch, sf, rowinfo[ch][1])] = cons[ch]
     for sf in pub:
-        if sf not in sfs: rows['PUBLISHED_%s_no_group_has_this_majority' % sf] = pub[sf].upper()
+        if sf not in sfs: rows['PUBLISHED_%s_no_group_has_this_majority' % pubname[sf]] = pub[sf]
     for ch in cons:
         if ch not in rowinfo: rows[ch + '|none'] = cons[ch]
     aln = mafft(rows, a.threads, tmp, 'final', ('--auto',))

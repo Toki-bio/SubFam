@@ -1,0 +1,100 @@
+old_001|SF1|p0.55	TRUE_SF1_consensus_of_SF1_copies	0.970
+old_002|SF1|p0.40	TRUE_SF1_consensus_of_SF1_copies	0.974  closer to TRUE_SF2_consensus_of_SF2_copies
+old_003|SF1|p0.30	TRUE_SF1_consensus_of_SF1_copies	0.908  closer to TRUE_SF2_consensus_of_SF2_copies
+old_006|SF1|p0.50	TRUE_SF1_consensus_of_SF1_copies	0.904
+old_007|SF1|p0.50	TRUE_SF1_consensus_of_SF1_copies	0.895
+old_008|SF1|p0.40	TRUE_SF1_consensus_of_SF1_copies	0.948  closer to TRUE_SF2_consensus_of_SF2_copies
+old_009|SF1|p0.60	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_014|SF1|p0.35	TRUE_SF1_consensus_of_SF1_copies	0.962  closer to TRUE_SF4_consensus_of_SF4_copies
+old_016|SF1|p0.25	TRUE_SF1_consensus_of_SF1_copies	0.878  closer to TRUE_SF4_consensus_of_SF4_copies
+old_018|SF1|p0.30	TRUE_SF1_consensus_of_SF1_copies	0.980  closer to TRUE_SF2_consensus_of_SF2_copies
+old_025|SF1|p0.80	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_026|SF1|p0.85	TRUE_SF1_consensus_of_SF1_copies	0.997
+old_029|SF1|p0.60	TRUE_SF1_consensus_of_SF1_copies	0.990
+old_031|SF1|p0.60	TRUE_SF1_consensus_of_SF1_copies	0.987
+old_032|SF1|p0.80	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_034|SF1|p0.85	TRUE_SF1_consensus_of_SF1_copies	0.977
+old_037|SF1|p0.90	TRUE_SF1_consensus_of_SF1_copies	0.920
+old_038|SF1|p1.00	TRUE_SF1_consensus_of_SF1_copies	0.853
+old_039|SF1|p0.95	TRUE_SF1_consensus_of_SF1_copies	0.970
+old_040|SF1|p0.90	TRUE_SF1_consensus_of_SF1_copies	0.990
+old_041|SF1|p0.95	TRUE_SF1_consensus_of_SF1_copies	0.987
+old_042|SF1|p0.95	TRUE_SF1_consensus_of_SF1_copies	0.993
+old_043|SF1|p0.55	TRUE_SF1_consensus_of_SF1_copies	0.993
+old_044|SF1|p0.55	TRUE_SF1_consensus_of_SF1_copies	0.990
+old_045|SF1|p0.90	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_046|SF1|p0.90	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_047|SF1|p1.00	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_048|SF1|p1.00	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_049|SF1|p0.85	TRUE_SF1_consensus_of_SF1_copies	1.000
+old_083|SF1|p0.45	TRUE_SF1_consensus_of_SF1_copies	0.980
+old_087|SF1|p0.45	TRUE_SF1_consensus_of_SF1_copies	0.977
+old_088|SF1|p0.75	TRUE_SF1_consensus_of_SF1_copies	0.997
+old_090|SF1|p0.50	TRUE_SF1_consensus_of_SF1_copies	0.950
+old_091|SF1|p0.35	TRUE_SF1_consensus_of_SF1_copies	0.969  closer to TRUE_SF2_consensus_of_SF2_copies
+old_095|SF1|p0.30	TRUE_SF1_consensus_of_SF1_copies	0.905  closer to TRUE_SF6_consensus_of_SF6_copies
+old_097|SF1|p0.55	TRUE_SF1_consensus_of_SF1_copies	0.921
+old_099|SF1|p0.30	TRUE_SF1_consensus_of_SF1_copies	0.970  closer to TRUE_SF2_consensus_of_SF2_copies
+old_024|SF2|p0.50	TRUE_SF2_consensus_of_SF2_copies	0.973  closer to TRUE_SF1_consensus_of_SF1_copies
+old_027|SF2|p0.70	TRUE_SF2_consensus_of_SF2_copies	0.997
+old_028|SF2|p0.40	TRUE_SF2_consensus_of_SF2_copies	0.977
+old_030|SF2|p0.55	TRUE_SF2_consensus_of_SF2_copies	1.000
+old_033|SF2|p0.50	TRUE_SF2_consensus_of_SF2_copies	0.973
+old_035|SF2|p0.80	TRUE_SF2_consensus_of_SF2_copies	0.917
+old_036|SF2|p0.95	TRUE_SF2_consensus_of_SF2_copies	0.933
+old_050|SF2|p1.00	TRUE_SF2_consensus_of_SF2_copies	0.997
+old_051|SF2|p0.95	TRUE_SF2_consensus_of_SF2_copies	1.000
+old_052|SF2|p1.00	TRUE_SF2_consensus_of_SF2_copies	1.000
+old_053|SF2|p0.90	TRUE_SF2_consensus_of_SF2_copies	1.000
+old_054|SF2|p0.75	TRUE_SF2_consensus_of_SF2_copies	1.000
+old_085|SF2|p0.40	TRUE_SF2_consensus_of_SF2_copies	0.966  closer to TRUE_SF4_consensus_of_SF4_copies
+old_086|SF2|p0.35	TRUE_SF2_consensus_of_SF2_copies	0.980
+old_093|SF2|p0.45	TRUE_SF2_consensus_of_SF2_copies	0.875  closer to TRUE_SF1_consensus_of_SF1_copies
+old_096|SF2|p0.35	TRUE_SF2_consensus_of_SF2_copies	0.944  closer to TRUE_SF1_consensus_of_SF1_copies
+old_098|SF2|p0.35	TRUE_SF2_consensus_of_SF2_copies	0.982
+old_013|SF3|p0.40	TRUE_SF3_consensus_of_SF3_copies	0.969
+old_020|SF3|p0.85	TRUE_SF3_consensus_of_SF3_copies	0.990
+old_021|SF3|p0.85	TRUE_SF3_consensus_of_SF3_copies	1.000
+old_022|SF3|p0.35	TRUE_SF3_consensus_of_SF3_copies	0.987
+old_023|SF3|p0.35	TRUE_SF3_consensus_of_SF3_copies	0.980  closer to TRUE_SF4_consensus_of_SF4_copies
+old_055|SF3|p0.40	TRUE_SF3_consensus_of_SF3_copies	0.963  closer to TRUE_SF4_consensus_of_SF4_copies
+old_056|SF3|p0.90	TRUE_SF3_consensus_of_SF3_copies	0.967
+old_059|SF3|p0.60	TRUE_SF3_consensus_of_SF3_copies	0.950
+old_060|SF3|p0.80	TRUE_SF3_consensus_of_SF3_copies	0.990
+old_061|SF3|p0.95	TRUE_SF3_consensus_of_SF3_copies	1.000
+old_062|SF3|p0.95	TRUE_SF3_consensus_of_SF3_copies	1.000
+old_063|SF3|p1.00	TRUE_SF3_consensus_of_SF3_copies	1.000
+old_066|SF3|p0.80	TRUE_SF3_consensus_of_SF3_copies	1.000
+old_067|SF3|p0.50	TRUE_SF3_consensus_of_SF3_copies	0.990
+old_010|SF4|p0.30	TRUE_SF4_consensus_of_SF4_copies	0.947  closer to TRUE_SF2_consensus_of_SF2_copies
+old_012|SF4|p0.30	TRUE_SF4_consensus_of_SF4_copies	0.982  closer to TRUE_SF3_consensus_of_SF3_copies
+old_019|SF4|p0.35	TRUE_SF4_consensus_of_SF4_copies	0.980
+old_057|SF4|p0.70	TRUE_SF4_consensus_of_SF4_copies	0.980
+old_058|SF4|p0.90	TRUE_SF4_consensus_of_SF4_copies	0.913
+old_064|SF4|p0.75	TRUE_SF4_consensus_of_SF4_copies	1.000
+old_065|SF4|p0.95	TRUE_SF4_consensus_of_SF4_copies	1.000
+old_068|SF4|p0.95	TRUE_SF4_consensus_of_SF4_copies	1.000
+old_069|SF4|p0.45	TRUE_SF4_consensus_of_SF4_copies	0.990
+old_084|SF4|p0.50	TRUE_SF4_consensus_of_SF4_copies	0.987
+old_094|SF4|p0.40	TRUE_SF4_consensus_of_SF4_copies	0.976
+old_004|SF5|p0.40	TRUE_SF5_consensus_of_SF5_copies	0.947
+old_005|SF5|p0.25	TRUE_SF5_consensus_of_SF5_copies	0.899  closer to TRUE_SF2_consensus_of_SF2_copies
+old_015|SF5|p0.30	TRUE_SF5_consensus_of_SF5_copies	0.974
+old_072|SF5|p0.75	TRUE_SF5_consensus_of_SF5_copies	0.987
+old_073|SF5|p0.80	TRUE_SF5_consensus_of_SF5_copies	0.907
+old_077|SF5|p0.65	TRUE_SF5_consensus_of_SF5_copies	0.993
+old_078|SF5|p0.90	TRUE_SF5_consensus_of_SF5_copies	1.000
+old_079|SF5|p0.60	TRUE_SF5_consensus_of_SF5_copies	1.000
+old_081|SF5|p0.55	TRUE_SF5_consensus_of_SF5_copies	0.987
+old_089|SF5|p0.65	TRUE_SF5_consensus_of_SF5_copies	0.986
+old_092|SF5|p0.35	TRUE_SF5_consensus_of_SF5_copies	0.983
+old_100|SF5|p0.20	TRUE_SF5_consensus_of_SF5_copies	0.957  closer to TRUE_SF8_consensus_of_SF8_copies
+old_017|SF6|p0.25	TRUE_SF6_consensus_of_SF6_copies	0.940  closer to TRUE_SF1_consensus_of_SF1_copies
+old_070|SF6|p0.40	TRUE_SF6_consensus_of_SF6_copies	0.983
+old_074|SF6|p0.65	TRUE_SF6_consensus_of_SF6_copies	0.920
+old_075|SF6|p0.40	TRUE_SF6_consensus_of_SF6_copies	0.973
+old_080|SF6|p0.80	TRUE_SF6_consensus_of_SF6_copies	1.000
+old_082|SF6|p0.65	TRUE_SF6_consensus_of_SF6_copies	1.000
+old_011|SF7|p0.25	TRUE_SF7_consensus_of_SF7_copies	0.928  closer to TRUE_SF2_consensus_of_SF2_copies
+old_071|SF7|p0.80	TRUE_SF7_consensus_of_SF7_copies	0.990
+old_076|SF8|p0.25	TRUE_SF8_consensus_of_SF8_copies	0.956  closer to TRUE_SF6_consensus_of_SF6_copies

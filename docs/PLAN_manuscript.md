@@ -9,6 +9,14 @@ Inputs: the discussion of 2026-10-10, `docs/research/B2_literature.md`,
   as similarity subgroups. (2) An alignment proxy that lets downstream tools handle thousands of
   repetitive sequences. One sentence of limits beside them: no identity threshold, a chunk is not a
   subfamily, orphans and truncated copies are not resolved.
+- Framing sentence (author, 2026-10-10): SubFam does not claim start-to-end work; it bridges the
+  gap between the gold standard of manual curation and a researcher's computational analysis by
+  organising the pile of chaotic raw sequences into an ordered, readable form.
+- Journal: BMC Bioinformatics (Software) or Mobile DNA. Nature Communications only if the B2 example
+  yields a biological finding worth its own paper; as a tool paper with three examples it would be
+  asked for the broad benchmarking this plan avoids.
+- Reproducibility: every example is rebuilt by `examples/rebuild.sh` from named inputs and seeds;
+  every benchmark directory has a README with the exact commands.
 - Three working examples: B2 (main figure), L1 (long, truncated copies), Alu (crowded family,
   supplement). A satellite example is deferred until B2 is on screen.
 - Simulations stay, demoted to one paragraph + one supplementary figure: they test one property
