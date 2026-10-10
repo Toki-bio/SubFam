@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""vsearch_sweep.py COPIES.fa CHUNKS.tsv TRUTH1.tsv NAME1 TRUTH2.tsv NAME2 [--threads T --ids 0.80,0.90,0.95,0.98]
+"""vsearch_sweep.py COPIES.fa CHUNKS.tsv TRUTH1.tsv NAME1 [TRUTH2.tsv NAME2] [--threads T --ids 0.80,0.90,0.95,0.98]
 
 The threshold baseline: vsearch --cluster_fast (global identity, --iddef 2, plus strand) at each identity, against
 SubFam's chunks (CHUNKS.tsv) and one family-wide group. Per method: number of groups (= rows an aligner would get),
@@ -10,7 +10,7 @@ import collections, subprocess, sys, tempfile, os
 args = sys.argv[1:]; threads, ids = 4, '0.60,0.70,0.80,0.90,0.95,0.98'
 for f in ('--threads', '--ids'):
     if f in args: i = args.index(f); v = args[i + 1]; del args[i:i + 2]; threads, ids = (int(v), ids) if f == '--threads' else (threads, v)
-copies, chunks, t1, n1, t2, n2 = args[:6]
+copies, chunks, t1, n1 = args[:4]; t2, n2 = (args[4], args[5]) if len(args) >= 6 else (t1, n1)   # one labelling: pass TRUTH1 NAME1 only
 truth = [dict(l.split()[:2] for l in open(t)) for t in (t1, t2)]
 names = [l[1:].split()[0] for l in open(copies) if l.startswith('>')]
 BIG = 10                                             # a group of at least this many copies is a 'real' group

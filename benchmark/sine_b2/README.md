@@ -97,7 +97,7 @@ look at: the 11-bp central deletion shared by B2a and B2b against B2c/d/e; the 2
 B2d; the τ/terminator region before the A-tail where B2a differs; the run of chunks 22–45 (B2a, from
 Mm2-like to Mm1a-like) and where the two B2b chunks (44–45) and the B2c chunks (13–14) sit.
 
-## Baseline: identity-threshold clustering (`vsearch_sweep.py`, output `vsearch_sweep.txt`)
+## Baseline: identity-threshold clustering (`../baseline_vsearch/vsearch_sweep.py`, output `vsearch_sweep.txt`, also copied to `../baseline_vsearch/b2_sweep.txt`)
 
 The same 3,000 copies, `vsearch --cluster_fast` (global identity, `--iddef 2`, plus strand) at six thresholds, against
 SubFam's 60 chunks and a single family-wide consensus. A group of at least 10 copies counts as a real group; purity

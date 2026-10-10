@@ -47,4 +47,4 @@ python3 "$HERE/chaos_subset.py" b2_chr19_3000.fa b2_truth_kramerov.tsv chaos_sub
 python3 "$HERE/figure_chaos_to_order.py" chaos_subset.fa chaos_subset.tsv sf_chaos/sub.chunks.tsv sf_chaos/sub.cons.fasta chaos_to_order_b2.png --threads "$T"
 
 # 6. the threshold baseline: vsearch --cluster_fast at 0.60-0.98 against SubFam's 60 chunks and one family consensus
-python3 "$HERE/vsearch_sweep.py" b2_chr19_3000.fa sf50/b2.chunks.tsv b2_truth.tsv rmsk b2_truth_kramerov.tsv V2021 --threads "$T" | tee vsearch_sweep.txt
+python3 "$TOP/benchmark/baseline_vsearch/vsearch_sweep.py" b2_chr19_3000.fa sf50/b2.chunks.tsv b2_truth.tsv rmsk b2_truth_kramerov.tsv V2021 --threads "$T" | tee vsearch_sweep.txt
