@@ -19,9 +19,9 @@ The output is a short alignment (for example 40 rows for 2,000 copies) where eve
 ```
 
 1. **Order** all sequences along a k-mer guide tree. The distance between two copies is the weighted Jaccard distance of their k-mer counts (default k = 6). The tree is built by UPGMA, and at every merge the two subtrees are flipped so that their closest ends meet. No alignment is computed in this step, only an order in which related copies sit next to each other. The method is a port of the "Reorder by similarity" guide tree in [ViewAlign](https://github.com/Toki-bio/MSA-viewer) (`kmer-tree.js`). `-m` uses the MAFFT guide tree instead (`mafft --retree 0 --reorder`, as in SubFam 1.0).
-2. **Chunk** that order into consecutive blocks of *N* sequences. Leftover sequences (fewer than *N*) join the last chunk, so nothing is dropped.
-3. **Consensus**: align each chunk (MAFFT, in parallel) and call its plurality consensus. A base is called when at least `-p` × chunk size of the sequences agree. The consensus is EMBOSS `cons` reimplemented in awk (EDNAFULL scores, the same tie rules). Its output is byte-identical to `cons`, which is no longer needed.
-4. **Align** the chunk consensuses with MAFFT L-INS-i.
+2. **Chunk** that order into round(total / *N*) consecutive blocks of equal size (within one sequence), so nothing is dropped and no block is far from *N*.
+3. **Consensus**: align each chunk (MAFFT, in parallel) and call its plurality consensus. A base is called when at least `-p` × chunk size of the sequences support it (the residue with the best EDNAFULL column score wins; a gap scores zero, so a column where the residues disagree too much gets no call). Bases supported by half the chunk or fewer are written in lower case. The consensus is EMBOSS `cons` reimplemented in awk (EDNAFULL scores, the same tie rules). Its output is byte-identical to `cons`, which is no longer needed. The default 0.36 is 18 of 50, the plurality SINEderella has used since its first version; `-p` scales it with `-n`.
+4. **Align** the chunk consensuses with MAFFT L-INS-i (MAFFT's automatic mode above 2,000 consensuses). The rows of `PREFIX.aln.fasta` are in MAFFT's `--reorder` order; `PREFIX.cons.fasta` and `PREFIX.chunks.tsv` are in chunk order.
 
 ### Why chunks and not clusters?
 
@@ -37,7 +37,7 @@ SubFam never asks "are these two copies X% identical?". It only asks "which copi
 
 ## Installation
 
-Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required.
+Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` ≥ 1.20 for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required. The input may be gzip-compressed.
 
 ```bash
 conda install -c conda-forge -c bioconda mafft numpy
@@ -53,17 +53,17 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 
 | option | default | meaning |
 |---|---|---|
-| `-n INT` | 50 | sequences per chunk |
-| `-p FLOAT` | 0.36 | fraction of a chunk that must agree to call a base |
+| `-n INT` | 50 | sequences per chunk (the input is cut into round(total/N) equal chunks) |
+| `-p FLOAT` | 0.36 | fraction of a chunk that must support a base to call it |
 | `-k INT` | 6 | k-mer size of the ordering tree (3–12) |
 | `-t INT` | all cores | threads |
 | `-o DIR` | `.` | output directory |
 | `-x STR` | input name | output prefix |
-| `-r` | off | copies may be on both strands: strand-independent (canonical) k-mers for the tree, then each copy is oriented like its neighbour in the order |
+| `-r` | off | copies may be on both strands: strand-independent (canonical) k-mers for the tree, then each copy is oriented like its neighbour in the order, and the whole set like its majority strand |
 | `-m` | off | order with the MAFFT guide tree instead of k-mers |
 | `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
 | `-c` | off | coverage-relative plurality for truncated copies: a base needs `-p` of the sequences that span that column (end gaps excluded, at least 3 spanning), not of the whole chunk |
-| `-a` | off | keep no-consensus positions as `N` (by default they are removed) |
+| `-a` | off | keep no-consensus positions as `N` (by default they are removed, which also removes alignment columns where most of the chunk has a gap) |
 | `-K` | off | keep intermediate chunk files |
 
 Outputs:

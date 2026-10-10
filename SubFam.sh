@@ -17,11 +17,11 @@
 
 set -euo pipefail
 
-VERSION=1.2.0
+VERSION=1.3.0
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
-THREADS=$(nproc)
+THREADS=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1)
 OUTDIR=.
 PREFIX=
 ORDER=kmer
@@ -39,14 +39,15 @@ SubFam $VERSION - reduce related sequences to an alignment of chunk consensuses
 Usage: $(basename "$0") [options] <sequences.fasta>
 
 Options:
-  -n INT    sequences per chunk (default: $N)
+  -n INT    sequences per chunk (default: $N); the input is cut into round(total/N) chunks
+            of equal size, so a chunk holds between about 2/3 N and 3/2 N sequences
   -p FLOAT  plurality: fraction of a chunk that must agree on a base (default: $PLURALITY)
   -k INT    k-mer size of the ordering tree, 3-12 (default: $K, best at all divergences tested)
   -t INT    threads (default: all, $THREADS)
   -o DIR    output directory (default: current directory)
   -x STR    output prefix (default: input file name without extension)
   -r        sequences may be on both strands: strand-independent k-mers, then each copy
-            is oriented like its neighbour
+            is oriented like its neighbour, and the whole set like its majority strand
   -m        order with the MAFFT guide tree (mafft --retree 0 --reorder) instead of k-mers
   -P        order with MAFFT PartTree (implies -m; for very large inputs, >20,000 sequences)
   -c        coverage-relative plurality, for truncated copies (fragments, 5'-truncated LINEs):
@@ -54,7 +55,8 @@ Options:
             end gaps do not) instead of -p of the whole chunk, with at least 3 spanning
             sequences. Default: -p of the whole chunk, which cuts a consensus down to the
             region most copies cover.
-  -a        keep no-consensus positions as N (default: drop them from the consensus)
+  -a        keep no-consensus positions as N (default: drop them from the consensus);
+            bases supported by half the chunk or fewer are written in lower case
   -K        keep intermediate files (chunks, chunk alignments)
   -v        print version
   -h        show this help
@@ -63,16 +65,18 @@ Outputs (in DIR):
   PREFIX.cons.fasta   unaligned consensus sequences, one per chunk
   PREFIX.aln.fasta    aligned consensus sequences (FASTA)
   PREFIX.msf          the same alignment in MSF format
-  PREFIX.chunks.tsv   input id, consensus it went into, strand (- = reverse-complemented
-                      by -r, relative to the first sequence of the order)
+  PREFIX.chunks.tsv   input id, consensus it went into, strand (- = reverse-complemented by -r)
+  PREFIX.log          version, command line and chunk count of the run
 
-Requires: mafft, awk, and python3 with numpy (not needed with -m/-P).
+Requires: mafft >= 7, awk, and python3 with numpy >= 1.20 (not needed with -m/-P).
+Input may be gzip-compressed.
 EOF
 }
 
 die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
+ARGS=$*
 while getopts ":n:p:k:t:o:x:rmPcaKvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
@@ -102,18 +106,30 @@ for tool in mafft awk; do
     command -v "$tool" >/dev/null 2>&1 || die "'$tool' not found in PATH"
 done
 if [ "$ORDER" = kmer ]; then
-    python3 -c 'import numpy' 2>/dev/null || die "k-mer ordering needs python3 with numpy (or use -m)"
+    python3 -c 'import numpy; from numpy.lib.stride_tricks import sliding_window_view' 2>/dev/null ||
+        die "k-mer ordering needs python3 with numpy >= 1.20 (or use -m)"
 fi
 [[ $N =~ ^[0-9]+$ ]] && [ "$N" -ge 2 ] || die "-n must be an integer >= 2"
 [[ $K =~ ^[0-9]+$ ]] && [ "$K" -ge 3 ] && [ "$K" -le 12 ] || die "-k must be an integer from 3 to 12"
 [[ $THREADS =~ ^[0-9]+$ ]] && [ "$THREADS" -ge 1 ] || die "-t must be a positive integer"
-awk -v p="$PLURALITY" 'BEGIN { exit !(p > 0 && p <= 1) }' || die "-p must be in (0, 1]"
+[[ $PLURALITY =~ ^[0-9]*\.?[0-9]+$ ]] && awk -v p="$PLURALITY" 'BEGIN { exit !(p > 0 && p <= 1) }' ||
+    die "-p must be a number in (0, 1]"
 
-PREFIX=${PREFIX:-$(basename "${IN%.*}")}
+BASE=$(basename "$IN")
+case $BASE in *.gz) BASE=${BASE%.gz} ;; esac
+PREFIX=${PREFIX:-${BASE%.*}}
+[ -n "$PREFIX" ] || die "cannot derive an output prefix from '$IN'; give one with -x"
+case $PREFIX in */*) die "-x must not contain '/'" ;; esac
 NAME=${PREFIX//[[:space:]]/_}   # FASTA ids cannot contain spaces
 mkdir -p "$OUTDIR"
-WORK=$(mktemp -d "$OUTDIR/.subfam_${PREFIX}_XXXXXX")
+WORK=$(mktemp -d "$OUTDIR/.subfam_${NAME}_XXXXXX")
 [ -n "$KEEP_TMP" ] || trap 'rm -rf "$WORK"' EXIT
+export OPENBLAS_NUM_THREADS=$THREADS OMP_NUM_THREADS=$THREADS MKL_NUM_THREADS=$THREADS
+
+if [ "$(head -c 2 "$IN" | od -An -tx1 | tr -d ' \n')" = 1f8b ]; then     # gzip magic
+    gzip -dc "$IN" > "$WORK/input.fasta" || die "cannot decompress '$IN'"
+    IN=$WORK/input.fasta
+fi
 
 # ---------------------------------------------------------------------------------------
 # Embedded programs
@@ -181,7 +197,11 @@ def distances(seqs, k, canonical):
     for t in range(1, int(cnt.max()) + 1 if len(cnt) else 1):
         sel = cnt >= t
         rr, cc = r_idx[sel], c_idx[sel]
-        for lo in range(0, m, block):
+        if not len(cc):
+            break
+        _, cc = np.unique(cc, return_inverse=True)       # only the k-mers still at this count level
+        mt = int(cc.max()) + 1
+        for lo in range(0, mt, block):
             s = (cc >= lo) & (cc < lo + block)
             if not s.any():
                 continue
@@ -283,6 +303,8 @@ def main():
                 rev = sum(c in ref for c in kmer_codes(seqs[i].translate(COMP)[::-1], k, False).tolist())
                 flip[i] = rev > fwd
             prev = seqs[i].translate(COMP)[::-1] if flip[i] else seqs[i]
+        if sum(flip) * 2 > len(flip):                    # keep the majority strand as given
+            flip = [not f for f in flip]
     with open(out, "w") as fh:
         for i in order:
             if flip[i]:
@@ -344,7 +366,7 @@ END {
             if (rel && k >= fi[i] && k <= la[i]) ncov++
         }
         if (rel) {
-            need = frac * ncov; need = (need == int(need)) ? need : int(need) + 1
+            need = frac * ncov; x = int(need + 1e-9); need = (need - x > 1e-9) ? x + 1 : x   # ceil, safe for 0.07 * 100
             mc = (mincov < n) ? mincov : n
             if (ncov < mc) { out = out "N"; continue }
         }
@@ -418,8 +440,13 @@ AWK
 T0=$(date +%s)
 TOTAL=$(grep -c '^>' "$IN" || true)
 [ "$TOTAL" -ge 1 ] || die "no FASTA records in '$IN'"
-NCHUNK=$(( TOTAL / N )); [ "$NCHUNK" -ge 1 ] || NCHUNK=1
-echo "SubFam $VERSION: $TOTAL sequences -> $NCHUNK chunks of ~$N"
+NCHUNK=$(( (TOTAL + N / 2) / N )); [ "$NCHUNK" -ge 1 ] || NCHUNK=1     # round(TOTAL / N)
+echo "SubFam $VERSION: $TOTAL sequences -> $NCHUNK chunks of ~$(( TOTAL / NCHUNK ))"
+{
+    echo "SubFam $VERSION  $(date '+%Y-%m-%d %H:%M')"
+    echo "command: $0 $ARGS"
+    echo "input: $IN  sequences: $TOTAL  chunks: $NCHUNK  n: $N  p: $PLURALITY  k: $K  order: $ORDER${PARTTREE:+ parttree}${BOTH:+ both-strands}${RELCOV:+ coverage-relative}"
+} > "$OUTDIR/$PREFIX.log"
 
 T1=$(date +%s)
 if [ "$ORDER" = kmer ]; then
@@ -432,14 +459,14 @@ else
 fi
 elapsed "$T1"
 
-# Split into NCHUNK chunks of N consecutive sequences; the remainder (< N)
-# joins the last chunk so that no sequence is lost.
-awk -v n="$N" -v nc="$NCHUNK" -v dir="$WORK" -v pre="$NAME" -v map="$WORK/chunks.tsv" '
+# Split into NCHUNK consecutive chunks of equal size (within one sequence of each other).
+awk -v tot="$TOTAL" -v nc="$NCHUNK" -v dir="$WORK" -v pre="$NAME" -v map="$WORK/chunks.tsv" '
     BEGIN { fmt = "%s_%0" length(nc "") "d" }
     /^>/ {
-        c = int(i++ / n); if (c >= nc) c = nc - 1
+        c = int(i * nc / tot); i++
         name = sprintf(fmt, pre, c + 1)
-        out = dir "/" name ".fasta"
+        f = dir "/" name ".fasta"
+        if (f != out) { if (out) close(out); out = f }
         id = substr($1, 2); sub(/^_R_/, "", id)   # strip the reverse-complement tag
         print id "\t" name "\t" (substr($1, 2, 3) == "_R_" ? "-" : "+") > map
     }
@@ -450,23 +477,29 @@ rm -f "$WORK/ordered.fasta"
 echo "Aligning chunks and calling consensus sequences"
 T1=$(date +%s)
 export PLURALITY KEEP_N CONS_AWK RELCOV MINCOV
-find "$WORK" -maxdepth 1 -name "${NAME}_*.fasta" -print0 | sort -z |
+printf '%s\0' "$WORK/${NAME}_"*.fasta |
     xargs -0 -P "$THREADS" -I {} sh -c '
-        set -e; f=$1; name=$(basename "$f" .fasta)
+        f=$1; name=$(basename "$f" .fasta)
         n=$(grep -c "^>" "$f")
-        plur=$(awk -v n="$n" -v p="$PLURALITY" "BEGIN { x = n * p; print (x == int(x)) ? x : int(x) + 1 }")
+        plur=$(awk -v n="$n" -v p="$PLURALITY" "BEGIN { x = n * p; i = int(x + 1e-9); print (x - i > 1e-9) ? i + 1 : i }")
         if [ "$n" -ge 2 ]; then mafft --thread 1 --nuc --quiet "$f" > "$f.aln"; else cp "$f" "$f.aln"; fi
-        awk -v plur="$plur" -v name="$name" -v rel="$RELCOV" -v frac="$PLURALITY" -v mincov="$MINCOV" "$CONS_AWK" "$f.aln" |
-            awk -v keep="$KEEP_N" "!/^>/ && !keep { gsub(/[Nn]/, \"\") } 1" > "$f.cons"
+        [ -s "$f.aln" ] || { echo "SubFam: MAFFT failed on chunk $name" >&2; exit 1; }
+        awk -v plur="$plur" -v name="$name" -v rel="$RELCOV" -v frac="$PLURALITY" -v mincov="$MINCOV" "$CONS_AWK" "$f.aln" > "$f.raw"
+        [ -s "$f.raw" ] || { echo "SubFam: consensus failed on chunk $name" >&2; exit 1; }
+        awk -v keep="$KEEP_N" "!/^>/ { if (keep) gsub(/n/, \"N\"); else gsub(/[Nn]/, \"\") } 1" "$f.raw" > "$f.cons"
     ' _ {}
-find "$WORK" -maxdepth 1 -name "${NAME}_*.fasta.cons" -print0 | sort -z | xargs -0 cat > "$OUTDIR/$PREFIX.cons.fasta"
+cat "$WORK/${NAME}_"*.fasta.cons > "$OUTDIR/$PREFIX.cons.fasta"
+[ "$(grep -c '^>' "$OUTDIR/$PREFIX.cons.fasta")" -eq "$NCHUNK" ] || die "expected $NCHUNK consensus sequences, see $WORK"
 cp "$WORK/chunks.tsv" "$OUTDIR/$PREFIX.chunks.tsv"
 elapsed "$T1"
 
 echo "Aligning consensus sequences"
 T1=$(date +%s)
 if [ "$NCHUNK" -ge 2 ]; then
-    mafft --thread "$THREADS" --localpair --maxiterate 1000 --ep 0.123 --nuc --reorder --quiet \
+    # L-INS-i up to 2,000 consensus sequences, MAFFT's automatic choice beyond; --threadit 0 keeps
+    # the iterative refinement deterministic whatever the thread count
+    MODE="--localpair --maxiterate 1000"; [ "$NCHUNK" -le 2000 ] || MODE=--auto
+    mafft --thread "$THREADS" --threadit 0 $MODE --nuc --reorder --quiet \
         "$OUTDIR/$PREFIX.cons.fasta" > "$OUTDIR/$PREFIX.aln.fasta"
 else
     cp "$OUTDIR/$PREFIX.cons.fasta" "$OUTDIR/$PREFIX.aln.fasta"

@@ -39,7 +39,7 @@ def plurality(aln, frac=0.36, mincov=3):
             if a <= i < b:
                 ncov += 1; cnt[s[i]] += 1
         if ncov < min(mincov, len(rows)): continue
-        need = -(-frac * ncov // 1)
+        need = int(frac * ncov + 1e-9); need += (frac * ncov - need > 1e-9)   # ceil, safe for 0.07 * 100
         ch, c = max(((k, v) for k, v in cnt.items()), key=lambda kv: (kv[1], kv[0] != '-'))
         if ch != '-' and c >= need: out.append(ch)
     return ''.join(out)

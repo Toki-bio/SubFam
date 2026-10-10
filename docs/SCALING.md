@@ -163,8 +163,8 @@ a minimum coverage.
 2. **Compare over the overlap, never over the union.** Ordering distance for mixed-length copies
    must be computed on the shared interval (position-aware k-mers after mapping to a backbone, or
    `iddef 2` alignment identity on a subsample), not whole-sequence Jaccard.
-3. **Coverage-relative plurality** (`-p` as a fraction of covering sequences, with `-c MIN`
-   minimum coverage) so chunk consensuses extend as far as the data does.
+3. **Coverage-relative plurality** (`-c`: `-p` as a fraction of covering sequences, with a
+   minimum coverage of 3) so chunk consensuses extend as far as the data does.
 4. **Expect scalar alignment speed above 5 kb** in VSEARCH, and O(L²) per chunk in MAFFT: a
    50 × 6 kb chunk takes seconds, fine; 2,000 such chunks is minutes on a workstation.
 
