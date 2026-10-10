@@ -15,7 +15,9 @@ Result file: `examples/b2_mm39_chr19_n50.aln.fasta`.
 - Background on the two classifications: `docs/research/B2_literature.md`. In short, Repbase/Dfam
   names rest on single-nucleotide diagnostics; the indel-based scheme of Vassetzky et al. 2021
   (B2a–e) treats Mm1a + Mm1t + Mm2 as one subfamily, B2a, with Mm1 and Mm2 as "extreme cases in a
-  continuum", and B3 as B2d. The B2a–e consensuses are not deposited; they are not in this file yet.
+  continuum", and B3 as B2d. The B2a–e consensuses exist only in Figure S2 of that paper's
+  supplement; `kramerov_consensus.sh` fetches the supplement from Europe PMC and extracts them
+  (`kramerov2021_B2_consensus.fa`: B2a 187, B2b 190, B2c 190, B2d 216, B2e 196 bp, IUPAC codes kept).
 
 ## Run
 `SubFam.sh -n 50 -t 8 -x b2 b2_chr19_3000.fa`: 60 chunk consensuses, 19 s.
@@ -50,3 +52,47 @@ predict for Mm1t. SubFam asserts nothing here; the rows are the data.
   RepeatMasker; without the 2021 consensuses they cannot be marked in this file.
 - Purity is against rmsk labels, which are themselves uncertain between Mm1a/Mm1t/Mm2 (2 and 16
   nt apart over 193 bp).
+
+## The same copies against the 2021 subfamilies (B2a–e)
+
+`label_by_consensus.py`: every copy labelled by its best hit to the five 2021 consensuses
+(vsearch global alignment, identity threshold 0.5, loosened word prefilter; the way Borodulina et al.
+2025 assigned copies). All 3,000 copies get a label (1 tie). Cross-table with the RepeatMasker label:
+
+| rmsk \ 2021 | B2a | B2b | B2c | B2d | B2e |
+|---|---|---|---|---|---|
+| B2_Mm1a | 246 | 0 | 0 | 0 | 0 |
+| B2_Mm1t | 273 | 1 | 0 | 0 | 0 |
+| B2_Mm2 | 563 | **104** | 2 | 2 | 1 |
+| B3 | 0 | 8 | 141 | **927** | 190 |
+| B3A | 2 | 12 | 53 | 248 | 226 |
+
+Median identity of the copies to their consensus: B2a 89.3 %, B2b 81.1 %, B2c 75.1 %, B2d 70.4 %,
+B2e 67.2 %. Identity between consensuses (vsearch, global): the three Dfam B2 entries are 94–95 %
+to B2a and 90–98 % to each other; Dfam B3 is 92 % to B2d; Dfam B3A is 81 % to B2e and 78 % to B2d
+(closest to neither); B2c/B2d/B2e are 77–85 % to each other.
+
+Reading: Mm1a + Mm1t + Mm2 = B2a, as the paper says, except that **104 of 672 rmsk B2_Mm2 copies
+are B2b**, a subfamily RepeatMasker has no name for; B3 = B2d plus a share of B2e and B2c; B3A is
+not a subfamily in the 2021 scheme but a mixture of old B2d/B2e/B2c copies, and 214 of its 542
+copies have no hit at 50 % with the stricter prefilter.
+
+**Grouped by the 2021 label** (`examples/b2_mm39_chr19_n50_kramerov.aln.fasta`, `rows_kramerov.tsv`):
+B2a 22 rows (purity 0.72–1.00, 20 of 22 ≥ 0.92), B2b 2 rows (0.48, 0.60), B2c 2 rows (0.92, 0.48),
+B2d 34 rows (0.48–0.86), B2e none: its 417 copies never form a chunk majority, they are spread over
+the B2d chunks. Identity to own head median 0.953, min 0.829; 13 rows closer to another head, 12 of
+them B2d rows closer to the B2c head.
+
+So the young, indel-defined subfamilies resolve (B2a as a block of 22 pure chunks; B2b and B2c as
+their own chunks, small because they are 4–7 % of the copies), and the old ones (B2d, B2e, at 67–70 %
+identity to their consensus) do not: their copies are as far from each other as from the other
+subfamily's consensus, the best-hit labels are correspondingly uncertain, and the k-mer order mixes
+them. That is the limit of any copy-level method on 25–30 % diverged SINEs, and the alignment shows
+it rather than hiding it.
+
+**For manual inspection**: `examples/b2_mm39_chr19_n50_both.aln.fasta` has the five Dfam and the
+five 2021 consensuses at the top and the 60 chunk consensuses below in chunk order (the k-mer
+guide-tree order), each named `<chunk>|rmsk:<label>_p<purity>|kram:<label>_p<purity>`. Things to
+look at: the 11-bp central deletion shared by B2a and B2b against B2c/d/e; the 28-bp 3' insertion of
+B2d; the τ/terminator region before the A-tail where B2a differs; the run of chunks 22–45 (B2a, from
+Mm2-like to Mm1a-like) and where the two B2b chunks (44–45) and the B2c chunks (13–14) sit.
