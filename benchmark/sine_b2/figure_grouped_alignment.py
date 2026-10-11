@@ -32,13 +32,23 @@ for k, _ in rows:
     if k.startswith('REFERENCE_'): names.append(k.replace('REFERENCE_', 'ref ')) 
     elif '|' in k: f = k.split('|'); names.append('%s  %s' % (f[0], f[2] if len(f) > 2 else ''))
     else: names.append(re.sub(r'_consensus_of_.*', '', k).replace('CLASSCONS_', 'class consensus ').replace('PUBLISHED_', 'published '))
+if g < 0:                      # no head rows: group = the class named in the row (<chunk>|<class>|p<purity>), in order of first appearance
+    classes = []
+    for k, _ in rows:
+        c = k.split('|')[1] if '|' in k else '?'
+        if c not in classes: classes.append(c)
+    grp = [classes.index(k.split('|')[1]) if '|' in k else -1 for k, _ in rows]; g = len(classes) - 1
 ngr = g + 1; pal = plt.get_cmap('tab10' if ngr <= 10 else 'tab20')
-fig_h = max(4, 0.16 * len(rows) + 1.2)
+fig_h = max(4, min(14, 0.16 * len(rows) + 1.2))
 fig = plt.figure(figsize=(12, fig_h)); gs = fig.add_gridspec(1, 2, width_ratios=[1, 40], wspace=0.005)
 ax = fig.add_subplot(gs[0, 1]); ax.imshow(M, aspect='auto', cmap=ListedColormap(['#ffffff', '#dfe7ee', '#c0392b']), vmin=0, vmax=2, interpolation='nearest')
-ax.set_yticks(range(len(rows))); ax.set_yticklabels(names, fontsize=6, family='monospace'); ax.yaxis.tick_right()
+ax.yaxis.tick_right()
+if len(rows) <= 130: ax.set_yticks(range(len(rows))); ax.set_yticklabels(names, fontsize=6, family='monospace')
+else: ax.set_yticks([]); ax.set_ylabel('%d rows, in SubFam order' % len(rows))
 for i, (k, _) in enumerate(rows):
     if not ('|' in k or k.startswith('REFERENCE_')): ax.axhspan(i - 0.5, i + 0.5, facecolor='none', edgecolor='#333', lw=0.8)
 ax.set_xlabel('alignment column (columns present in >= %d %% of the SubFam rows)' % round(100 * minocc)); ax.set_title(title, loc='left', fontsize=10)
 sb = fig.add_subplot(gs[0, 0]); sb.imshow(np.array([[x if x >= 0 else ngr] for x in grp]), aspect='auto', cmap=ListedColormap([pal(i) for i in range(ngr)] + ['#bbbbbb']), vmin=0, vmax=ngr, interpolation='nearest'); sb.axis('off')
+if 'classes' in dir():
+    fig.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=pal(i)) for i in range(ngr)], labels=classes, ncol=min(ngr, 6), loc='lower center', fontsize=8, frameon=False, bbox_to_anchor=(0.5, -0.02))
 fig.savefig(out, dpi=170, bbox_inches='tight'); print('wrote', out, len(rows), 'rows,', len(keep), 'of', L, 'columns', file=sys.stderr)
