@@ -150,6 +150,10 @@ the 600-row alignment is `examples/b2_mm39_chr123_30k_n50.aln.fasta`.
 | `-n 50 -P` | 7 min 19 s | 0.7 GB | 600 (592) | 0.756 | 0.793 | 1.000 / 0.985 / 0.995 / 0.939 / 0.890 | 38 of 60 |
 | `-n 20`, k-mer order (1.4.2) | 15 min 26 s | 4.1 GB | 1,500 (1,486) | 0.826 | 0.801 | 1.000 / 0.985 / 0.995 / 0.943 / 0.890 | 35 of 60 |
 
+Seeds 2 and 3 (`stress_chr123/seeds.sh`, SubFam 1.4.2, `-n 50`, k-mer order, CPU otherwise idle): 6 min 23 s and 6 min 15 s, 4.1 GB; 600 rows (591 and 590 distinct);
+purity 0.804 and 0.809; mean agree 0.795 and 0.796; Dfam B2_Mm1a 1.000 / 1.000, Mm1t 0.985 / 0.985, Mm2 0.995 / 0.990, B3 0.954 / 0.952, B3A 0.888 / 0.898; chr19 rows found at ≥ 0.95: 40 of 60 (seed 2).
+So the three samples agree to 0.005 in purity and 0.01 in recovery, and the 13 min of seed 1 was the shared-CPU figure (6.3 min on an idle machine).
+
 Reading: at ten times the input the picture of the 3,000-copy run holds (purity 0.805 against 0.793; the three young Dfam consensuses in the rows at
 ≥ 0.984, the two old ones at 0.89–0.94 as before); `-P` saves most of the memory and half the time at a cost of 0.05 in purity; `-n 20` gives 1,500 rows
 at purity 0.826. The old rule for the final alignment (full L-INS-i refinement, single-threaded) took the `-n 20` run past 1.5 h in the refinement
