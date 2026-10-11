@@ -1,0 +1,22 @@
+== n50: 600 rows, 584 distinct, chunk purity vs rmsk name 0.472, mean agree 0.882
+   dfam_alu.fa (42 references):
+      expected >=50   n= 26  recovered at 0.95/0.98/0.99:  25/ 21/ 17   median best identity 0.994
+      expected 10-50  n=  6  recovered at 0.95/0.98/0.99:   6/  5/  2   median best identity 0.984
+      expected <10    n= 10  recovered at 0.95/0.98/0.99:   9/  5/  2   median best identity 0.980
+      rows with a reference at >= 0.95: 463 of 600 (nearest references: 22 distinct); rows with none: 137
+   price213.fa (213 references):
+      expected >=50   n= 74  recovered at 0.95/0.98/0.99:  74/ 61/ 37   median best identity 0.993
+      expected 10-50  n= 90  recovered at 0.95/0.98/0.99:  88/ 61/ 37   median best identity 0.989
+      expected <10    n= 49  recovered at 0.95/0.98/0.99:  45/ 12/  5   median best identity 0.972
+      rows with a reference at >= 0.95: 506 of 600 (nearest references: 55 distinct); rows with none: 94
+== n50P: 600 rows, 588 distinct, chunk purity vs rmsk name 0.400, mean agree 0.881
+   dfam_alu.fa (42 references):
+      expected >=50   n= 26  recovered at 0.95/0.98/0.99:  22/ 20/ 12   median best identity 0.987
+      expected 10-50  n=  6  recovered at 0.95/0.98/0.99:   6/  4/  2   median best identity 0.984
+      expected <10    n= 10  recovered at 0.95/0.98/0.99:   9/  4/  2   median best identity 0.977
+      rows with a reference at >= 0.95: 456 of 600 (nearest references: 17 distinct); rows with none: 144
+   price213.fa (213 references):
+      expected >=50   n= 74  recovered at 0.95/0.98/0.99:  73/ 57/ 29   median best identity 0.989
+      expected 10-50  n= 90  recovered at 0.95/0.98/0.99:  86/ 57/ 29   median best identity 0.986
+      expected <10    n= 49  recovered at 0.95/0.98/0.99:  42/ 10/  3   median best identity 0.965
+      rows with a reference at >= 0.95: 485 of 600 (nearest references: 45 distinct); rows with none: 115

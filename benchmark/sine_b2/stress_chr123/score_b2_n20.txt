@@ -1,0 +1,10 @@
+== n20: 1500 rows, 1486 distinct, chunk purity vs rmsk class 0.826, mean agree 0.801; rows per majority class {'B3A': 288, 'B3': 669, 'B2_Mm2': 325, 'B2_Mm1t': 130, 'B2_Mm1a': 88}
+   dfam_B2.fa (5 references): recovered at 0.95/0.98/0.99: 3/3/2; median best identity 0.985; min 0.890
+      DFAM_B2_Mm1a           best row b2_0739  identity 1.000 coverage 0.995
+      DFAM_B2_Mm1t           best row b2_0747  identity 0.985 coverage 1.000
+      DFAM_B2_Mm2            best row b2_1080  identity 0.995 coverage 0.990
+      DFAM_B3                best row b2_0507  identity 0.943 coverage 0.977
+      DFAM_B3A               best row b2_1387  identity 0.890 coverage 0.924
+      rows with a reference at >= 0.95: 393 of 1500
+   chr19_rows.fa (60 references): recovered at 0.95/0.98/0.99: 35/22/18; median best identity 0.957; min 0.886
+      rows with a reference at >= 0.95: 558 of 1500

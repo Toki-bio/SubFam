@@ -135,3 +135,24 @@ Chunk purity of the 3,000-copy run against the RepeatMasker label and the Vasset
 | samples seed 2 / 3 / 4 (N 50, k 6) | 60 | 0.778 / 0.781 / 0.774 | 0.781 / 0.777 / 0.779 |
 
 Purity moves by about 0.05 with N (smaller chunks are purer, as expected), by up to 0.04 with k (k = 6 best against rmsk, flat against the 2021 labels), not at all with p (p changes the consensus, not the chunk membership), and by 0.02 between random samples. The MAFFT order is 0.06 lower against rmsk. No setting was tuned on these labels.
+
+## Stress case: 30,000 copies of mm39 chr1–3 (2026-10-11; `stress_chr123/`)
+`stress_chr123/pipeline.sh` (paths of this run; chromosomes 1–3 of mm39 from UCSC, the extraction rule of `make_b2.sh`: 41,989 full-length copies,
+chr1 14,690, chr2 16,345, chr3 10,954; a random 30,000, seed 1, `subsample.py`), SubFam 1.4.1 for `-n 50` and `-n 50 -P`, 1.4.2 for `-n 20`
+(the three runs differ only in the final-alignment mode), 8 threads on a 4-core machine; peak RSS of the whole run. Scored by `score_big.py`
+(outputs `score_b2.txt`, `score_b2_n20.txt`): purity against the RepeatMasker class, recovery of the five Dfam consensuses and of the 60 chr19
+rows by `../alu_hg38/recover.py` (coverage ≥ 0.9). Consensuses, chunk statistics and chunk tables of the three runs are in `stress_chr123/`;
+the 600-row alignment is `examples/b2_mm39_chr123_30k_n50.aln.fasta`.
+
+| run | wall | peak RSS | rows (distinct) | purity | mean agree | Dfam B2_Mm1a / Mm1t / Mm2 / B3 / B3A best identity | chr19 rows found at ≥ 0.95 |
+|---|---|---|---|---|---|---|---|
+| `-n 50`, k-mer order | 13 min 11 s | 4.1 GB | 600 (588) | 0.805 | 0.795 | 1.000 / 0.984 / 0.995 / 0.943 / 0.889 | 35 of 60 |
+| `-n 50 -P` | 7 min 19 s | 0.7 GB | 600 (592) | 0.756 | 0.793 | 1.000 / 0.985 / 0.995 / 0.939 / 0.890 | 38 of 60 |
+| `-n 20`, k-mer order (1.4.2) | 15 min 26 s | 4.1 GB | 1,500 (1,486) | 0.826 | 0.801 | 1.000 / 0.985 / 0.995 / 0.943 / 0.890 | 35 of 60 |
+
+Reading: at ten times the input the picture of the 3,000-copy run holds (purity 0.805 against 0.793; the three young Dfam consensuses in the rows at
+≥ 0.984, the two old ones at 0.89–0.94 as before); `-P` saves most of the memory and half the time at a cost of 0.05 in purity; `-n 20` gives 1,500 rows
+at purity 0.826. The old rule for the final alignment (full L-INS-i refinement, single-threaded) took the `-n 20` run past 1.5 h in the refinement
+alone before it was stopped; 1.4.2 aligns the 1,500 rows with MAFFT `--auto` in seconds. The 11.5 min of the `-n 20` ordering step was measured
+while another process shared the CPU. The chr19 rows found among the 600 at ≥ 0.95 are mostly the B2 rows; the B3/B3A rows of the two runs differ,
+as expected for 25–30 % diverged copies drawn from different chromosomes.

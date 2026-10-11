@@ -1,0 +1,20 @@
+== n50: 600 rows, 588 distinct, chunk purity vs rmsk class 0.805, mean agree 0.795; rows per majority class {'B3A': 112, 'B3': 271, 'B2_Mm2': 129, 'B2_Mm1t': 54, 'B2_Mm1a': 34}
+   dfam_B2.fa (5 references): recovered at 0.95/0.98/0.99: 3/3/2; median best identity 0.984; min 0.889
+      DFAM_B2_Mm1a           best row b2_296   identity 1.000 coverage 0.995
+      DFAM_B2_Mm1t           best row b2_299   identity 0.984 coverage 0.990
+      DFAM_B2_Mm2            best row b2_394   identity 0.995 coverage 0.985
+      DFAM_B3                best row b2_169   identity 0.943 coverage 0.981
+      DFAM_B3A               best row b2_125   identity 0.889 coverage 1.000
+      rows with a reference at >= 0.95: 176 of 600
+   chr19_rows.fa (60 references): recovered at 0.95/0.98/0.99: 35/22/17; median best identity 0.962; min 0.885
+      rows with a reference at >= 0.95: 263 of 600
+== n50P: 600 rows, 592 distinct, chunk purity vs rmsk class 0.756, mean agree 0.793; rows per majority class {'B3': 297, 'B2_Mm2': 134, 'B3A': 82, 'B2_Mm1t': 49, 'B2_Mm1a': 38}
+   dfam_B2.fa (5 references): recovered at 0.95/0.98/0.99: 3/3/2; median best identity 0.985; min 0.890
+      DFAM_B2_Mm1a           best row b2_279   identity 1.000 coverage 1.000
+      DFAM_B2_Mm1t           best row b2_254   identity 0.985 coverage 1.000
+      DFAM_B2_Mm2            best row b2_369   identity 0.995 coverage 0.979
+      DFAM_B3                best row b2_444   identity 0.939 coverage 0.981
+      DFAM_B3A               best row b2_583   identity 0.890 coverage 0.919
+      rows with a reference at >= 0.95: 185 of 600
+   chr19_rows.fa (60 references): recovered at 0.95/0.98/0.99: 38/22/19; median best identity 0.961; min 0.889
+      rows with a reference at >= 0.95: 253 of 600
