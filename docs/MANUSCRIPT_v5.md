@@ -95,7 +95,7 @@ SubFam is a bash script with embedded Python (numpy ≥ 1.20) and awk; MAFFT ≥
 
 ## Open items
 1. If wanted, `vsearch --cluster_size --consout` and MMseqs2 as further baselines (MeShClust2 done).
-2. (Done for the 3′-end run, the relabelling and the B2 identities: `benchmark/line_real/README.md` §6, `benchmark/sine_b2/label.log`.) Fidelity numbers: output to be committed when the re-run finishes.
+2. (Done for the 3′-end run, the relabelling and the B2 identities: `benchmark/line_real/README.md` §6, `benchmark/sine_b2/label.log`.) Fidelity: re-run 2026-10-11, `benchmark/multiseed/fidelity.txt`, identical to the README table.
 3. Figures 1–2 as publication graphics; hg38 Alu run on the author's servers.
 4. A length-robust distance for mixed-length input is a method change, left for a later version.
 5. Declarations, Zenodo, journal headings.

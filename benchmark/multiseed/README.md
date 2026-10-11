@@ -29,3 +29,4 @@ Reading: the rows are faithful summaries for young and middle families and much 
 contains its source consensus. A copy that is not nearest to its own row is still represented in `chunks.tsv`; the claim is organisation, not per-copy attribution.
 
 Re-run 2026-10-10 with SubFam 1.3.0 (`run.sh`, 8 threads): all 216 rows of `results.tsv` are byte-identical to the file above.
+Re-run 2026-10-11 with SubFam 1.4.1 (seeds 1-4 of run.sh): fidelity.txt, identical to the table above.
