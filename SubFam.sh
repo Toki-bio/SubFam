@@ -5,7 +5,7 @@
 #   1. order all sequences along a k-mer guide tree (UPGMA; neighbours end up adjacent)
 #   2. cut the ordered list into consecutive chunks of N neighbours
 #   3. align each chunk (MAFFT) and call its plurality consensus
-#   4. align the consensus sequences (MAFFT L-INS-i)
+#   4. align the consensus sequences (MAFFT L-INS-i; lighter modes above 300 and 1,000 consensuses)
 #
 # Each consensus averages N closely related copies: private mutations of single
 # copies cancel out, variants shared by a group survive. No identity threshold
@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.4.1
+VERSION=1.4.2
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -607,10 +607,14 @@ fi
 echo "Aligning consensus sequences"
 T1=$(date +%s)
 if [ "$NCHUNK" -ge 2 ]; then
-    # L-INS-i up to 2,000 consensus sequences, MAFFT's automatic choice beyond; --threadit 0 keeps
-    # the iterative refinement deterministic whatever the thread count
-    MODE="--localpair --maxiterate 1000"; [ "$NCHUNK" -le 2000 ] || MODE=--auto
-    mafft --thread "$THREADS" --threadit 0 $MODE --nuc --reorder --preservecase --quiet \
+    # Up to 300 consensuses: L-INS-i with full iterative refinement, --threadit 0 so that the refinement
+    # is deterministic whatever the thread count (refinement cost grows with the square of the row count:
+    # seconds at 100 rows, 6 min at 600, hours at 1,500). 301-1,000: the pairwise-consistency step of
+    # L-INS-i with two refinement rounds (most of its gain, a tenth of the time). Beyond: MAFFT --auto.
+    if [ "$NCHUNK" -le 300 ]; then MODE="--localpair --maxiterate 1000 --threadit 0"
+    elif [ "$NCHUNK" -le 1000 ]; then MODE="--localpair --maxiterate 2"
+    else MODE=--auto; fi
+    mafft --thread "$THREADS" $MODE --nuc --reorder --preservecase --quiet \
         "$OUTDIR/$PREFIX.cons.fasta" > "$OUTDIR/$PREFIX.aln.fasta"
 else
     cp "$OUTDIR/$PREFIX.cons.fasta" "$OUTDIR/$PREFIX.aln.fasta"
