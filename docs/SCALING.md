@@ -228,3 +228,16 @@ default bin size is byte-identical to before.
 In SINEderella this is `step1c_deplete.sh`: residual = `unassigned.fasta` + assigned copies
 below the per-subfamily percentile of step3's `sim_ratio`; SubFam with bin size 20 on the
 residual; the result goes through the same manual review as step1's `input.clw`.
+
+## Measured 2026-10-11, SubFam 1.4.1 (`benchmark/ablation/run_scale.sh`, output `scale_10k_20k.tsv`)
+Simulated middle family (8 %), 8 threads, N = 50; peak RSS of the whole run (children's ru_maxrss).
+
+| copies | ordering | wall time | peak RSS | rows | chunk purity | sources recovered |
+|---|---|---|---|---|---|---|
+| 10,000 | k-mer | 75 s | 839 MB | 200 | 0.921 | 8/8 |
+| 10,000 | `-P` (PartTree) | 65 s | 104 MB | 200 | 0.888 | 8/8 |
+| 20,000 | k-mer | 247 s | 2,216 MB | 400 | 0.947 | 8/8 |
+| 20,000 | `-P` (PartTree) | 173 s | 194 MB | 400 | 0.902 | 8/8 |
+
+So `-P` works, uses a tenth of the memory, recovers the same sources and gives slightly less pure chunks on this simulation. The k-mer path
+needs about 4 n² bytes plus 0.3 GB (2.2 GB at 20,000; a 16 GB machine will fail around 55,000); SubFam 1.4.1 warns above 20,000.

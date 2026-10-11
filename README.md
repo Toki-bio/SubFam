@@ -61,6 +61,7 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 | `-x STR` | input name | output prefix |
 | `-r` | off | copies may be on both strands: strand-independent (canonical) k-mers for the tree, then each copy is oriented like its neighbour in the order, and the whole set like its majority strand |
 | `-m` | off | order with the MAFFT guide tree instead of k-mers |
+| `-I` | off | keep the input order: for input you ordered yourself, or to measure what the ordering contributes (a shuffled input gives the chance level) |
 | `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
 | `-c` | off | coverage-relative plurality for truncated copies: a base needs `-p` of the sequences that span that column (end gaps excluded, at least 3 spanning), not of the whole chunk |
 | `-a` | off | keep no-consensus positions as `N` (by default they are removed, which also removes alignment columns where most of the chunk has a gap) |

@@ -1,0 +1,8 @@
+variant	rows	columns	sec	purity_rmsk	purity_v2021	mean_agree	mean_id_min
+SubFam (k-mer order, chunks, consensus, alignment)	60	223	20	0.793	0.773	0.805	0.720
+no ordering: shuffled input, same chunks	60	237	9	0.426	0.424	0.757	0.597
+no ordering: input order (genomic coordinate)	60	242	9	0.428	0.457	0.760	0.591
+MAFFT guide-tree order instead of k-mers	60	223	11	0.734	0.764	0.798	0.710
+no chunks: one consensus of all copies	1	194	47	0.422	0.392	0.796	0.503
+no consensus: MAFFT --auto of all 3,000 copies	3000	2781	18	NA	NA	NA	NA
+k-mer UPGMA order without the closest-ends flip	60	234	19	0.771	0.766	0.803	0.716

@@ -51,6 +51,8 @@ Options:
   -r        sequences may be on both strands: strand-independent k-mers, then each copy
             is oriented like its neighbour, and the whole set like its majority strand
   -m        order with the MAFFT guide tree (mafft --retree 0 --reorder) instead of k-mers
+  -I        keep the input order (no ordering step): for input you ordered yourself, or to see
+            what the ordering contributes (chunks of a shuffled input are the chance level)
   -P        order with MAFFT PartTree (implies -m; for very large inputs, >20,000 sequences)
   -c        coverage-relative plurality, for truncated copies (fragments, 5'-truncated LINEs):
             a base needs -p of the sequences that span that column (internal gaps count,
@@ -96,7 +98,7 @@ die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
 ARGS=$(printf '%q ' "$@")
-while getopts ":n:p:k:t:o:x:e:g:rmPcaKvh" opt; do
+while getopts ":n:p:k:t:o:x:e:g:rmIPcaKvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
         p) PLURALITY=$OPTARG ;;
@@ -108,6 +110,7 @@ while getopts ":n:p:k:t:o:x:e:g:rmPcaKvh" opt; do
         g) LABELS=$OPTARG ;;
         r) BOTH=1 ;;
         m) ORDER=mafft ;;
+        I) ORDER=input ;;
         P) ORDER=mafft; PARTTREE=--parttree ;;
         c) RELCOV=1 ;;
         a) KEEP_N=1 ;;
@@ -166,8 +169,10 @@ fi
 # Embedded programs
 # ---------------------------------------------------------------------------------------
 KMER_ORDER_PY=$(cat <<'PY'
+import os
 import sys
 import numpy as np
+NOFLIP = os.environ.get("SUBFAM_NOFLIP") == "1"
 
 # k-mer guide-tree order: a port of kmer-tree.js (ViewAlign, Toki-bio/MSA-viewer, MIT).
 # Weighted Jaccard distance on k-mer counts, UPGMA with ViewAlign's tie-breaking, and at
@@ -291,6 +296,8 @@ def upgma_order(cd, dist):
         A, B = clusters[ci], clusters[cj]
         opts = [dist(A[-1], B[0]), dist(A[-1], B[-1]), dist(A[0], B[0]), dist(A[0], B[-1])]
         best = int(np.argmin(opts))                      # first minimum, like a stable sort
+        if NOFLIP:                                       # ablation only (SUBFAM_NOFLIP=1): plain UPGMA leaf order
+            best = 0
         A = A[::-1] if best >= 2 else A
         B = B[::-1] if best in (1, 3) else B
         sI, sJ = len(A), len(B)
@@ -515,6 +522,9 @@ T1=$(date +%s)
 if [ "$ORDER" = kmer ]; then
     echo "Ordering sequences along the $K-mer guide tree"
     python3 -c "$KMER_ORDER_PY" "$IN" "$WORK/ordered.fasta" "$K" "${BOTH:-0}" "${BOTH:-0}"
+elif [ "$ORDER" = input ]; then
+    echo "Keeping the input order (-I)"
+    cp "$IN" "$WORK/ordered.fasta"
 else
     echo "Ordering sequences along the MAFFT guide tree"
     mafft --thread "$THREADS" --nuc --quiet --retree 0 --reorder $PARTTREE ${BOTH:+--adjustdirection} \

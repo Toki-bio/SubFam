@@ -1,0 +1,5 @@
+input	order	sec	peak_rss_MB	recovered	rows
+mid10k	kmer	75	839	x	200	200	0.00	0.921	100.0	8/8
+mid10k	P	65	104	x	200	200	0.00	0.888	100.0	8/8
+mid20k	kmer	247	2216	x	400	400	0.00	0.947	100.0	8/8
+mid20k	P	173	194	x	400	400	0.00	0.902	100.0	8/8
