@@ -1,0 +1,53 @@
+# B2, 60 chunk consensuses; Cluster Now at the UI defaults, recursion depth 2, columns present in >= 50 % of the rows
+b2.aln.fasta: 60 rows x 223 columns -> 2 top-level clusters, 60 rows assigned, 0 unassigned
+## minPerfect 5
+24 rows, 11 exclusive columns, 1 run(s) in chunk order (b2_22..b2_45) | rmsk B2_Mm2 660, B2_Mm1t 274, B2_Mm1a 246 (0.55) | V2021 B2a 1080, B2b 101, B2d 10 (0.90)
+    unassigned inside: 12 rows
+36 rows, 16 exclusive columns, 2 run(s) in chunk order (b2_01..b2_60) | rmsk B3 1249, B3A 539, B2_Mm2 12 (0.69) | V2021 B2d 1167, B2e 409, B2c 195 (0.65)
+    unassigned inside: 36 rows
+b2.aln.fasta: 60 rows x 223 columns -> 2 top-level clusters, 60 rows assigned, 0 unassigned
+## minPerfect 2
+24 rows, 11 exclusive columns, 1 run(s) in chunk order (b2_22..b2_45) | rmsk B2_Mm2 660, B2_Mm1t 274, B2_Mm1a 246 (0.55) | V2021 B2a 1080, B2b 101, B2d 10 (0.90)
+    12 rows, 5 exclusive columns, 2 run(s) in chunk order (b2_22..b2_45) | rmsk B2_Mm2 556, B2_Mm1t 22, B3 17 (0.93) | V2021 B2a 481, B2b 100, B2d 10 (0.80)
+        3 rows, 2 exclusive columns, 1 run(s) in chunk order (b2_43..b2_45) | rmsk B2_Mm2 128, B3 16, B3A 3 (0.85) | V2021 B2b 79, B2a 53, B2d 9 (0.53)
+        3 rows, 0 exclusive columns, 3 run(s) in chunk order (b2_22..b2_29) | rmsk B2_Mm2 146, B2_Mm1t 3, B3 1 (0.97) | V2021 B2a 134, B2b 15, B2d 1 (0.89)
+        unassigned inside: 6 rows
+    6 rows, 2 exclusive columns, 1 run(s) in chunk order (b2_34..b2_39) | rmsk B2_Mm1a 214, B2_Mm1t 85, B2_Mm2 1 (0.71) | V2021 B2a 300 (1.00)
+        unassigned inside: 6 rows
+    unassigned inside: 6 rows
+36 rows, 16 exclusive columns, 2 run(s) in chunk order (b2_01..b2_60) | rmsk B3 1249, B3A 539, B2_Mm2 12 (0.69) | V2021 B2d 1167, B2e 409, B2c 195 (0.65)
+    unassigned inside: 36 rows
+
+# B2: exclusive (strict) and enriched (cloudy) columns of a GIVEN partition = chunk majority label (groups below 3 rows are not characterised)
+## groups = chunk majority, v2021
+B2a: 22 rows, 9 strict, 33 cloudy
+B2b: 2 rows, 0 strict, 0 cloudy
+B2c: 2 rows, 0 strict, 0 cloudy
+B2d: 34 rows, 21 strict, 38 cloudy
+## groups = chunk majority, rmsk
+B2_Mm1a: 4 rows, 0 strict, 43 cloudy
+B2_Mm1t: 6 rows, 0 strict, 38 cloudy
+B2_Mm2: 14 rows, 1 strict, 33 cloudy
+B3: 27 rows, 10 strict, 45 cloudy
+B3A: 9 rows, 4 strict, 7 cloudy
+
+# L1, last 1000 bp of every copy, 111 chunk consensuses; recursion depth 2, minPerfect 3, columns present in >= 50 % of the rows
+tail.aln.fasta: 111 rows x 3684 columns -> 4 top-level clusters, 94 rows assigned, 17 unassigned
+30 rows, 5 exclusive columns, 1 run(s) in chunk order (tail_001..tail_030) | rmsk L1PA7 368, L1PA6 112, L1PA8 106 (0.61)
+    6 rows, 9 exclusive columns, 1 run(s) in chunk order (tail_025..tail_030) | rmsk L1PA6 110, L1PA5 5, L1PA7 4 (0.92)
+        unassigned inside: 2 rows
+    24 rows, 9 exclusive columns, 1 run(s) in chunk order (tail_001..tail_024) | rmsk L1PA7 364, L1PA8 106, L1PA4 3 (0.76)
+        5 rows, 4 exclusive columns, 2 run(s) in chunk order (tail_001..tail_023) | rmsk L1PA8 73, L1PA7 21, L1PA4 3 (0.72)
+        19 rows, 4 exclusive columns, 2 run(s) in chunk order (tail_004..tail_024) | rmsk L1PA7 343, L1PA8 33, L1PA3 2 (0.90)
+27 rows, 5 exclusive columns, 1 run(s) in chunk order (tail_045..tail_071) | rmsk L1PA3 372, L1PA2 151, L1PA4 18 (0.69)
+    12 rows, 3 exclusive columns, 3 run(s) in chunk order (tail_045..tail_071) | rmsk L1PA3 221, L1PA4 17, L1PA2 2 (0.92)
+        unassigned inside: 12 rows
+    15 rows, 5 exclusive columns, 2 run(s) in chunk order (tail_049..tail_070) | rmsk L1PA3 151, L1PA2 149, L1PA4 1 (0.50)
+        unassigned inside: 15 rows
+34 rows, 0 exclusive columns, 3 run(s) in chunk order (tail_031..tail_092) | rmsk L1PA4 331, L1PA5 287, L1PA6 50 (0.49)
+    17 rows, 3 exclusive columns, 3 run(s) in chunk order (tail_044..tail_090) | rmsk L1PA4 310, L1PA5 26, L1PA3 3 (0.91)
+        unassigned inside: 17 rows
+    17 rows, 3 exclusive columns, 3 run(s) in chunk order (tail_031..tail_092) | rmsk L1PA5 261, L1PA6 50, L1PA4 21 (0.77)
+        unassigned inside: 8 rows
+3 rows, 0 exclusive columns, 2 run(s) in chunk order (tail_043..tail_094) | rmsk L1PA5 27, L1PA4 11, L1PA7 9 (0.45)
+unassigned at top level: 17 rows

@@ -1,0 +1,518 @@
+{
+ "options": {
+  "minSize": 3,
+  "minPerfect": 3,
+  "maxIterations": 10,
+  "qualitySmall": 80,
+  "qualityMedium": 70,
+  "qualityLarge": 60,
+  "sizeSmallMedium": 11,
+  "sizeMediumLarge": 20,
+  "minOccurrences": 3
+ },
+ "nRows": 111,
+ "alnLen": 3684,
+ "clusters": [
+  {
+   "size": 30,
+   "rows": [
+    "tail_001",
+    "tail_002",
+    "tail_003",
+    "tail_022",
+    "tail_004",
+    "tail_006",
+    "tail_019",
+    "tail_014",
+    "tail_017",
+    "tail_020",
+    "tail_008",
+    "tail_012",
+    "tail_011",
+    "tail_024",
+    "tail_015",
+    "tail_010",
+    "tail_007",
+    "tail_018",
+    "tail_013",
+    "tail_016",
+    "tail_021",
+    "tail_023",
+    "tail_025",
+    "tail_026",
+    "tail_028",
+    "tail_027",
+    "tail_030",
+    "tail_029",
+    "tail_009",
+    "tail_005"
+   ],
+   "perfect": [
+    "2991:A",
+    "3512:C",
+    "3618:C",
+    "3347:C",
+    "3579:G"
+   ],
+   "imperfect": [
+    "3049:T",
+    "3500:G",
+    "3537:A",
+    "3596:A"
+   ],
+   "cloudy": [],
+   "children": [
+    {
+     "size": 6,
+     "rows": [
+      "tail_025",
+      "tail_026",
+      "tail_028",
+      "tail_027",
+      "tail_030",
+      "tail_029"
+     ],
+     "perfect": [
+      "2907:C",
+      "3176:G",
+      "3399:G",
+      "3434:G",
+      "3514:G",
+      "3568:A",
+      "3575:A",
+      "3640:G",
+      "3651:C"
+     ],
+     "imperfect": [],
+     "cloudy": [],
+     "childUnassigned": [
+      "tail_025",
+      "tail_029"
+     ]
+    },
+    {
+     "size": 24,
+     "rows": [
+      "tail_001",
+      "tail_002",
+      "tail_003",
+      "tail_022",
+      "tail_004",
+      "tail_006",
+      "tail_019",
+      "tail_014",
+      "tail_017",
+      "tail_020",
+      "tail_008",
+      "tail_012",
+      "tail_011",
+      "tail_024",
+      "tail_015",
+      "tail_010",
+      "tail_007",
+      "tail_018",
+      "tail_013",
+      "tail_016",
+      "tail_021",
+      "tail_023",
+      "tail_009",
+      "tail_005"
+     ],
+     "perfect": [
+      "2719:T",
+      "2907:T",
+      "3176:T",
+      "3399:A",
+      "3434:A",
+      "3514:A",
+      "3568:G",
+      "3575:G",
+      "3654:C"
+     ],
+     "imperfect": [],
+     "cloudy": [],
+     "children": [
+      {
+       "size": 5,
+       "rows": [
+        "tail_001",
+        "tail_002",
+        "tail_003",
+        "tail_022",
+        "tail_023"
+       ],
+       "perfect": [
+        "3222:T",
+        "3328:A",
+        "3524:G",
+        "3535:C"
+       ],
+       "imperfect": [],
+       "cloudy": []
+      },
+      {
+       "size": 19,
+       "rows": [
+        "tail_004",
+        "tail_006",
+        "tail_019",
+        "tail_014",
+        "tail_017",
+        "tail_020",
+        "tail_008",
+        "tail_012",
+        "tail_011",
+        "tail_024",
+        "tail_015",
+        "tail_010",
+        "tail_007",
+        "tail_018",
+        "tail_013",
+        "tail_016",
+        "tail_021",
+        "tail_009",
+        "tail_005"
+       ],
+       "perfect": [
+        "3222:C",
+        "3328:G",
+        "3524:T",
+        "3535:G"
+       ],
+       "imperfect": [
+        "3582:G",
+        "3668:T"
+       ],
+       "cloudy": []
+      }
+     ],
+     "childUnassigned": []
+    }
+   ],
+   "childUnassigned": []
+  },
+  {
+   "size": 27,
+   "rows": [
+    "tail_045",
+    "tail_068",
+    "tail_063",
+    "tail_069",
+    "tail_065",
+    "tail_064",
+    "tail_071",
+    "tail_047",
+    "tail_066",
+    "tail_067",
+    "tail_046",
+    "tail_048",
+    "tail_049",
+    "tail_050",
+    "tail_053",
+    "tail_052",
+    "tail_062",
+    "tail_070",
+    "tail_054",
+    "tail_058",
+    "tail_059",
+    "tail_060",
+    "tail_057",
+    "tail_055",
+    "tail_056",
+    "tail_061",
+    "tail_051"
+   ],
+   "perfect": [
+    "2710:C",
+    "3364:T",
+    "3371:T",
+    "3385:T",
+    "3601:G"
+   ],
+   "imperfect": [
+    "3165:C",
+    "3363:A",
+    "3486:T",
+    "3627:T"
+   ],
+   "cloudy": [],
+   "children": [
+    {
+     "size": 12,
+     "rows": [
+      "tail_045",
+      "tail_068",
+      "tail_063",
+      "tail_069",
+      "tail_065",
+      "tail_064",
+      "tail_071",
+      "tail_047",
+      "tail_066",
+      "tail_067",
+      "tail_046",
+      "tail_048"
+     ],
+     "perfect": [
+      "3531:A",
+      "3568:A",
+      "3580:A"
+     ],
+     "imperfect": [
+      "3677:T"
+     ],
+     "cloudy": [],
+     "childUnassigned": [
+      "tail_045",
+      "tail_068",
+      "tail_063",
+      "tail_069",
+      "tail_065",
+      "tail_064",
+      "tail_071",
+      "tail_047",
+      "tail_066",
+      "tail_067",
+      "tail_046",
+      "tail_048"
+     ]
+    },
+    {
+     "size": 15,
+     "rows": [
+      "tail_049",
+      "tail_050",
+      "tail_053",
+      "tail_052",
+      "tail_062",
+      "tail_070",
+      "tail_054",
+      "tail_058",
+      "tail_059",
+      "tail_060",
+      "tail_057",
+      "tail_055",
+      "tail_056",
+      "tail_061",
+      "tail_051"
+     ],
+     "perfect": [
+      "3677:A",
+      "3531:G",
+      "3568:G",
+      "3580:G",
+      "3595:G"
+     ],
+     "imperfect": [
+      "2823:G",
+      "3399:A"
+     ],
+     "cloudy": [],
+     "childUnassigned": [
+      "tail_049",
+      "tail_050",
+      "tail_053",
+      "tail_052",
+      "tail_062",
+      "tail_070",
+      "tail_054",
+      "tail_058",
+      "tail_059",
+      "tail_060",
+      "tail_057",
+      "tail_055",
+      "tail_056",
+      "tail_061",
+      "tail_051"
+     ]
+    }
+   ],
+   "childUnassigned": []
+  },
+  {
+   "size": 34,
+   "rows": [
+    "tail_031",
+    "tail_037",
+    "tail_091",
+    "tail_038",
+    "tail_039",
+    "tail_085",
+    "tail_092",
+    "tail_086",
+    "tail_087",
+    "tail_032",
+    "tail_040",
+    "tail_042",
+    "tail_041",
+    "tail_036",
+    "tail_033",
+    "tail_034",
+    "tail_044",
+    "tail_072",
+    "tail_078",
+    "tail_074",
+    "tail_076",
+    "tail_075",
+    "tail_088",
+    "tail_090",
+    "tail_073",
+    "tail_079",
+    "tail_081",
+    "tail_080",
+    "tail_083",
+    "tail_077",
+    "tail_084",
+    "tail_082",
+    "tail_089",
+    "tail_035"
+   ],
+   "perfect": [],
+   "imperfect": [
+    "3213:G",
+    "3347:T",
+    "3392:T",
+    "3399:G",
+    "3441:A",
+    "3500:T",
+    "3514:G",
+    "3575:A",
+    "3579:A",
+    "3640:G",
+    "3651:C",
+    "3654:T",
+    "3486:A"
+   ],
+   "cloudy": [],
+   "children": [
+    {
+     "size": 17,
+     "rows": [
+      "tail_044",
+      "tail_072",
+      "tail_078",
+      "tail_074",
+      "tail_076",
+      "tail_075",
+      "tail_088",
+      "tail_090",
+      "tail_073",
+      "tail_079",
+      "tail_081",
+      "tail_080",
+      "tail_083",
+      "tail_077",
+      "tail_084",
+      "tail_082",
+      "tail_089"
+     ],
+     "perfect": [
+      "2765:T",
+      "3459:A",
+      "3656:A"
+     ],
+     "imperfect": [
+      "2871:A"
+     ],
+     "cloudy": [],
+     "childUnassigned": [
+      "tail_044",
+      "tail_072",
+      "tail_078",
+      "tail_074",
+      "tail_076",
+      "tail_075",
+      "tail_088",
+      "tail_090",
+      "tail_073",
+      "tail_079",
+      "tail_081",
+      "tail_080",
+      "tail_083",
+      "tail_077",
+      "tail_084",
+      "tail_082",
+      "tail_089"
+     ]
+    },
+    {
+     "size": 17,
+     "rows": [
+      "tail_031",
+      "tail_037",
+      "tail_091",
+      "tail_038",
+      "tail_039",
+      "tail_085",
+      "tail_092",
+      "tail_086",
+      "tail_087",
+      "tail_032",
+      "tail_040",
+      "tail_042",
+      "tail_041",
+      "tail_036",
+      "tail_033",
+      "tail_034",
+      "tail_035"
+     ],
+     "perfect": [
+      "3459:T",
+      "3656:G",
+      "3070:A"
+     ],
+     "imperfect": [
+      "2765:A",
+      "2871:C"
+     ],
+     "cloudy": [],
+     "childUnassigned": [
+      "tail_031",
+      "tail_032",
+      "tail_040",
+      "tail_042",
+      "tail_041",
+      "tail_033",
+      "tail_034",
+      "tail_035"
+     ]
+    }
+   ],
+   "childUnassigned": []
+  },
+  {
+   "size": 3,
+   "rows": [
+    "tail_043",
+    "tail_093",
+    "tail_094"
+   ],
+   "perfect": [],
+   "imperfect": [
+    "2903:C",
+    "2991:G",
+    "3049:C"
+   ],
+   "cloudy": []
+  }
+ ],
+ "unassigned": [
+  "tail_097",
+  "tail_098",
+  "tail_099",
+  "tail_100",
+  "tail_101",
+  "tail_102",
+  "tail_103",
+  "tail_104",
+  "tail_096",
+  "tail_095",
+  "tail_105",
+  "tail_106",
+  "tail_107",
+  "tail_108",
+  "tail_109",
+  "tail_110",
+  "tail_111"
+ ]
+}
