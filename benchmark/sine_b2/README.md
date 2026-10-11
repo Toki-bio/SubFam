@@ -122,3 +122,16 @@ labels is not shown in the table because those labels are themselves best hits b
 a vsearch clustering matches them by construction (the full table in `vsearch_sweep.txt` has the column); (2) purity
 rewards small groups, which is why the coverage column is printed; (3) `cluster_fast` is greedy and
 order-dependent; (4) this is one chromosome and one family, so it illustrates the argument and is not a benchmark.
+
+## Sensitivity (2026-10-11; `sensitivity.sh`, output `sensitivity.tsv`)
+Chunk purity of the 3,000-copy run against the RepeatMasker label and the Vassetzky 2021 best-hit label, and the mean `agree` of `chunkstats.tsv`, for other settings and other random samples of the 5,972 copies:
+
+| setting | chunks | purity rmsk | purity 2021 |
+|---|---|---|---|
+| N = 20 / 30 / 50 / 100 (k 6) | 150 / 100 / 60 / 30 | 0.812 / 0.803 / 0.793 / 0.757 | 0.785 / 0.780 / 0.773 / 0.760 |
+| k = 4 / 5 / 6 / 8 / 10 (N 50) | 60 | 0.758 / 0.761 / 0.793 / 0.763 / 0.754 | 0.779 / 0.771 / 0.773 / 0.770 / 0.761 |
+| p = 0.25 / 0.36 / 0.5 (N 50, k 6) | 60 | 0.793 (all) | 0.773 (all) |
+| MAFFT guide-tree order (`-m`, N 50) | 60 | 0.734 | 0.764 |
+| samples seed 2 / 3 / 4 (N 50, k 6) | 60 | 0.778 / 0.781 / 0.774 | 0.781 / 0.777 / 0.779 |
+
+Purity moves by about 0.05 with N (smaller chunks are purer, as expected), by up to 0.04 with k (k = 6 best against rmsk, flat against the 2021 labels), not at all with p (p changes the consensus, not the chunk membership), and by 0.02 between random samples. The MAFFT order is 0.06 lower against rmsk. No setting was tuned on these labels.
