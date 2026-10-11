@@ -1,0 +1,3 @@
+copies with a 3'-end hit: 1921; unique best hit equal to rmsk: 1760 (91.6 %); rmsk among the best hits (ties counted): 1830 (95.3 %); within one class: 1915 (99.7 %); ties: 72
+last 900 bp: 111 chunks, purity 0.796, chunks with purity >= 0.9: 61
+whole copies: 111 chunks, purity 0.696, chunks with purity >= 0.9: 32

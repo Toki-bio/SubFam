@@ -84,18 +84,18 @@ SubFam is a bash script with embedded Python (numpy ≥ 1.20) and awk; MAFFT ≥
 [AUTHOR: ethics and consent (not applicable), competing interests, funding, contributions, acknowledgements, AI-use statement; fee waiver for authors in Uzbekistan to be verified.]
 
 ## Figures and tables
-- **Figure 1.** Mouse B2, 3,000 copies, 60 rows: the alignment grouped by RepeatMasker class, with the class consensus and the Dfam consensus as heads (`examples/b2_mm39_chr19_n50.aln.fasta`). *[to be drawn]*
+- **Figure 1.** Mouse B2, 3,000 copies, 60 rows: the alignment grouped by RepeatMasker class, with the class consensus and the Dfam consensus as heads (`examples/b2_mm39_chr19_n50.aln.fasta`; raster `docs/figures/fig1_b2_grouped.png`, `benchmark/sine_b2/figure_grouped_alignment.py`: grey = majority base of the SubFam rows, red = other base, white = gap; head rows framed; purity of each row at the right).
 - **Figure 2.** From chaos to order: 390 B2 copies in input order, in SubFam order, and their 20 chunk consensuses, on one alignment (sketch `docs/figures/sketch_chaos_to_order_b2.png`; the 221 of 1,108 columns present in ≥ 25 % of the copies).
 - **Table 1.** Identity-clustering baseline.
 - **Table 2.** Ablation.
-- **Supplementary Figure 1.** L1PA2–8 grouped by RepeatMasker label (`examples/real_l1pa_chr4_n20c.aln.fasta`); **Supplementary Table.** whole-copy against 3′-region trees.
-- **Supplementary Figure 2.** Alu loci with Price et al. consensuses (`examples/konkel_alu_n20.aln.fasta`).
+- **Supplementary Figure 1.** L1PA2–8 grouped by RepeatMasker label (`examples/real_l1pa_chr4_n20c.aln.fasta`; raster `docs/figures/figS1_l1_grouped.png`); **Supplementary Table.** whole-copy against 3′-region trees.
+- **Supplementary Figure 2.** Alu loci with Price et al. consensuses (`examples/konkel_alu_n20.aln.fasta`; raster `docs/figures/figS2_alu_grouped.png`).
 - **Supplementary Figure 3.** Simulation recovery by family age; chunk-size and k sensitivity.
 - **Supplementary text.** The two B2 classifications compared (`benchmark/sine_b2/README.md`).
 
 ## Open items
 1. If wanted, `vsearch --cluster_size --consout` and MMseqs2 as further baselines (MeShClust2 done).
-2. Commit the raw outputs behind the 3′-end run (0.796), the 91.6 % relabelling, the 67–70 % identities and the fidelity numbers, or regenerate them.
+2. (Done for the 3′-end run, the relabelling and the B2 identities: `benchmark/line_real/README.md` §6, `benchmark/sine_b2/label.log`.) Fidelity numbers: output to be committed when the re-run finishes.
 3. Figures 1–2 as publication graphics; hg38 Alu run on the author's servers.
 4. A length-robust distance for mixed-length input is a method change, left for a later version.
 5. Declarations, Zenodo, journal headings.

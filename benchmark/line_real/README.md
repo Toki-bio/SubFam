@@ -119,3 +119,9 @@ diagnostic differences, which sit in the 3′ end. Caveats: the classes were the
 them is expected and does not show that the 3′ tree is closer to a biological truth; RF is high for any two unresolved trees of 1,000+ leaves (0.79 even for k = 5), so only the contrast
 with the control is informative; chunk purity here uses consecutive chunks of 20 in SubFam's leaf order, which gives 112 chunks (SubFam proper: 111); the ARI column of the output
 (tree cut into 7 clusters) is uninformative (about 0: the cut gives one large cluster and a few tiny ones) and is not used.
+
+## 6. Raw outputs behind sections 2-3 (committed 2026-10-11)
+`hits3p.tsv.gz` (the best hits of `relabel_3end.sh`), `sf_last900/` (chunks, log and chunk statistics of `SubFam.sh -n 20` on the last 900 bp,
+re-run with 1.4.1: 1 min 23 s on 8 threads) and `recompute_3end.py` -> `recompute_3end.txt`: 1,921 copies with a 3'-end hit; the unique best
+hit equals the rmsk label for 1,760 (91.6 %), the rmsk label is among the best hits (72 ties counted) for 1,830 (95.3 %), within one class for 1,915
+(99.7 %); chunk purity 0.796 with 61 chunks >= 0.9 on the last 900 bp against 0.696 and 32 on whole copies. The 91.6 % of section 2 is the unique-best convention.

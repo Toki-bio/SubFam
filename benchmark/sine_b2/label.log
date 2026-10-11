@@ -1,0 +1,13 @@
+copies with a hit: 3000 of 3000 ; ties: 1
+B2a	1084 copies	median identity to consensus 89.3
+B2b	125 copies	median identity to consensus 81.1
+B2c	196 copies	median identity to consensus 75.1
+B2d	1177 copies	median identity to consensus 70.4
+B2e	417 copies	median identity to consensus 67.2
+tie_B2d_B2e	1 copies	median identity to consensus 65.3
+rmsk \ consensus	B2a	B2b	B2c	B2d	B2e	tie_B2d_B2e
+B2_Mm1a	246	0	0	0	0	0
+B2_Mm1t	273	1	0	0	0	0
+B2_Mm2	563	104	2	2	1	0
+B3	0	8	141	927	190	0
+B3A	2	12	53	248	226	1

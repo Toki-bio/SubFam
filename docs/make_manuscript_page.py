@@ -2,7 +2,7 @@
 """make_manuscript_page.py MANUSCRIPT.md FIGURE.png OUT.html
 Renders the manuscript draft (markdown) as one self-contained HTML page for the artifact viewer:
 [AUTHOR ...] and [NOT RUN ...] markers are highlighted, the chaos-to-order sketch is embedded after its paragraph."""
-import base64, re, sys, markdown
+import base64, os, re, sys, markdown
 md, fig, out = sys.argv[1:4]
 def split_paragraphs(text):          # the draft writes one paragraph per line: put a blank line between plain adjacent lines
     L, out = text.split('\n'), []
@@ -18,6 +18,11 @@ figure = ('<figure><img alt="Sketch of Figure 2: 390 real B2 copies in random or
           'src="data:image/png;base64,%s"><figcaption>Figure 2 (sketch). 390 real B2 copies (stratified random sample): input order, SubFam order, 20 chunk consensuses on one alignment. '
           'Left strip: Vassetzky 2021 best-hit label. Red: differs from the column majority; white: gap.</figcaption></figure>' % img)
 body = re.sub(r'(<p><em>From chaos to order.*?</p>)', lambda m: m.group(1) + figure, body, count=1, flags=re.S)
+f1 = os.path.join(os.path.dirname(fig), 'fig1_b2_grouped.png')
+if os.path.exists(f1):
+    img1 = base64.b64encode(open(f1, 'rb').read()).decode()
+    fig1 = ('<figure><img alt="Figure 1: the B2 alignment grouped by RepeatMasker class" src="data:image/png;base64,%s"><figcaption>Figure 1. Mouse B2, 3,000 copies, 60 SubFam rows (N = 50), grouped by RepeatMasker class; class consensus and Dfam consensus as heads (framed); grey = majority base of the SubFam rows, red = other base, white = gap; purity at the right.</figcaption></figure>' % img1)
+    body = re.sub(r'(<h3>Example 1: mouse B2 SINEs.*?</h3>)', lambda m: m.group(1) + fig1, body, count=1, flags=re.S)
 title = 'SubFam manuscript draft'
 css = open(__file__.replace('make_manuscript_page.py', 'manuscript_page.css'), encoding='utf-8').read()
 open(out, 'w', encoding='utf-8').write('<title>%s</title>\n<style>\n%s\n</style>\n<main>\n%s\n</main>\n' % (title, css, body))

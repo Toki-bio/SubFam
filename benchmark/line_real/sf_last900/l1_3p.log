@@ -1,0 +1,3 @@
+SubFam 1.4.1  2026-10-11 12:09
+command: /home/user/SubFam/SubFam.sh -n 20 -t 8 -o /tmp/claude-0/-home-user/1be2918b-24d1-57ec-aa06-e66e904c321d/scratchpad/l1_900 -x l1_3p /tmp/claude-0/-home-user-SubFam/1be2918b-24d1-57ec-aa06-e66e904c321d/scratchpad/l1real/l1_3p.fa 
+input: /tmp/claude-0/-home-user-SubFam/1be2918b-24d1-57ec-aa06-e66e904c321d/scratchpad/l1real/l1_3p.fa  sequences: 2222  chunks: 111  n: 20  p: 0.36  k: 6  order: kmer
