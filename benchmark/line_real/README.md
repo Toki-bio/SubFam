@@ -68,3 +68,23 @@ defined on is used; the rest of the disagreement is of the order of the labels' 
 (re-labelling by the 3' end reproduces rmsk for 91.6 % of copies, section 2). Full-length copies
 group at the coarser ORF2 resolution of Smit's Table 2; that is a property of the sequences, not an
 error of either classification.
+
+## 4. Is the k-mer order driven by copy length? (2026-10-11; `length_effect.py`, output `length_effect.txt`)
+
+Question: with 5′-truncated copies, does the UPGMA tree group copies by size instead of by diagnostic differences? The distance is the weighted
+Jaccard distance of k-mer counts, which is large between a copy and its own shorter prefix: for the longest copy (8,505 bp) the distance
+to its own first 3,000 / 2,000 / 1,000 / 500 bp is 0.65 / 0.77 / 0.88 / 0.94 (identical sequence, no mutations). So length enters the distance by construction.
+
+Measured on the 2,222 L1PA2–8 copies and the 111 chunks of the `-n 20 -c` run:
+- The chunks are nearly length-homogeneous: median within-chunk length CV 0.05, against 0.59 for random chunks of 20. Normalised mutual
+  information of the chunk with the length quintile is 0.457, with the RepeatMasker label 0.389; label and length are unrelated (0.011).
+- The length-independent signal is still there: inside each length quintile, the label purity of the chunks is 0.67, 0.74, 0.66, 0.69 and 0.86
+  (quintiles from shortest to longest), against 0.365 for chunks cut by length alone (the chance level, since length and label are unrelated).
+  The longest copies (6.0–8.5 kb, nearly full length) sort best.
+
+Reading: yes, length is part of the order, as expected from the distance. It splits each class over several chunks (111 chunks for 7 classes) and
+puts a short copy and a long copy of the same class in different chunks. It does not explain the mixing of neighbouring classes: purity inside
+a length stratum (0.66–0.86) is about the same as overall (0.70), and well above chance. Mixing PA2+3, PA4–6, PA7+8 remains a property of how
+little those classes differ, as in section 2. Consequence for the method: chunk consensuses of short copies and of long copies of one class
+appear as separate rows; `-c` lets each consensus extend only as far as its copies. A length-insensitive distance (for example, containment instead of Jaccard)
+would change this and has not been tried. The 3′-end control of section 3 removes the length effect (all copies 900 bp) and gives 0.80.

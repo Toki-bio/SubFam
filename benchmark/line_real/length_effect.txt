@@ -1,0 +1,13 @@
+(1) longest copy 8505 bp; weighted-Jaccard distance to its own prefix of:
+    3000 bp: 0.648
+    2000 bp: 0.765
+    1000 bp: 0.883
+     500 bp: 0.942
+(2) NMI(chunk; length quintile) 0.457   NMI(chunk; label) 0.389   NMI(label; length quintile) 0.011
+(3) purity: chunks cut by length alone 0.365, SubFam chunks 0.696; median within-chunk length CV: SubFam 0.05, random chunks 0.59
+(4) label purity of SubFam chunks inside each length quintile (chunks with at least 5 copies of the quintile):
+    quintile 1 (1000-1383 bp): 432 copies in 30 such chunks, purity 0.667
+    quintile 2 (1385-2020 bp): 426 copies in 36 such chunks, purity 0.737
+    quintile 3 (2021-3305 bp): 423 copies in 29 such chunks, purity 0.660
+    quintile 4 (3318-6028 bp): 424 copies in 29 such chunks, purity 0.689
+    quintile 5 (6029-8505 bp): 437 copies in 30 such chunks, purity 0.858
