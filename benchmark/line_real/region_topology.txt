@@ -1,0 +1,10 @@
+copies: 2222; with >= 2000 bp: 1345 (61 %)
+A whole                            copies 2222  chunks 112  chunk purity 0.695  ARI(7 clusters, class) -0.000  NMI(chunk, length quintile) 0.459
+A last 1000 bp                     copies 2222  chunks 112  chunk purity 0.794  ARI(7 clusters, class) 0.004  NMI(chunk, length quintile) 0.075
+B whole                            copies 1345  chunks  68  chunk purity 0.720  ARI(7 clusters, class) 0.002  NMI(chunk, length quintile) 0.392
+B last 2000 bp                     copies 1345  chunks  68  chunk purity 0.779  ARI(7 clusters, class) 0.001  NMI(chunk, length quintile) 0.075
+C whole, k=5                       copies 2222  chunks 112  chunk purity 0.644  ARI(7 clusters, class) 0.004  NMI(chunk, length quintile) 0.475
+
+A whole            vs A last 1000 bp      normalised RF 0.974   cophenetic correlation 0.368
+B whole            vs B last 2000 bp      normalised RF 0.958   cophenetic correlation 0.523
+A whole            vs C whole, k=5        normalised RF 0.791   cophenetic correlation 0.911

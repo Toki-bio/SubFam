@@ -88,3 +88,34 @@ a length stratum (0.66–0.86) is about the same as overall (0.70), and well abo
 little those classes differ, as in section 2. Consequence for the method: chunk consensuses of short copies and of long copies of one class
 appear as separate rows; `-c` lets each consensus extend only as far as its copies. A length-insensitive distance (for example, containment instead of Jaccard)
 would change this and has not been tried. The 3′-end control of section 3 removes the length effect (all copies 900 bp) and gives 0.80.
+
+## 5. Tree on the whole copy vs on a shared 3′ region (2026-10-11; `region_topology.py`, output `region_topology.txt`)
+
+Question (author): does the topology of the k-mer tree change if it is built only from the part every copy has (the 3′ tail), or from a longer
+window shared by the copies that cover it? Same copies, same distance (weighted Jaccard of 6-mers, UPGMA), different input region. L1 copies are
+5′-truncated and end at the 3′ end, so the last X bp of every copy of at least X bp is one homologous window (up to indels; no alignment was used to define it).
+A: all 2,222 copies, whole vs last 1,000 bp (the shortest copy is 1,000 bp). B: the 1,345 copies of at least 2,000 bp (61 %), whole vs last 2,000 bp.
+C (control): whole sequence, k = 6 vs k = 5, to show how far a harmless parameter change moves the tree.
+
+| comparison | normalised RF (rooted clades) | cophenetic correlation |
+|---|---|---|
+| A: whole vs last 1,000 bp | 0.974 | 0.368 |
+| B: whole vs last 2,000 bp | 0.958 | 0.523 |
+| C: k = 6 vs k = 5, whole | 0.791 | 0.911 |
+
+| tree | copies | chunk purity vs RepeatMasker class (chunks of 20) | NMI(chunk, length quintile) |
+|---|---|---|---|
+| A whole | 2,222 | 0.695 | 0.459 |
+| A last 1,000 bp | 2,222 | 0.794 | 0.075 |
+| B whole | 1,345 | 0.720 | 0.392 |
+| B last 2,000 bp | 1,345 | 0.779 | 0.075 |
+| C whole, k = 5 | 2,222 | 0.644 | 0.475 |
+
+Reading: the tree built from the whole copy and the tree built from the shared 3′ region are almost entirely different (RF 0.96–0.97, cophenetic
+correlation 0.37–0.52), much further apart than two trees from the same sequence with k = 6 and k = 5 (RF 0.79, correlation 0.91). Whole-copy chunks follow the copy
+length (NMI 0.46 and 0.39), 3′-region chunks do not (0.075), and the 3′-region chunks agree better with the RepeatMasker classes (0.79 and 0.78 against 0.70 and 0.72), also in the
+subset of long copies where every copy covers the window (B). So the discordance of the whole-copy tree comes from length and from the unequal parts the copies cover, not from the
+diagnostic differences, which sit in the 3′ end. Caveats: the classes were themselves assigned from the 3′ end (Smit 1995; RepeatMasker best score), so agreement of a 3′ tree with
+them is expected and does not show that the 3′ tree is closer to a biological truth; RF is high for any two unresolved trees of 1,000+ leaves (0.79 even for k = 5), so only the contrast
+with the control is informative; chunk purity here uses consecutive chunks of 20 in SubFam's leaf order, which gives 112 chunks (SubFam proper: 111); the ARI column of the output
+(tree cut into 7 clusters) is uninformative (about 0: the cut gives one large cluster and a few tiny ones) and is not used.
