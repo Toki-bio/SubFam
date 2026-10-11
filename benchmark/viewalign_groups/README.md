@@ -5,11 +5,11 @@ Answer by measurement: they work as a second stage on the **chunk-consensus alig
 with named diagnostic columns. They need a well-aligned, shared region: on the ragged whole-copy L1 alignment they find coverage patterns, not subfamilies.
 
 Code used: `cluster.js` of [Toki-bio/MSA-viewer](https://github.com/Toki-bio/MSA-viewer) at commit `5d637fb7c2d3b5576599225c8215562293ea371c`, class `SINEClusterer`
-(position-pattern clustering = "Cluster Now"; `characterizeGroups` = exclusive / enriched columns of a given partition), loaded in node the way that repository's
+(position-pattern clustering = "Find SNP groups" (Diagnostic SNPs); `characterizeGroups` = exclusive / enriched columns of a given partition), loaded in node the way that repository's
 `tests/clustering/*.test.js` load it (`cluster_rows.js`). UI defaults of those tests: minSize 3, minPerfect 5, quality 80/70/60 %, 10 iterations, `clusterChunked`.
 Additions of ours: `--recurse 2` (re-run inside each cluster, same columns), `--min-occupancy 0.5` (mask columns that are a gap in more than half of the rows, see below),
 `--groups` (characterise a given partition). Scoring: `score_clusters.py` (labels are counted in COPIES, a row = the copies of its chunk). Everything: `run_viewalign_groups.sh`;
-results: `results/viewalign_groups.txt` and the JSON files. The viewer was not opened; its UI "Cluster Now" runs this same class on the same alignments:
+results: `results/viewalign_groups.txt` and the JSON files. The viewer was not opened by me. In the code of that commit the button "Find SNP groups" (`clusterNowButton` → `clusterSequences` in `script.js`) calls this same class, `SINEClusterer.clusterChunked` (script.js lines ~16123–16138), and its "Split existing groups" option calls it again on the members of a group (~15736), which is what `--recurse` does here; "Min Features" and "Min Occur" are `minPerfect` and `minOccurrences`. The author reports that the UI divides the B2 alignment into two groups, as found here. Its UI "Find SNP groups" (Diagnostic SNPs) runs this same class on the same alignments:
 `examples/b2_mm39_chr19_n50_chunks.aln.fasta` and `examples/l1pa_chr4_last1000_n20_chunks.aln.fasta` are the two input alignments (SubFam's own alignment of the chunk consensuses).
 
 ## B2 (60 chunk consensuses, 223 columns)

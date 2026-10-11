@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.3.0
+VERSION=1.4.0
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -31,6 +31,8 @@ KEEP_N=
 KEEP_TMP=
 RELCOV=
 MINCOV=3       # with -c: fewest covering sequences for a consensus base
+EXTRACT=       # -e: chunks whose original sequences are written to one FASTA file each
+LABELS=        # -g: id<TAB>group file; the composition of every chunk by group is reported
 
 usage() {
     cat <<EOF
@@ -57,6 +59,13 @@ Options:
             region most copies cover.
   -a        keep no-consensus positions as N (default: drop them from the consensus);
             bases supported by half the chunk or fewer are written in lower case
+  -e LIST   write the ORIGINAL sequences of the listed chunks to one FASTA file each, in
+            DIR/PREFIX.chunk_fasta/ (as in the input: same headers, same orientation). LIST:
+            all, or comma-separated chunk numbers and ranges, e.g. 3,7,22-45 (a chunk is
+            named PREFIX_NN, NN = its number in the order)
+  -g FILE   labels of the input sequences chosen by you (lines: id<TAB>group, e.g. a
+            RepeatMasker class or a subfamily name): reports how every chunk is composed by
+            group (PREFIX.composition.tsv). SubFam does not define groups.
   -K        keep intermediate files (chunks, chunk alignments)
   -v        print version
   -h        show this help
@@ -66,6 +75,15 @@ Outputs (in DIR):
   PREFIX.aln.fasta    aligned consensus sequences (FASTA)
   PREFIX.msf          the same alignment in MSF format
   PREFIX.chunks.tsv   input id, consensus it went into, strand (- = reverse-complemented by -r)
+  PREFIX.chunkstats.tsv  per chunk, without any labels: n, consensus length, share of
+            lower-case (weakly supported) bases, columns where at least half of the chunk has
+            a base (core), agree = mean share of the covering sequences that carry the most
+            frequent base of a core column, id_med and id_min = median and lowest identity of
+            the chunk's sequences to that base over their core columns, ragged = share of core
+            columns where at least 20 % of the chunk has a gap. Low agree / id_min / high ragged
+            mean a loose chunk (a mixed group, a misalignment or outlier sequences).
+  PREFIX.chunk_fasta/ (with -e)   the original sequences of the chosen chunks, one file each
+  PREFIX.composition.tsv (with -g)  chunk, n, labelled, majority group, purity, count per group
   PREFIX.log          version, command line and chunk count of the run
 
 Requires: mafft >= 7, awk, and python3 with numpy >= 1.20 (not needed with -m/-P).
@@ -77,7 +95,7 @@ die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
 ARGS=$*
-while getopts ":n:p:k:t:o:x:rmPcaKvh" opt; do
+while getopts ":n:p:k:t:o:x:e:g:rmPcaKvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
         p) PLURALITY=$OPTARG ;;
@@ -85,6 +103,8 @@ while getopts ":n:p:k:t:o:x:rmPcaKvh" opt; do
         t) THREADS=$OPTARG ;;
         o) OUTDIR=$OPTARG ;;
         x) PREFIX=$OPTARG ;;
+        e) EXTRACT=$OPTARG ;;
+        g) LABELS=$OPTARG ;;
         r) BOTH=1 ;;
         m) ORDER=mafft ;;
         P) ORDER=mafft; PARTTREE=--parttree ;;
@@ -114,6 +134,10 @@ fi
 [[ $THREADS =~ ^[0-9]+$ ]] && [ "$THREADS" -ge 1 ] || die "-t must be a positive integer"
 [[ $PLURALITY =~ ^[0-9]*\.?[0-9]+$ ]] && awk -v p="$PLURALITY" 'BEGIN { exit !(p > 0 && p <= 1) }' ||
     die "-p must be a number in (0, 1]"
+
+[ -z "$LABELS" ] || [ -s "$LABELS" ] || die "label file '$LABELS' not found or empty"
+[ -z "$EXTRACT" ] || [[ $EXTRACT =~ ^(all|[0-9]+(-[0-9]+)?(,[0-9]+(-[0-9]+)?)*)$ ]] ||
+    die "-e needs 'all' or chunk numbers and ranges such as 3,7,22-45"
 
 BASE=$(basename "$IN")
 case $BASE in *.gz) BASE=${BASE%.gz} ;; esac
@@ -393,6 +417,35 @@ END {
 AWK
 )
 
+STATS_AWK=$(cat <<'AWK'
+# Label-free quality of one chunk, from its alignment (FASTA, all rows the same length).
+# Variables: name, conslen, lower. Prints one tab-separated line:
+# chunk n conslen lower core agree id_med id_min ragged
+/^>/ { n++; next }
+{ gsub(/[ \t\r]/, ""); seq[n] = seq[n] toupper($0) }
+END {
+    L = length(seq[1]); core = 0; agsum = 0; rag = 0
+    for (k = 1; k <= L; k++) {
+        delete cnt; ng = 0
+        for (i = 1; i <= n; i++) { c = substr(seq[i], k, 1); if (c ~ /[ACGT]/) { cnt[c]++; ng++ } }
+        if (ng < n / 2) continue
+        best = ""; bk = 0
+        for (c in cnt) if (cnt[c] > bk || (cnt[c] == bk && c < best)) { best = c; bk = cnt[c] }
+        core++; top[k] = best; agsum += bk / ng
+        if ((n - ng) / n >= 0.2) rag++
+    }
+    for (i = 1; i <= n; i++) {
+        m = 0; t = 0
+        for (k = 1; k <= L; k++) if (k in top) { c = substr(seq[i], k, 1); if (c ~ /[ACGT]/) { t++; if (c == top[k]) m++ } }
+        id[i] = t ? m / t : 0
+    }
+    for (i = 2; i <= n; i++) { v = id[i]; j = i - 1; while (j >= 1 && id[j] > v) { id[j + 1] = id[j]; j-- } id[j + 1] = v }
+    med = (n % 2) ? id[(n + 1) / 2] : (id[n / 2] + id[n / 2 + 1]) / 2
+    printf "%s\t%d\t%d\t%.3f\t%d\t%.3f\t%.3f\t%.3f\t%.3f\n", name, n, conslen, conslen ? lower / conslen : 0, core, core ? agsum / core : 0, med, id[1], core ? rag / core : 0
+}
+AWK
+)
+
 MSF_AWK=$(cat <<'AWK'
 # Aligned FASTA -> GCG MSF, as EMBOSS seqret -osformat2 msf writes it (nucleotides).
 # Variables: file (name printed in the header), date (dd/mm/yy).
@@ -476,7 +529,7 @@ rm -f "$WORK/ordered.fasta"
 
 echo "Aligning chunks and calling consensus sequences"
 T1=$(date +%s)
-export PLURALITY KEEP_N CONS_AWK RELCOV MINCOV
+export PLURALITY KEEP_N CONS_AWK STATS_AWK RELCOV MINCOV
 printf '%s\0' "$WORK/${NAME}_"*.fasta |
     xargs -0 -P "$THREADS" -I {} sh -c '
         f=$1; name=$(basename "$f" .fasta)
@@ -487,11 +540,47 @@ printf '%s\0' "$WORK/${NAME}_"*.fasta |
         awk -v plur="$plur" -v name="$name" -v rel="$RELCOV" -v frac="$PLURALITY" -v mincov="$MINCOV" "$CONS_AWK" "$f.aln" > "$f.raw"
         [ -s "$f.raw" ] || { echo "SubFam: consensus failed on chunk $name" >&2; exit 1; }
         awk -v keep="$KEEP_N" "!/^>/ { if (keep) gsub(/n/, \"N\"); else gsub(/[Nn]/, \"\") } 1" "$f.raw" > "$f.cons"
+        cl=$(grep -v "^>" "$f.cons" | tr -d "\n" | wc -c); lw=$(grep -v "^>" "$f.cons" | tr -d "\n" | tr -cd "[:lower:]" | wc -c)
+        awk -v name="$name" -v conslen="$cl" -v lower="$lw" "$STATS_AWK" "$f.aln" > "$f.stats"
     ' _ {}
 cat "$WORK/${NAME}_"*.fasta.cons > "$OUTDIR/$PREFIX.cons.fasta"
 [ "$(grep -c '^>' "$OUTDIR/$PREFIX.cons.fasta")" -eq "$NCHUNK" ] || die "expected $NCHUNK consensus sequences, see $WORK"
 cp "$WORK/chunks.tsv" "$OUTDIR/$PREFIX.chunks.tsv"
+{ printf 'chunk\tn\tcons_len\tlower\tcore\tagree\tid_med\tid_min\tragged\n'; cat "$WORK/${NAME}_"*.fasta.stats; } > "$OUTDIR/$PREFIX.chunkstats.tsv"
 elapsed "$T1"
+
+if [ -n "$EXTRACT" ]; then
+    # the original sequences of the chosen chunks, one FASTA file per chunk (input headers and orientation unchanged)
+    XDIR="$OUTDIR/$PREFIX.chunk_fasta"; mkdir -p "$XDIR"
+    awk -v sel="$EXTRACT" -v nc="$NCHUNK" -v pre="$NAME" -v dir="$XDIR" -v map="$WORK/chunks.tsv" '
+        BEGIN {
+            fmt = "%s_%0" length(nc "") "d"
+            if (sel == "all") { for (c = 1; c <= nc; c++) want[sprintf(fmt, pre, c)] = 1 }
+            else { m = split(sel, part, ","); for (q = 1; q <= m; q++) { r = split(part[q], ab, "-"); lo = ab[1] + 0; hi = (r > 1) ? ab[2] + 0 : lo
+                   for (c = lo; c <= hi; c++) if (c >= 1 && c <= nc) want[sprintf(fmt, pre, c)] = 1 } }
+            while ((getline line < map) > 0) { split(line, f, "\t"); if (f[2] in want) dest[f[1]] = f[2] }
+        }
+        /^>/ { id = substr($1, 2); out = (id in dest) ? dir "/" dest[id] ".fasta" : ""; if (out != "") nseq[dest[id]]++ }
+        out != "" { print > out }
+        END { for (c in want) { k++; tot += nseq[c] } printf "  wrote %d chunk files with %d sequences to %s\n", k, tot, dir }
+    ' "$IN"
+fi
+if [ -n "$LABELS" ]; then
+    # composition of every chunk by the groups given in the label file (SubFam only counts; it does not define groups)
+    awk -F'\t' -v lab="$LABELS" '
+        BEGIN { while ((getline line < lab) > 0) { if (line ~ /^#/ || line ~ /^[ \t]*$/) continue; split(line, a, /[ \t]+/); g[a[1]] = a[2]; seen[a[2]] = 1 } ng = 0; for (x in seen) grp[++ng] = x
+                for (i = 2; i <= ng; i++) { v = grp[i]; j = i - 1; while (j >= 1 && grp[j] > v) { grp[j + 1] = grp[j]; j-- } grp[j + 1] = v } }
+        { n[$2]++; if (!($2 in first)) { first[$2] = 1; ord[++nch] = $2 } if ($1 in g) { cnt[$2, g[$1]]++; lb[$2]++ } }
+        END {
+            printf "chunk\tn\tlabelled\tmajority\tpurity"; for (i = 1; i <= ng; i++) printf "\t%s", grp[i]; printf "\n"
+            for (c = 1; c <= nch; c++) { ch = ord[c]; maj = "-"; mx = 0
+                for (i = 1; i <= ng; i++) if (cnt[ch, grp[i]] > mx) { mx = cnt[ch, grp[i]]; maj = grp[i] }
+                printf "%s\t%d\t%d\t%s\t%s", ch, n[ch], lb[ch], maj, lb[ch] ? sprintf("%.2f", mx / lb[ch]) : "NA"
+                for (i = 1; i <= ng; i++) printf "\t%d", cnt[ch, grp[i]]; printf "\n" }
+        }
+    ' "$OUTDIR/$PREFIX.chunks.tsv" > "$OUTDIR/$PREFIX.composition.tsv"
+    echo "  chunk composition by $(head -1 "$OUTDIR/$PREFIX.composition.tsv" | awk -F'\t' '{ print NF - 5 }') groups: $OUTDIR/$PREFIX.composition.tsv"
+fi
 
 echo "Aligning consensus sequences"
 T1=$(date +%s)
@@ -508,5 +597,5 @@ awk -v file="$OUTDIR/$PREFIX.msf" -v date="$(date +%d/%m/%y)" "$MSF_AWK" "$OUTDI
 elapsed "$T1"
 
 [ -z "$KEEP_TMP" ] || echo "Intermediate files kept in $WORK"
-echo "Job completed: $OUTDIR/$PREFIX.{cons.fasta,aln.fasta,msf,chunks.tsv}"
+echo "Job completed: $OUTDIR/$PREFIX.{cons.fasta,aln.fasta,msf,chunks.tsv,chunkstats.tsv}"
 elapsed "$T0"

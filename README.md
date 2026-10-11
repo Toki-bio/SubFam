@@ -64,6 +64,8 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 | `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
 | `-c` | off | coverage-relative plurality for truncated copies: a base needs `-p` of the sequences that span that column (end gaps excluded, at least 3 spanning), not of the whole chunk |
 | `-a` | off | keep no-consensus positions as `N` (by default they are removed, which also removes alignment columns where most of the chunk has a gap) |
+| `-e LIST` | off | write the original sequences of the listed chunks to one FASTA file each in `PREFIX.chunk_fasta/`; `LIST` is `all` or chunk numbers and ranges, e.g. `3,7,22-45` |
+| `-g FILE` | off | your own labels (`id<TAB>group`): report how every chunk is composed by group in `PREFIX.composition.tsv` |
 | `-K` | off | keep intermediate chunk files |
 
 Outputs:
@@ -74,6 +76,13 @@ Outputs:
 | `PREFIX.aln.fasta` | the consensuses aligned (FASTA) |
 | `PREFIX.msf` | the same alignment in MSF format |
 | `PREFIX.chunks.tsv` | `input id`, `consensus`, `strand`: which copy built which consensus |
+| `PREFIX.chunkstats.tsv` | per chunk, no labels needed: `n`, `cons_len`, `lower` (share of weakly supported lower-case bases), `core` columns, `agree` (mean share of the sequences that carry the most frequent base of a core column), `id_med` / `id_min` (median / lowest identity of the chunk's sequences to those bases), `ragged` (share of core columns with ≥ 20 % gaps) |
+| `PREFIX.chunk_fasta/` (`-e`) | the original sequences of the chosen chunks, input headers and orientation unchanged (`strand` in `chunks.tsv` says which were flipped for the ordering with `-r`) |
+| `PREFIX.composition.tsv` (`-g`) | `chunk`, `n`, `labelled`, `majority`, `purity`, then the count of each group |
+
+**Chunk names and quality.** A chunk is named `PREFIX_NN` (NN = its position in the k-mer order, so neighbouring numbers are similar). The name carries no quality information, on purpose: names stay stable and safe for downstream tools. Quality is in `PREFIX.chunkstats.tsv`, and, if you supply labels, in `PREFIX.composition.tsv` (`purity`). On the B2 example (60 chunks, 3,000 copies) the five statistics of `chunkstats.tsv` are strongly correlated with each other (Spearman 0.88–0.97) and each correlates with the label purity of the chunk at 0.74; the correlation is 0.80 among the 24 young B2a chunks and only 0.36 among the 36 old ones. So they flag loose chunks, mostly the old, diverged ones, and do not tell a mixed chunk from a merely diverged one (`benchmark/hard/chunk_stats.py` has a prototype for that, with a two-lineage split test, not yet in SubFam).
+
+**Scope.** SubFam orders, chunks, and averages; it does not define groups. `-g` only counts your labels against the chunks and `-e` only gives back the original loci of a chunk. How groups are defined (diagnostic columns, a tree cut, annotation) and how chunks are sorted into them is left to the next step, for example the SNP-group search of [ViewAlign](https://toki-bio.github.io/MSA-viewer/) on `PREFIX.aln.fasta`.
 
 `annotate_aligned_by_ssearch_seqkit.sh` labels the resulting consensuses with their best hit in one or more reference libraries (Dfam, RepBase, your own).
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ViewAlign's own group finding (cluster.js: SINEClusterer, "Cluster Now", and characterizeGroups) on SubFam's chunk-consensus alignments.
+# ViewAlign's own group finding (cluster.js: SINEClusterer, "Find SNP groups", and characterizeGroups) on SubFam's chunk-consensus alignments.
 #   run_viewalign_groups.sh MSAVIEWER_DIR OUTDIR  B2_ALN B2_CHUNKS B2_TRUTH_RMSK B2_TRUTH_V2021  L1TAIL_ALN L1TAIL_CHUNKS L1_TRUTH
 # MSAVIEWER_DIR: a checkout of https://github.com/Toki-bio/MSA-viewer (used here: 5d637fb7c2d3b5576599225c8215562293ea371c); node >= 18.
 # B2_*: sf50/b2.aln.fasta and b2.chunks.tsv of benchmark/sine_b2/make_b2.sh, b2_truth.tsv, b2_truth_kramerov.tsv.
@@ -7,7 +7,7 @@
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd); M=$1; O=$2; mkdir -p "$O"
 B2A=$3; B2C=$4; B2R=$5; B2V=$6; LA=$7; LC=$8; LT=$9
-{ echo "# B2, 60 chunk consensuses; Cluster Now at the UI defaults, recursion depth 2, columns present in >= 50 % of the rows"
+{ echo "# B2, 60 chunk consensuses; Find SNP groups at the defaults, recursion depth 2, columns present in >= 50 % of the rows"
   for mp in 5 2; do
     node "$HERE/cluster_rows.js" "$M" "$B2A" "$O/b2_mp$mp.json" --recurse 2 --min-perfect $mp --min-occupancy 0.5
     echo "## minPerfect $mp"; python3 "$HERE/score_clusters.py" "$O/b2_mp$mp.json" "$B2C" rmsk "$B2R" V2021 "$B2V"

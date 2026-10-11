@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 /* cluster_rows.js MSAVIEWER_DIR IN.aln.fasta OUT.json [--trim] [--min-occupancy F] [--min-perfect N] [--min-occ N] [--max-iter N] [--min-size N]
- * Runs ViewAlign's position-pattern subfamily clustering (cluster.js, class SINEClusterer, "Cluster Now") on an alignment, exactly the
+ * Runs ViewAlign's position-pattern subfamily clustering (cluster.js, class SINEClusterer, "Find SNP groups") on an alignment, exactly the
  * code of the checkout MSAVIEWER_DIR, loaded the way tests/clustering/*.test.js load it. Defaults are the UI defaults used in those tests
  * (minSize 3, minPerfect 5, maxIterations 10, quality 80/70/60 %, sizes 11/20, minOccurrences 3). Writes the clusters (member row ids,
  * perfect = exclusive columns, imperfect, cloudy) and the unassigned rows as JSON.
