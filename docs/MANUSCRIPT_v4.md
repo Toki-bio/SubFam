@@ -49,21 +49,24 @@ Each step of SubFam exists elsewhere: guide-tree leaf orders (MAFFT `--reorder`)
 Chunks of unordered copies are at the level of one family consensus; the generic guide-tree order gives most of the gain, the k-mer order with the flip the rest; without the consensus step the researcher has the 3,000-row alignment.
 
 ### Against identity-threshold clustering (Table 1)
-`vsearch --cluster_fast` at several identities, and MeShClust [NOT RUN: in progress], against the SubFam chunks and one family-wide consensus [benchmark/baseline_vsearch/README.md]. Purity is the fraction of copies carrying the majority label of their group; a "real" group has at least 10 copies; distinct rows are counted after collapsing identical consensus sequences.
+`vsearch --cluster_fast` and MeShClust2 (mean-shift assignment with alignment-free identity; Girgis lab) at several identities, against the SubFam chunks and one family-wide consensus [benchmark/baseline_vsearch/README.md, benchmark/baseline_meshclust/README.md]. Purity is the fraction of copies carrying the majority label of their group; a "real" group has at least 10 copies; distinct rows are counted after collapsing identical consensus sequences.
 
 | example | method | groups | singletons | copies in groups ≥ 10 | purity of those |
 |---|---|---|---|---|---|
 | B2, 3,000 copies | one consensus | 1 | 0 | 100 % | 0.42 |
 | | **SubFam N = 50** (60 distinct rows) | **60** | **0** | **100 %** | **0.79** |
 | | vsearch 0.60 / 0.80 / 0.95 | 632 / 1,992 / 2,868 | 389 / 1,906 / 2,812 | 63 / 29 / 1 % | 0.67 / 0.80 / 0.82 |
+| | MeShClust2 0.60 / 0.80 / 0.95 | 636 / 2,328 / 2,882 | 533 / 2,233 / 2,865 | 73 / 16 / 3 % | 0.46 / 0.56 / 0.95 |
 | L1PA2–8, 2,222 copies | one consensus | 1 | 0 | 100 % | 0.22 |
 | | **SubFam N = 20, -c** (111 distinct rows) | **111** | **0** | **100 %** | **0.70** |
 | | vsearch 0.80 / 0.90 / 0.95 | 45 / 753 / 1,557 | 31 / 686 / 1,475 | 96 / 60 / 22 % | 0.36 / 0.48 / 0.83 |
+| | MeShClust2 0.80 / 0.90 / 0.95 | 317 / 709 / 1,992 | 246 / 639 / 1,957 | 81 / 66 / 7 % | 0.27 / 0.34 / 0.65 |
 | Alu loci, 316 copies | one consensus | 1 | 0 | 100 % | 0.52 |
 | | **SubFam N = 20** (7 distinct of 16 rows) | **16** | **0** | **100 %** | **0.92** |
 | | vsearch 0.95 / 0.98 / 0.99 | 18 / 70 / 140 | 8 / 38 / 101 | 89 / 65 / 35 % | 0.94 / 0.97 / 0.98 |
+| | MeShClust2 0.90 / 0.95 / 0.98 | 1 / 11 / 40 | 0 / 4 / 24 | 100 / 95 / 78 % | 0.52 / 0.77 / 0.86 |
 
-On the old families no threshold gives a short result that keeps every copy: low thresholds merge across classes (L1 at 0.80: three groups hold 96 % of the copies at purity 0.36), high thresholds leave most copies alone (B2 at 0.80: 1,906 of 3,000 are singletons). On the young Alu loci a threshold exists and vsearch at 0.95 matches SubFam in purity (0.94 against 0.92) while covering 89 % of the copies; there SubFam's gain is completeness and the order, not purity. Caveats: purity rewards small groups (hence the coverage column); the labels are annotations, not truth; `cluster_fast` is greedy; one chromosome per family. COSEG, run once on the Konkel loci, separated AluYb8 but not AluYa5 from AluY and at matched granularity scored above SubFam's fixed chunks on V-measure, which over-split by design [benchmark/alu_konkel/README.md].
+With either tool, on the old families no threshold gives a short result that keeps every copy: low thresholds merge across classes (L1 at 0.80: three groups hold 96 % of the copies at purity 0.36), high thresholds leave most copies alone (B2 at 0.80: 1,906 of 3,000 are singletons). On the young Alu loci a threshold exists and vsearch at 0.95 matches SubFam in purity (0.94 against 0.92) while covering 89 % of the copies; there SubFam's gain is completeness and the order, not purity. Caveats: purity rewards small groups (hence the coverage column); the labels are annotations, not truth; `cluster_fast` is greedy; one chromosome per family. COSEG, run once on the Konkel loci, separated AluYb8 but not AluYa5 from AluY and at matched granularity scored above SubFam's fixed chunks on V-measure, which over-split by design [benchmark/alu_konkel/README.md].
 
 ### Simulation (Supplementary Figure 3)
 Simulations give the one thing real data cannot, a known truth across family ages. With eight subfamilies at 3, 8 and 15 % divergence (eight replicates each), SubFam `-n 20` recovered all eight source consensuses in every run with 100 rows for 2,000 copies, whereas the VSEARCH identity that recovers the sources changed with age (0.90–0.95 for the young family, 0.70 for the old one) and even the best identity chosen per replicate with the truth recovered 5.25 of 8 in the old family [benchmark/multiseed]. In a harder simulation (CpG decay, source elements, mixed ages, truncated copies) SubFam recovered 6.3–7.8 of 8 at 100 rows when identity is measured over non-CpG columns; over all columns CpG decay keeps nearly every consensus of every method below 99 % identity to the master [benchmark/hard]. In the simple simulation 10 of 40 rows at N = 50 are distinct: an abundant subfamily fills several chunks with the same consensus. Rows are faithful to their copies in young and middle families and less so in old ones (a copy's own row was its best-matching row for 98.1, 87.3 and 57.5 % of copies). The simulations are star-like and of our own design; they are a supplement, not the evidence.
@@ -91,7 +94,7 @@ SubFam is a bash script with embedded Python (numpy ≥ 1.20) and awk; MAFFT ≥
 - **Supplementary text.** The two B2 classifications compared (`benchmark/sine_b2/README.md`).
 
 ## Open items
-1. MeShClust baseline (in progress) and, if the author wants, `vsearch --cluster_size --consout`.
+1. If wanted, `vsearch --cluster_size --consout` and MMseqs2 as further baselines (MeShClust2 done).
 2. Commit the raw outputs behind the 3′-end run (0.796), the 91.6 % relabelling, the 67–70 % identities and the fidelity numbers, or regenerate them.
 3. Figures 1–2 as publication graphics; hg38 Alu run on the author's servers.
 4. A length-robust distance for mixed-length input is a method change, left for a later version.

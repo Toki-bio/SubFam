@@ -1,0 +1,8 @@
+method                       groups med.sz  single | copies covered, n groups, purity rmsk (groups >= 10) | purity all | wall s
+one family-wide consensus         1   3000       0 | 100.0%    1 0.422 | 0.422 | 
+SubFam chunks (60)               60     50       0 | 100.0%   60 0.793 | 0.793 | 
+meshclust2 --id 0.60            636      1     533 |  73.4%   20 0.461 | 0.587 | 9
+meshclust2 --id 0.70           2021      1    1944 |  29.1%   25 0.530 | 0.848 | 10
+meshclust2 --id 0.80           2328      1    2233 |  15.5%   21 0.557 | 0.906 | 9
+meshclust2 --id 0.90           2738      1    2711 |   7.4%    2 0.743 | 0.978 | 12
+meshclust2 --id 0.95           2882      1    2865 |   3.0%    1 0.945 | 0.998 | 11
