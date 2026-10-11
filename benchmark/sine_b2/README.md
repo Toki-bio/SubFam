@@ -32,14 +32,14 @@ to the head of their own group: median 0.959, min 0.836; 5 rows are closer to an
 | class | rows | purity of the chunks (p) | identity to own head | reading |
 |---|---|---|---|---|
 | B2_Mm1a | 4 | 0.78–1.00 | 0.990–1.000 | clean |
-| B2_Mm2 | 14 | 0.44–1.00 (10 of 14 ≥ 0.76) | 0.867–1.000; 1 of 14 closer to the Mm1t head | mostly clean |
+| B2_Mm2 | 14 | 0.44–1.00 (11 of 14 ≥ 0.76) | 0.867–1.000; 1 of 14 closer to the Mm1t head | mostly clean |
 | B2_Mm1t | 6 | 0.44–0.96 (5 of 6 ≤ 0.66) | 0.957–0.979; 3 of 6 closer to the Mm1a or Mm2 head | no chunk of its own: its copies sit between Mm1a and Mm2 |
 | B3 | 27 | 0.56–1.00 | 0.914–0.990 | clean blocks, old (the copies are 23–27 % diverged) |
 | B3A | 9 | 0.50–0.92 | 0.836–0.927; 1 of 9 closer to the B3 head | old and mixed with B3 |
 
-The chunk order puts B3/B3A first (chunks 1–21), then B2_Mm2 → Mm1t → Mm1a (22–45), then B3 again
-(46–60): the k-mer tree separates the B2 and B3 lineages and, inside B2, runs from the older Mm2 to
-the younger Mm1a, with Mm1t in between and never pure.
+The chunk order puts B3/B3A first (chunks 1–21), then the B2 block (22–45: 22–29 Mm2, 30–34 Mm1t/Mm2,
+35–38 Mm1a, 39–45 Mm1t/Mm2), then B3 again (46–60): the k-mer tree separates the B2 and B3 lineages;
+inside B2 the three Repbase names interleave, with Mm1a as a short pure run and Mm1t never pure.
 
 Read with the literature: this is what the 2021 indel scheme predicts (Mm1a/Mm1t/Mm2 = one
 subfamily with a gradient; B3 = another), and not what five separate Repbase entries would
@@ -78,7 +78,7 @@ not a subfamily in the 2021 scheme but a mixture of old B2d/B2e/B2c copies, and 
 copies have no hit at 50 % with the stricter prefilter.
 
 **Grouped by the 2021 label** (`examples/b2_mm39_chr19_n50_kramerov.aln.fasta`, `rows_kramerov.tsv`):
-B2a 22 rows (purity 0.72–1.00, 20 of 22 ≥ 0.92), B2b 2 rows (0.48, 0.60), B2c 2 rows (0.92, 0.48),
+B2a 22 rows (purity 0.50–1.00, 20 of 22 ≥ 0.92), B2b 2 rows (0.48, 0.60), B2c 2 rows (0.92, 0.48),
 B2d 34 rows (0.48–0.86), B2e none: its 417 copies never form a chunk majority, they are spread over
 the B2d chunks. Identity to own head median 0.951, min 0.829; 12 rows closer to another head: 9 B2d rows
 closer to the B2c head, 2 to the B2e head, 1 B2a row to the B2b head.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """chaos_subset.py COPIES.fa LABELS.tsv OUT.fa OUT.tsv
-The hand-picked set of the chaos-to-order figure: a random (seed 1) 120 B2a, 30 B2b, 120 B2c and 120 B2d copies
+The stratified random sample of the chaos-to-order figure: a random (seed 1) 120 B2a, 30 B2b, 120 B2c and 120 B2d copies
 (labels = best hit to the Vassetzky et al. 2021 consensuses), written in shuffled order (no B2e: its copies
 are not separable from B2d at the copy level, see README)."""
 import collections, random, sys

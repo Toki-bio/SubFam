@@ -15,7 +15,7 @@ body = markdown.markdown(split_paragraphs(open(md, encoding='utf-8').read()), ex
 body = re.sub(r'\[(AUTHOR[^\]]*|NOT RUN[^\]]*)\]', lambda m: '<mark>[%s]</mark>' % m.group(1), body)
 img = base64.b64encode(open(fig, 'rb').read()).decode()
 figure = ('<figure><img alt="Sketch of Figure 2: 390 real B2 copies in random order, in SubFam order, and the 20 chunk consensuses" '
-          'src="data:image/png;base64,%s"><figcaption>Figure 2 (sketch). 390 hand-picked real B2 copies: input order, SubFam order, 20 chunk consensuses on one alignment. '
+          'src="data:image/png;base64,%s"><figcaption>Figure 2 (sketch). 390 real B2 copies (stratified random sample): input order, SubFam order, 20 chunk consensuses on one alignment. '
           'Left strip: Vassetzky 2021 best-hit label. Red: differs from the column majority; white: gap.</figcaption></figure>' % img)
 body = re.sub(r'(<p><em>From chaos to order.*?</p>)', lambda m: m.group(1) + figure, body, count=1, flags=re.S)
 title = 'SubFam manuscript draft'

@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.4.0
+VERSION=1.4.1
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -63,7 +63,8 @@ Options:
             DIR/PREFIX.chunk_fasta/ (as in the input: same headers, same orientation). LIST:
             all, or comma-separated chunk numbers and ranges, e.g. 3,7,22-45 (a chunk is
             named PREFIX_NN, NN = its number in the order)
-  -g FILE   labels of the input sequences chosen by you (lines: id<TAB>group, e.g. a
+  -g FILE   labels of the input sequences chosen by you (lines: id<TAB>group; a group name
+            may contain spaces when the separator is a tab; e.g. a
             RepeatMasker class or a subfamily name): reports how every chunk is composed by
             group (PREFIX.composition.tsv). SubFam does not define groups.
   -K        keep intermediate files (chunks, chunk alignments)
@@ -94,7 +95,7 @@ EOF
 die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
-ARGS=$*
+ARGS=$(printf '%q ' "$@")
 while getopts ":n:p:k:t:o:x:e:g:rmPcaKvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
@@ -143,7 +144,9 @@ BASE=$(basename "$IN")
 case $BASE in *.gz) BASE=${BASE%.gz} ;; esac
 PREFIX=${PREFIX:-${BASE%.*}}
 [ -n "$PREFIX" ] || die "cannot derive an output prefix from '$IN'; give one with -x"
-case $PREFIX in */*) die "-x must not contain '/'" ;; esac
+case $PREFIX in */*|*\\*) die "-x must not contain '/' or '\\'" ;; .|..) die "-x must not be '.' or '..'" ;; esac
+[ -n "${PREFIX//[[:space:]]/}" ] || die "-x must not be blank"
+case $OUTDIR in *\\*) die "-o must not contain '\\'" ;; esac
 NAME=${PREFIX//[[:space:]]/_}   # FASTA ids cannot contain spaces
 mkdir -p "$OUTDIR"
 WORK=$(mktemp -d "$OUTDIR/.subfam_${NAME}_XXXXXX")
@@ -154,6 +157,10 @@ if [ "$(head -c 2 "$IN" | od -An -tx1 | tr -d ' \n')" = 1f8b ]; then     # gzip 
     gzip -dc "$IN" > "$WORK/input.fasta" || die "cannot decompress '$IN'"
     IN=$WORK/input.fasta
 fi
+if [ "$(head -c 3 "$IN" | od -An -tx1 | tr -d ' \n')" = efbbbf ]; then   # UTF-8 byte-order mark: would hide the first header
+    tail -c +4 "$IN" > "$WORK/input_nobom.fasta"; IN=$WORK/input_nobom.fasta
+fi
+[ "$(head -c 1 "$IN")" = ">" ] || die "'$1' does not start with a FASTA header line"
 
 # ---------------------------------------------------------------------------------------
 # Embedded programs
@@ -494,6 +501,9 @@ T0=$(date +%s)
 TOTAL=$(grep -c '^>' "$IN" || true)
 [ "$TOTAL" -ge 1 ] || die "no FASTA records in '$IN'"
 NCHUNK=$(( (TOTAL + N / 2) / N )); [ "$NCHUNK" -ge 1 ] || NCHUNK=1     # round(TOTAL / N)
+if [ "$ORDER" = kmer ] && [ "$TOTAL" -gt 20000 ]; then
+    echo "warning: the k-mer ordering holds a ${TOTAL}x${TOTAL} float32 matrix (~$(( 4 * TOTAL * TOTAL / 1000000000 + 1 )) GB); use -P beyond the memory of this machine" >&2
+fi
 echo "SubFam $VERSION: $TOTAL sequences -> $NCHUNK chunks of ~$(( TOTAL / NCHUNK ))"
 {
     echo "SubFam $VERSION  $(date '+%Y-%m-%d %H:%M')"
@@ -562,13 +572,15 @@ if [ -n "$EXTRACT" ]; then
         }
         /^>/ { id = substr($1, 2); out = (id in dest) ? dir "/" dest[id] ".fasta" : ""; if (out != "") nseq[dest[id]]++ }
         out != "" { print > out }
-        END { for (c in want) { k++; tot += nseq[c] } printf "  wrote %d chunk files with %d sequences to %s\n", k, tot, dir }
+        END { for (c in want) { k++; tot += nseq[c] } printf "  wrote %d chunk files with %d sequences to %s\n", k, tot, dir
+              if (!k) { print "SubFam: -e " sel " names no chunk of 1.." nc > "/dev/stderr"; exit 1 } }
     ' "$IN"
 fi
 if [ -n "$LABELS" ]; then
     # composition of every chunk by the groups given in the label file (SubFam only counts; it does not define groups)
     awk -F'\t' -v lab="$LABELS" '
-        BEGIN { while ((getline line < lab) > 0) { if (line ~ /^#/ || line ~ /^[ \t]*$/) continue; split(line, a, /[ \t]+/); g[a[1]] = a[2]; seen[a[2]] = 1 } ng = 0; for (x in seen) grp[++ng] = x
+        BEGIN { while ((getline line < lab) > 0) { sub(/\r$/, "", line); if (line ~ /^#/ || line ~ /^[ \t]*$/) continue
+                    if (index(line, "\t")) split(line, a, "\t"); else split(line, a, / +/); g[a[1]] = a[2]; seen[a[2]] = 1 } ng = 0; for (x in seen) grp[++ng] = x
                 for (i = 2; i <= ng; i++) { v = grp[i]; j = i - 1; while (j >= 1 && grp[j] > v) { grp[j + 1] = grp[j]; j-- } grp[j + 1] = v } }
         { n[$2]++; if (!($2 in first)) { first[$2] = 1; ord[++nch] = $2 } if ($1 in g) { cnt[$2, g[$1]]++; lb[$2]++ } }
         END {
@@ -588,7 +600,7 @@ if [ "$NCHUNK" -ge 2 ]; then
     # L-INS-i up to 2,000 consensus sequences, MAFFT's automatic choice beyond; --threadit 0 keeps
     # the iterative refinement deterministic whatever the thread count
     MODE="--localpair --maxiterate 1000"; [ "$NCHUNK" -le 2000 ] || MODE=--auto
-    mafft --thread "$THREADS" --threadit 0 $MODE --nuc --reorder --quiet \
+    mafft --thread "$THREADS" --threadit 0 $MODE --nuc --reorder --preservecase --quiet \
         "$OUTDIR/$PREFIX.cons.fasta" > "$OUTDIR/$PREFIX.aln.fasta"
 else
     cp "$OUTDIR/$PREFIX.cons.fasta" "$OUTDIR/$PREFIX.aln.fasta"

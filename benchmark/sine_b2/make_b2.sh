@@ -40,7 +40,7 @@ python3 "$TOP/examples/check_rows.py" b2_mm39_chr19_n50_kramerov.aln.fasta > row
 python3 "$HERE/combine.py" b2_mm39_chr19_n50_both.aln.fasta b2_chr19_3000.fa sf50/b2.chunks.tsv sf50/b2.cons.fasta \
     b2_truth.tsv rmsk b2_truth_kramerov.tsv kram dfam_B2.fa kramerov2021_B2_consensus.fa --threads "$T" --tmp build_tmp_c
 
-# 5. the chaos-to-order figure: 390 hand-picked real copies (B2a 120, B2b 30, B2c 120, B2d 120), SubFam -n 20,
+# 5. the chaos-to-order figure: 390 real copies (stratified random sample, seed 1) (B2a 120, B2b 30, B2c 120, B2d 120), SubFam -n 20,
 #    random order / k-mer order / chunk consensuses on one alignment (needs matplotlib)
 python3 "$HERE/chaos_subset.py" b2_chr19_3000.fa b2_truth_kramerov.tsv chaos_subset.fa chaos_subset.tsv
 "$TOP/SubFam.sh" -n 20 -t "$T" -o sf_chaos -x sub chaos_subset.fa

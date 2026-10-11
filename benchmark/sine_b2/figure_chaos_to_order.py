@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """figure_chaos_to_order.py SUB.fa SUB.tsv CHUNKS.tsv CONS.fa OUT.png [--threads T]
 
-Sketch of the 'chaos to order' figure. SUB.fa: a hand-picked set of real B2 copies; SUB.tsv: copy<TAB>label
+Sketch of the 'chaos to order' figure. SUB.fa: a stratified random sample of real B2 copies (chaos_subset.py); SUB.tsv: copy<TAB>label
 (B2a-e best hit); CHUNKS.tsv, CONS.fa: SubFam output on SUB.fa. All copies and all chunk consensuses are
 aligned together (MAFFT --auto) so the three panels share their columns:
   a) the copies in random (input) order, b) the same copies in SubFam's k-mer order, c) the chunk consensuses.
