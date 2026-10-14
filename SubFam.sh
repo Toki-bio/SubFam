@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.4.4
+VERSION=1.5.0
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -29,6 +29,7 @@ BOTH=
 PARTTREE=
 KEEP_N=
 KEEP_TMP=
+THREADIT=0     # refinement of the final alignment (<= 300 consensuses): 0 = one thread (reproducible), -F = all threads
 RELCOV=
 MINCOV=3       # with -c: fewest covering sequences for a consensus base
 EXTRACT=       # -e: chunks whose original sequences are written to one FASTA file each
@@ -59,8 +60,9 @@ Options:
             end gaps do not) instead of -p of the whole chunk, with at least 3 spanning
             sequences. Default: -p of the whole chunk, which cuts a consensus down to the
             region most copies cover.
-  -a        keep no-consensus positions as N (default: drop them from the consensus);
-            bases supported by half the chunk or fewer are written in lower case
+  -a        keep no-consensus positions as N in PREFIX.cons.fasta (default: drop them); the
+            final alignment never contains them. Bases supported by half the chunk or fewer
+            are written in lower case
   -e LIST   write the ORIGINAL sequences of the listed chunks to one FASTA file each, in
             DIR/PREFIX.chunk_fasta/ (as in the input: same headers, same orientation). LIST:
             all, or comma-separated chunk numbers and ranges, e.g. 3,7,22-45 (a chunk is
@@ -70,6 +72,8 @@ Options:
             RepeatMasker class or a subfamily name): reports how every chunk is composed by
             group (PREFIX.composition.tsv). SubFam does not define groups.
   -K        keep intermediate files (chunks, chunk alignments)
+  -F        refine the final alignment on all threads (up to 300 consensuses): faster, but the
+            alignment may differ between runs (default: one thread, identical output every time)
   -v        print version
   -h        show this help
 
@@ -89,7 +93,9 @@ Outputs (in DIR):
   PREFIX.composition.tsv (with -g)  chunk, n, labelled, majority group, purity, count per group
   PREFIX.log          version, command line and chunk count of the run
 
-Requires: mafft >= 7, awk, and python3 with numpy >= 1.20 (not needed with -m/-P).
+Requires: mafft >= 7, awk, and for the k-mer ordering a C compiler (kmer_order.c, compiled
+for each run) or python3 >= 3.6 with numpy >= 1.20 (KMER_IMPL=c|py forces one; neither is
+needed with -m/-P/-I).
 Input may be gzip-compressed. Ids (first word of a header) must be unique.
 EOF
 }
@@ -98,7 +104,7 @@ die() { echo "SubFam: $*" >&2; exit 1; }
 elapsed() { local s=$(( $(date +%s) - $1 )); echo "  done in $((s / 3600))h $(((s / 60) % 60))m $((s % 60))s"; }
 
 ARGS=$(printf '%q ' "$@")
-while getopts ":n:p:k:t:o:x:e:g:rmIPcaKvh" opt; do
+while getopts ":n:p:k:t:o:x:e:g:rmIPcaKFvh" opt; do
     case $opt in
         n) N=$OPTARG ;;
         p) PLURALITY=$OPTARG ;;
@@ -115,6 +121,7 @@ while getopts ":n:p:k:t:o:x:e:g:rmIPcaKvh" opt; do
         c) RELCOV=1 ;;
         a) KEEP_N=1 ;;
         K) KEEP_TMP=1 ;;
+        F) THREADIT=-1 ;;
         v) echo "SubFam $VERSION"; exit 0 ;;
         h) usage; exit 0 ;;
         :) die "option -$OPTARG needs a value" ;;
@@ -129,10 +136,6 @@ IN=$1; IN_ARG=$1
 for tool in mafft awk; do
     command -v "$tool" >/dev/null 2>&1 || die "'$tool' not found in PATH"
 done
-if [ "$ORDER" = kmer ]; then
-    python3 -c 'import sys; sys.path[:] = [p for p in sys.path if p not in ("", ".")]; import numpy; from numpy.lib.stride_tricks import sliding_window_view' 2>/dev/null ||
-        die "k-mer ordering needs python3 with numpy >= 1.20 (or use -m)"
-fi
 [[ $N =~ ^[0-9]+$ ]] && [ "$N" -ge 2 ] || die "-n must be an integer >= 2"
 [[ $K =~ ^[0-9]+$ ]] && [ "$K" -ge 3 ] && [ "$K" -le 12 ] || die "-k must be an integer from 3 to 12"
 [[ $THREADS =~ ^[0-9]+$ ]] && [ "$THREADS" -ge 1 ] || die "-t must be a positive integer"
@@ -156,6 +159,36 @@ WORK=$(mktemp -d "$OUTDIR/.subfam_${NAME}_XXXXXX"); mkdir "$WORK/in"   # input c
 [ -n "$KEEP_TMP" ] || trap 'rm -rf "$WORK"' EXIT
 export OPENBLAS_NUM_THREADS=$THREADS OMP_NUM_THREADS=$THREADS MKL_NUM_THREADS=$THREADS
 
+# k-mer ordering program: the C version (kmer_order.c, compiled into $WORK for this run, so there is
+# no stale binary and nothing is written outside the output directory), else the embedded Python
+# version (Python >= 3.6 with numpy >= 1.20). Both give the same order byte for byte
+# (tests/test_kmer_order.sh). KMER_IMPL=c|py forces one; SUBFAM_NOFLIP=1 (ablation only) needs Python.
+KMER_BIN=
+PY=
+if [ "$ORDER" = kmer ]; then
+    HERE=$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)
+    [ "${SUBFAM_NOFLIP:-}" != 1 ] || KMER_IMPL=py
+    if [ "${KMER_IMPL:-}" != py ] && [ -f "$HERE/kmer_order.c" ]; then
+        for cc in "${CC:-}" cc gcc clang; do
+            [ -n "$cc" ] && command -v "$cc" >/dev/null 2>&1 || continue
+            for flags in "-fopenmp" ""; do
+                # shellcheck disable=SC2086
+                if "$cc" -O2 -ffp-contract=off $flags -o "$WORK/kmer_order" "$HERE/kmer_order.c" -lm 2>/dev/null; then
+                    KMER_BIN="$WORK/kmer_order"; break 2
+                fi
+            done
+        done
+    fi
+    if [ -z "$KMER_BIN" ] && [ "${KMER_IMPL:-}" != c ]; then
+        for cand in "${PYTHON:-}" python3 python3.13 python3.12 python3.11 python3.10 python3.9 python3.8 python3.7 python3.6; do
+            [ -n "$cand" ] && command -v "$cand" >/dev/null 2>&1 || continue
+            if (cd "$WORK" && "$cand" -c 'import sys; sys.path[:] = [p for p in sys.path if p not in ("", ".")]
+import numpy; from numpy.lib.stride_tricks import sliding_window_view; sys.exit(sys.version_info < (3, 6))') 2>/dev/null; then PY=$cand; break; fi
+        done
+    fi
+    [ -n "$KMER_BIN$PY" ] || die "k-mer ordering needs a C compiler (kmer_order.c next to SubFam.sh) or python3 >= 3.6 with numpy >= 1.20; or use -m"
+fi
+
 if [ "$(head -c 2 "$IN" | od -An -tx1 | tr -d ' \n')" = 1f8b ]; then     # gzip magic
     gzip -dc "$IN" > "$WORK/in/gunzipped.fa" || die "cannot decompress '$IN'"
     IN=$WORK/in/gunzipped.fa
@@ -165,7 +198,8 @@ if [ "$(head -c 3 "$IN" | od -An -tx1 | tr -d ' \n')" = efbbbf ]; then   # UTF-8
 fi
 [ "$(head -c 1 "$IN")" = ">" ] || die "'$1' does not start with a FASTA header line"
 # one pass over the input: ids (first word of a header) must be unique, because chunks.tsv, -e and -g
-# refer to sequences by id; records without sequence are dropped; the input must be nucleotide.
+# refer to sequences by id; a record without sequence is refused (no record is ever lost silently);
+# the input must be nucleotide.
 awk -v out="$WORK/in/checked.fa" '
     function flush() { if (id == "") return; if (len > 0) { printf "%s", rec > out; kept++ } else { empty++; if (empty <= 3) ex = ex " " id }; id = "" }
     /^>/ { flush(); split(substr($0, 2), w, /[ \t]/); id = w[1]
@@ -173,11 +207,10 @@ awk -v out="$WORK/in/checked.fa" '
            if (id in seen) { print "SubFam: duplicate sequence id \"" id "\" (lines " seen[id] " and " NR "); ids must be unique" > "/dev/stderr"; bad = 1; exit 1 }
            seen[id] = NR; rec = $0 "\n"; len = 0; next }
     { sub(/\r$/, ""); rec = rec $0 "\n"; t = $0; gsub(/[ \t]/, "", t); len += length(t); all += length(t)
-      gsub(/[ACGTUNacgtun.*-]/, "", t); other += length(t) }
+      gsub(/[ACGTUNRYKMSWBDHVacgtunrykmswbdhv.*-]/, "", t); other += length(t) }
     END { if (bad) exit 1; flush()
-          if (empty) printf "SubFam: warning: dropped %d record(s) without sequence:%s%s\n", empty, ex, (empty > 3 ? " ..." : "") > "/dev/stderr"
-          if (!kept) { print "SubFam: no sequence left in the input" > "/dev/stderr"; exit 1 }
-          if (other > 0.1 * all) { printf "SubFam: %.0f%% of the letters are not A/C/G/T/U/N: SubFam needs nucleotide sequences\n", 100 * other / all > "/dev/stderr"; exit 1 } }
+          if (empty) { printf "SubFam: %d record(s) without sequence:%s%s; remove them first (e.g. seqkit seq -m 1)\n", empty, ex, (empty > 3 ? " ..." : "") > "/dev/stderr"; exit 1 }
+          if (other > 0.1 * all) { printf "SubFam: %.0f%% of the letters are not A/C/G/T/U/N or IUPAC codes: SubFam needs nucleotide sequences\n", 100 * other / all > "/dev/stderr"; exit 1 } }
 ' "$IN" || exit 1
 IN=$WORK/in/checked.fa
 
@@ -532,13 +565,17 @@ echo "SubFam $VERSION: $TOTAL sequences -> $NCHUNK chunks of ~$(( TOTAL / NCHUNK
 {
     echo "SubFam $VERSION  $(date '+%Y-%m-%d %H:%M')"
     echo "command: $0 $ARGS"
-    echo "input: $IN_ARG  sequences: $TOTAL  chunks: $NCHUNK  n: $N  p: $PLURALITY  k: $K  order: $ORDER${PARTTREE:+ parttree}${BOTH:+ both-strands}${RELCOV:+ coverage-relative}"
+    echo "input: $IN_ARG  sequences: $TOTAL  chunks: $NCHUNK  n: $N  p: $PLURALITY  k: $K  order: $ORDER${KMER_BIN:+ (C)}${PY:+ (python: $PY)}${PARTTREE:+ parttree}${BOTH:+ both-strands}${RELCOV:+ coverage-relative}${KEEP_N:+ keep-N}$([ "$THREADIT" = 0 ] || echo " threadit")"
 } > "$OUTDIR/$PREFIX.log"
 
 T1=$(date +%s)
 if [ "$ORDER" = kmer ]; then
     echo "Ordering sequences along the $K-mer guide tree"
-    python3 -c "$KMER_ORDER_PY" "$IN" "$WORK/ordered.fasta" "$K" "${BOTH:-0}" "${BOTH:-0}"
+    if [ -n "$KMER_BIN" ]; then
+        OMP_NUM_THREADS=$THREADS "$KMER_BIN" "$IN" "$WORK/ordered.fasta" "$K" "${BOTH:-0}" "${BOTH:-0}"
+    else
+        "$PY" -c "$KMER_ORDER_PY" "$IN" "$WORK/ordered.fasta" "$K" "${BOTH:-0}" "${BOTH:-0}"
+    fi
 elif [ "$ORDER" = input ]; then
     echo "Keeping the input order (-I)"
     cp "$IN" "$WORK/ordered.fasta"
@@ -581,6 +618,19 @@ printf '%s\0' "$WORK/${NAME}_"*.fasta |
         awk -v name="$name" -v conslen="$cl" -v lower="$lw" "$STATS_AWK" "$f.aln" > "$f.stats"
     ' _ {}
 cat "$WORK/${NAME}_"*.fasta.cons > "$OUTDIR/$PREFIX.cons.fasta"
+# The final alignment always gets the consensuses without no-consensus positions (N), also with -a: MAFFT
+# would align N runs as sequence (with -a, half of a divergent family's consensus can be N: 595 consensuses
+# took > 9 h, 2 s without). A consensus with no called base gets a single "-" so that its record is kept.
+awk 'function out(   t) { t = s; gsub(/[Nn]/, "", t); tot += length(s); nn += length(s) - length(t)
+                         print h; print (t == "" ? "-" : t) }
+     /^>/ { if (h != "") out(); h = $0; s = ""; next }
+     { s = s $0 }
+     END { if (h != "") out(); printf "%d %d\n", nn, tot > "/dev/stderr" }' "$OUTDIR/$PREFIX.cons.fasta" > "$WORK/cons.called.fasta" 2> "$WORK/nfrac.txt"
+read -r NN NTOT < "$WORK/nfrac.txt"
+if [ -n "$KEEP_N" ] && [ "${NTOT:-0}" -gt 0 ] && [ $((NN * 100 / NTOT)) -ge 30 ]; then
+    echo "SubFam: warning: $((NN * 100 / NTOT))% of the consensus positions have no consensus (N): the chunks are heterogeneous or" >&2
+    echo "        the copies truncated; try -c (coverage-relative plurality). They are left out of the final alignment." >&2
+fi
 [ "$(grep -c '^>' "$OUTDIR/$PREFIX.cons.fasta")" -eq "$NCHUNK" ] || die "expected $NCHUNK consensus sequences, rerun with -K to keep the work files"
 cp "$WORK/chunks.tsv" "$OUTDIR/$PREFIX.chunks.tsv"
 { printf 'chunk\tn\tcons_len\tlower\tcore\tagree\tid_med\tid_min\tragged\n'; cat "$WORK/${NAME}_"*.fasta.stats; } > "$OUTDIR/$PREFIX.chunkstats.tsv"
@@ -628,15 +678,20 @@ if [ "$NCHUNK" -ge 2 ]; then
     # is deterministic whatever the thread count (refinement cost grows with the square of the row count:
     # seconds at 100 rows, 6 min at 600, hours at 1,500). 301-1,000: the pairwise-consistency step of
     # L-INS-i with two refinement rounds (most of its gain, a tenth of the time). Beyond: MAFFT --auto.
-    if [ "$NCHUNK" -le 300 ]; then MODE="--localpair --maxiterate 1000 --threadit 0"
+    # (-F: refinement on all threads, faster, not reproducible)
+    [ "$THREADIT" = -1 ] && THREADIT=$THREADS
+    if [ "$NCHUNK" -le 300 ]; then MODE="--localpair --maxiterate 1000 --threadit $THREADIT"
     elif [ "$NCHUNK" -le 1000 ]; then MODE="--localpair --maxiterate 2"
     else MODE=--auto; fi
     mafft --thread "$THREADS" $MODE --nuc --reorder --preservecase --quiet \
-        "$OUTDIR/$PREFIX.cons.fasta" > "$OUTDIR/$PREFIX.aln.fasta"
+        "$WORK/cons.called.fasta" > "$OUTDIR/$PREFIX.aln.fasta"
 else
-    cp "$OUTDIR/$PREFIX.cons.fasta" "$OUTDIR/$PREFIX.aln.fasta"
+    cp "$WORK/cons.called.fasta" "$OUTDIR/$PREFIX.aln.fasta"
 fi
-awk -v file="$OUTDIR/$PREFIX.msf" -v date="$(date +%d/%m/%y)" "$MSF_AWK" "$OUTDIR/$PREFIX.aln.fasta" > "$OUTDIR/$PREFIX.msf"
+# MSF header: file name without the directory, and the date of SOURCE_DATE_EPOCH when set, so that the same
+# input gives the same MSF file wherever and whenever it is run
+MSF_DATE=$(date -u -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%d/%m/%y 2>/dev/null || date +%d/%m/%y)
+awk -v file="$PREFIX.msf" -v date="$MSF_DATE" "$MSF_AWK" "$OUTDIR/$PREFIX.aln.fasta" > "$OUTDIR/$PREFIX.msf"
 elapsed "$T1"
 
 [ -z "$KEEP_TMP" ] || echo "Intermediate files kept in $WORK"

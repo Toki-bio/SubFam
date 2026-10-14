@@ -102,7 +102,7 @@ SubFam turns a collection of related copies that is too large to read into a com
 - **Other requirements:** MAFFT ≥ 7.5; Python 3 with numpy ≥ 1.20 (for the k-mer ordering; `-m`/`-P` need MAFFT only); gawk or mawk
 - **License:** MIT
 - **Any restrictions to use by non-academics:** none
-- **Reproducibility:** every example and benchmark is reproduced by `examples/rebuild.sh`, `benchmark/sine_b2/make_b2.sh`, `benchmark/baseline_vsearch/run_sweeps.sh`, `benchmark/baseline_meshclust/run_meshclust.sh`, `benchmark/ablation/run_ablation.sh` and `benchmark/sine_b2/stress_chr123/pipeline.sh` from named public inputs, seeds and tool versions (MAFFT 7.505, vsearch 2.27.0, MeShClust2 d7fdb42; SubFam 1.3.0–1.4.4, whose consensuses, alignment and chunk table are byte-identical across these versions).
+- **Reproducibility:** every example and benchmark is reproduced by `examples/rebuild.sh`, `benchmark/sine_b2/make_b2.sh`, `benchmark/baseline_vsearch/run_sweeps.sh`, `benchmark/baseline_meshclust/run_meshclust.sh`, `benchmark/ablation/run_ablation.sh` and `benchmark/sine_b2/stress_chr123/pipeline.sh` from named public inputs, seeds and tool versions (MAFFT 7.505, vsearch 2.27.0, MeShClust2 d7fdb42; SubFam 1.3.0–1.5.0, whose consensuses, alignment and chunk table are byte-identical across these versions).
 
 ## Declarations
 **Ethics approval and consent to participate.** Not applicable.

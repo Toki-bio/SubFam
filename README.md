@@ -37,7 +37,7 @@ SubFam never asks "are these two copies X% identical?". It only asks "which copi
 
 ## Installation
 
-Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` ≥ 1.20 for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required. The input may be gzip-compressed. Sequence ids (the first word of a header) must be unique, because `chunks.tsv`, `-e` and `-g` refer to sequences by id; records without sequence are dropped with a warning; non-nucleotide input is rejected.
+Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and, for the k-mer ordering (not needed with `-m`, `-P` or `-I`), a C compiler: `kmer_order.c` (next to `SubFam.sh`) is compiled into the work directory on every run; without a compiler SubFam falls back to an embedded Python script (Python ≥ 3.6 with `numpy` ≥ 1.20; `KMER_IMPL=c|py` forces one). The C and Python versions give byte-identical orders (`tests/test_kmer_order.sh`: 292 synthetic cases). EMBOSS is no longer required. The input may be gzip-compressed. Sequence ids (the first word of a header) must be unique, because `chunks.tsv`, `-e` and `-g` refer to sequences by id; a record without sequence is refused with a message (SubFam never loses a record silently); non-nucleotide input is rejected.
 
 ```bash
 conda install -c conda-forge -c bioconda mafft numpy
@@ -64,10 +64,11 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 | `-I` | off | keep the input order: for input you ordered yourself, or to measure what the ordering contributes (a shuffled input gives the chance level) |
 | `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
 | `-c` | off | coverage-relative plurality for truncated copies: a base needs `-p` of the sequences that span that column (end gaps excluded, at least 3 spanning), not of the whole chunk |
-| `-a` | off | keep no-consensus positions as `N` (by default they are removed, which also removes alignment columns where most of the chunk has a gap) |
+| `-a` | off | keep no-consensus positions as `N` in `PREFIX.cons.fasta` (by default they are removed, which also removes alignment columns where most of the chunk has a gap); the final alignment never contains them, and SubFam warns when 30 % or more of the positions are `N` |
 | `-e LIST` | off | write the original sequences of the listed chunks to one FASTA file each in `PREFIX.chunk_fasta/`; `LIST` is `all` or chunk numbers and ranges, e.g. `3,7,22-45` |
 | `-g FILE` | off | your own labels (`id<TAB>group`): report how every chunk is composed by group in `PREFIX.composition.tsv` |
 | `-K` | off | keep intermediate chunk files |
+| `-F` | off | refine the final alignment on all threads (up to 300 consensuses): faster, but the alignment may differ between runs |
 
 Outputs:
 

@@ -47,3 +47,11 @@ SubFam 1.4.4 is ready for submission. Every defect found was fixed and re-tested
 ## Note for the bundled copy in SINEderella
 
 The copy of SubFam bundled in SINEderella is 1.2.0. Syncing it to 1.4.4 changes only `input.msf` at SINEderella's defaults, a file SINEderella does not read; `input.clw` is byte-identical at 300 copies. With inputs that are not a multiple of N, 1.4.x cuts round(T/N) equal chunks where 1.2.0 put the remainder in the last chunk, so the files then differ. The SINEderella wrapper has two separate defects (chunks numbered 1000 and up are dropped from `input.clw`; stale chunks of an earlier run are included); they are reported to the author, not fixed here.
+
+## Merge with main (1.5.0)
+
+`main` held SubFam 1.2.1–1.2.4 (C k-mer ordering, `-F`, N kept out of the final alignment with `-a`, reproducible MSF header, `tests/test_robust.sh`, `tests/test_kmer_order.sh`), made on a line separate from 1.3–1.4. SubFam 1.5.0 is 1.4.4 with all of it:
+- `kmer_order.c` got the 1.4 rule that turns the whole set to its majority strand with `-r`; without it the C and Python orders had the same row order but different strands (1 of 18 cases). After the change: 50 of 50 own cases and 292 of 292 `test_kmer_order.sh` cases identical. `SUBFAM_NOFLIP=1` uses the Python version.
+- Empty records are refused with a message instead of dropped, as `tests/test_robust.sh` requires that no record is lost silently.
+- The nucleotide check accepts IUPAC codes.
+- Checks on 1.5.0: `test_robust.sh` 26/26, `test_kmer_order.sh` 292/292, `check_inputs.sh` 10/10, `check_equivalence.sh` 3,600 / 80 / 20 runs with 0 differences; the regression input gives output byte-identical to 1.4.2 with the C and with the Python ordering and under mawk; `examples/rebuild.sh` reproduces both simulated examples byte for byte.

@@ -26,8 +26,7 @@ ok -o plain input.fasta
 ok -o gz input.fasta.gz
 ok -o bom -x input bom.fa
 ok -o crlf crlf.fa
-ok -o emp empty.fa
-grep -q 'dropped 1 record' log.txt || { echo "FAIL  no warning for the empty record"; fail=1; }
+bad 'without sequence' -o emp empty.fa
 bad 'duplicate sequence id' -o dup dup.fa
 bad 'nucleotide' -o prot prot.fa
 bad 'has no id' -o noid noid.fa

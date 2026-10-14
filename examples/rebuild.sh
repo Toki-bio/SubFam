@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Rebuild the simulated, Alu and L1 alignments in examples/ from scratch, with the exact commands and seeds used.
 #   examples/rebuild.sh WORKDIR [THREADS]
-# Deterministic given the same MAFFT version (7.505 was used) and SubFam version (1.3.0-1.4.4 give the same files).
+# Deterministic given the same MAFFT version (7.505 was used) and SubFam version (1.3.0-1.5.0 give the same files).
 #
 # Inputs that are not generated here (see the benchmark READMEs for how to make them):
 #   $KONKEL  alu_bodies.fa from benchmark/alu_konkel/prep.py (GenBank KT305395-KT305737 + the
