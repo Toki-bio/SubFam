@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.4.2
+VERSION=1.4.3
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -90,7 +90,7 @@ Outputs (in DIR):
   PREFIX.log          version, command line and chunk count of the run
 
 Requires: mafft >= 7, awk, and python3 with numpy >= 1.20 (not needed with -m/-P).
-Input may be gzip-compressed.
+Input may be gzip-compressed. Ids (first word of a header) must be unique.
 EOF
 }
 
@@ -123,7 +123,7 @@ while getopts ":n:p:k:t:o:x:e:g:rmIPcaKvh" opt; do
 done
 shift $((OPTIND - 1))
 [ $# -eq 1 ] || { usage >&2; exit 1; }
-IN=$1
+IN=$1; IN_ARG=$1
 
 [ -s "$IN" ] || die "input file '$IN' not found or empty"
 for tool in mafft awk; do
@@ -164,6 +164,22 @@ if [ "$(head -c 3 "$IN" | od -An -tx1 | tr -d ' \n')" = efbbbf ]; then   # UTF-8
     tail -c +4 "$IN" > "$WORK/input_nobom.fasta"; IN=$WORK/input_nobom.fasta
 fi
 [ "$(head -c 1 "$IN")" = ">" ] || die "'$1' does not start with a FASTA header line"
+# one pass over the input: ids (first word of a header) must be unique, because chunks.tsv, -e and -g
+# refer to sequences by id; records without sequence are dropped; the input must be nucleotide.
+awk -v out="$WORK/input_checked.fasta" '
+    function flush() { if (id == "") return; if (len > 0) { printf "%s", rec > out; kept++ } else { empty++; if (empty <= 3) ex = ex " " id }; id = "" }
+    /^>/ { flush(); split(substr($0, 2), w, /[ \t]/); id = w[1]
+           if (id == "") { print "SubFam: a header line has no id (line " NR ")" > "/dev/stderr"; bad = 1; exit 1 }
+           if (id in seen) { print "SubFam: duplicate sequence id \"" id "\" (lines " seen[id] " and " NR "); ids must be unique" > "/dev/stderr"; bad = 1; exit 1 }
+           seen[id] = NR; rec = $0 "\n"; len = 0; next }
+    { sub(/\r$/, ""); rec = rec $0 "\n"; t = $0; gsub(/[ \t]/, "", t); len += length(t); all += length(t)
+      gsub(/[ACGTUNacgtun.*-]/, "", t); other += length(t) }
+    END { if (bad) exit 1; flush()
+          if (empty) printf "SubFam: warning: dropped %d record(s) without sequence:%s%s\n", empty, ex, (empty > 3 ? " ..." : "") > "/dev/stderr"
+          if (!kept) { print "SubFam: no sequence left in the input" > "/dev/stderr"; exit 1 }
+          if (other > 0.1 * all) { printf "SubFam: %.0f%% of the letters are not A/C/G/T/U/N: SubFam needs nucleotide sequences\n", 100 * other / all > "/dev/stderr"; exit 1 } }
+' "$IN" || exit 1
+IN=$WORK/input_checked.fasta
 
 # ---------------------------------------------------------------------------------------
 # Embedded programs
@@ -515,7 +531,7 @@ echo "SubFam $VERSION: $TOTAL sequences -> $NCHUNK chunks of ~$(( TOTAL / NCHUNK
 {
     echo "SubFam $VERSION  $(date '+%Y-%m-%d %H:%M')"
     echo "command: $0 $ARGS"
-    echo "input: $IN  sequences: $TOTAL  chunks: $NCHUNK  n: $N  p: $PLURALITY  k: $K  order: $ORDER${PARTTREE:+ parttree}${BOTH:+ both-strands}${RELCOV:+ coverage-relative}"
+    echo "input: $IN_ARG  sequences: $TOTAL  chunks: $NCHUNK  n: $N  p: $PLURALITY  k: $K  order: $ORDER${PARTTREE:+ parttree}${BOTH:+ both-strands}${RELCOV:+ coverage-relative}"
 } > "$OUTDIR/$PREFIX.log"
 
 T1=$(date +%s)

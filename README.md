@@ -37,7 +37,7 @@ SubFam never asks "are these two copies X% identical?". It only asks "which copi
 
 ## Installation
 
-Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` ≥ 1.20 for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required. The input may be gzip-compressed.
+Requirements: `bash`, `awk` (POSIX; tested with gawk and mawk), [MAFFT](https://mafft.cbrc.jp/alignment/software/) ≥ 7, and `python3` with `numpy` ≥ 1.20 for the k-mer ordering (not needed with `-m`). EMBOSS is no longer required. The input may be gzip-compressed. Sequence ids (the first word of a header) must be unique, because `chunks.tsv`, `-e` and `-g` refer to sequences by id; records without sequence are dropped with a warning; non-nucleotide input is rejected.
 
 ```bash
 conda install -c conda-forge -c bioconda mafft numpy
