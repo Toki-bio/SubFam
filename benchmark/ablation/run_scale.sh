@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # -P (PartTree) vs k-mer order at 10,000 and 20,000 simulated copies: wall time, peak RSS, masters recovered (evaluate.py)
-set -e; SUB=/home/user/SubFam/SubFam.sh; B=/home/user/SubFam/benchmark
+set -e; TOP=$(cd "$(dirname "$0")/../.." && pwd); SUB=$TOP/SubFam.sh; B=$TOP/benchmark
 [ -s mid10k.fasta ] || python3 $B/simulate.py mid10k --divergence 0.08 --seed 7 --sizes 3000,2000,1500,1250,1000,750,300,200
 [ -s mid20k.fasta ] || python3 $B/simulate.py mid20k --divergence 0.08 --seed 8 --sizes 6000,4000,3000,2500,2000,1500,600,400
 printf 'input\torder\tsec\tpeak_rss_MB\trecovered\trows\n' > scale.tsv

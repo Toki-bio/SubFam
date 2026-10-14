@@ -1,0 +1,4 @@
+scenario	method	reps	reps_ge10	singleton_frac	purity	median_id	subfam_recovered	seconds
+young	SubFam -n 50	40	40	0.00	0.987	100.0	8/8	8.3
+young	SubFam -n 20	100	100	0.00	0.975	100.0	8/8	14.0
+young	SubFam -m -n 50	40	40	0.00	0.993	100.0	8/8	7.8

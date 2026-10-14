@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # B2 stress case, seeds 2 and 3: new 30,000-copy samples of the 41,989 chr1-3 copies, SubFam -n 50 (k-mer order), timing, scoring
-set -e; cd "$(dirname "$0")"; SUB=/home/user/SubFam/SubFam.sh; R=/home/user/SubFam/benchmark
+set -e; cd "$(dirname "$0")"; R=$(cd "$(dirname "$0")/../../.." && pwd)/benchmark; SUB=$R/../SubFam.sh
 for seed in 2 3; do
   python3 $R/sine_b2/subsample.py b2_chr123.fa 30000 $seed s$seed.fa s$seed.truth.tsv
   mkdir -p seed$seed; cp s$seed.fa seed$seed/s1.fa; cp s$seed.truth.tsv seed$seed/s1.truth.tsv; cp dfam_B2.fa chr19_rows.fa seed$seed/

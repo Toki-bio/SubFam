@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # hg38 chr1 Alu stress case: 30,000 random full-length copies (seed 1); SubFam -n 50 and -n 20 (k-mer order), -n 50 -P; wall time and peak RSS
-set -e; SUB=/home/user/SubFam/SubFam.sh; cd "$(dirname "$0")"
+set -e; SUB=$(cd "$(dirname "$0")/../.." && pwd)/SubFam.sh; cd "${1:?workdir with s1.fa}"
 printf 'run\tsec\tpeak_rss_MB\trows\n' > runs.tsv
 for v in "n50:-n 50" "n20:-n 20" "n50P:-n 50 -P"; do
   tag=${v%%:*}; opt=${v#*:}

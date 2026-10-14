@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Ablation on the 3,000 B2 copies: what each part of SubFam contributes. Same copies, N = 50 where chunks exist.
-set -e; SUB=/home/user/SubFam/SubFam.sh; B=$1; T=8
+set -e; SUB=$(cd "$(dirname "$0")/../.." && pwd)/SubFam.sh; B=$1; T=8
 python3 - "$B/b2_chr19_3000.fa" <<'PY'
 import random, sys
 seqs=[]; cur=None
@@ -39,7 +39,7 @@ printf 'no consensus: MAFFT --auto of all 3,000 copies\t3000\t%d\t%d\tNA\tNA\tNA
 cat ablation.tsv
 
 # the last variant (k-mer UPGMA order without the closest-ends flip; ablation only, SUBFAM_NOFLIP=1):
-set -e; SUB=/home/user/SubFam/SubFam.sh; B=$1; T=8
+set -e; SUB=$(cd "$(dirname "$0")/../.." && pwd)/SubFam.sh; B=$1; T=8
 t0=$(date +%s); SUBFAM_NOFLIP=1 $SUB -n 50 -t $T -o noflip -x b2 $B/b2_chr19_3000.fa >/dev/null; sec=$(( $(date +%s)-t0 ))
 python3 - "k-mer UPGMA order without the closest-ends flip" noflip/b2.chunks.tsv $B/b2_truth.tsv $B/b2_truth_kramerov.tsv noflip/b2.chunkstats.tsv noflip/b2.aln.fasta $sec <<'PY' >> ablation.tsv
 import sys, collections

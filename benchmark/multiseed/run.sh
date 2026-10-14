@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-B=/home/user/SubFam/benchmark; S=/home/user/SubFam/SubFam.sh
+B=$(cd "$(dirname "$0")/.." && pwd); S=$B/../SubFam.sh
 printf 'seed\tscenario\tmethod\treps\treps_ge10\tsingleton\tpurity\tmedian_id\trecovered\n' > results.tsv
 for seed in 1 2 3 4 5 6 7 8; do
  for scen in young:0.03 middle:0.08 old:0.15; do

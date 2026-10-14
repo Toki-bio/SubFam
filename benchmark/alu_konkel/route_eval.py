@@ -1,6 +1,6 @@
 import collections, json, subprocess, os, sys
-EV='/home/user/SubFam/benchmark/evaluate.py'
-SUB='/home/user/SubFam/SubFam.sh'
+import os; TOP=os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))); EV=os.path.join(TOP,'benchmark','evaluate.py')
+SUB=os.path.join(TOP,'SubFam.sh')
 lab={}
 for l in open('../alutest/loci_labels.tsv'):
     f=l.rstrip('\n').split('\t')
