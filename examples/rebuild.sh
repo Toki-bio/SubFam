@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Rebuild every alignment in examples/ from scratch, with the exact commands and seeds used.
+# Rebuild the simulated, Alu and L1 alignments in examples/ from scratch, with the exact commands and seeds used.
 #   examples/rebuild.sh WORKDIR [THREADS]
-# Deterministic given the same MAFFT version (7.505 was used) and SubFam version (1.3.0).
+# Deterministic given the same MAFFT version (7.505 was used) and SubFam version (1.3.0-1.4.4 give the same files).
 #
 # Inputs that are not generated here (see the benchmark READMEs for how to make them):
 #   $KONKEL  alu_bodies.fa from benchmark/alu_konkel/prep.py (GenBank KT305395-KT305737 + the
@@ -11,7 +11,10 @@
 # The B2 example is built by benchmark/sine_b2/make_b2.sh (downloads its own data).
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd); TOP=$HERE/..; SUB=$TOP/SubFam.sh; BUILD=$HERE/build_examples.py
-W=$1; T=${2:-4}; KONKEL=${KONKEL:-}; L1=${L1:-}
+W=${1:?usage: examples/rebuild.sh WORKDIR [THREADS]}; T=${2:-4}; KONKEL=${KONKEL:-}; L1=${L1:-}
+# absolute paths before the cd below; a path that is set but missing is an error, not a skipped example
+for v in KONKEL L1; do p=${!v}; [ -z "$p" ] || [ -s "$p" ] || { echo "rebuild.sh: \$$v=$p not found" >&2; exit 1; }; done
+KONKEL=${KONKEL:+$(readlink -f "$KONKEL")}; L1=${L1:+$(readlink -f "$L1")}
 mkdir -p "$W"; cd "$W"
 
 # 1. simple simulation, middle family (8 %), seed 1, SubFam -n 50

@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-VERSION=1.4.3
+VERSION=1.4.4
 N=50            # sequences per chunk
 PLURALITY=0.36  # fraction of chunk sequences that must agree for a consensus base
 K=6            # k-mer size for the ordering tree
@@ -130,7 +130,7 @@ for tool in mafft awk; do
     command -v "$tool" >/dev/null 2>&1 || die "'$tool' not found in PATH"
 done
 if [ "$ORDER" = kmer ]; then
-    python3 -c 'import numpy; from numpy.lib.stride_tricks import sliding_window_view' 2>/dev/null ||
+    python3 -c 'import sys; sys.path[:] = [p for p in sys.path if p not in ("", ".")]; import numpy; from numpy.lib.stride_tricks import sliding_window_view' 2>/dev/null ||
         die "k-mer ordering needs python3 with numpy >= 1.20 (or use -m)"
 fi
 [[ $N =~ ^[0-9]+$ ]] && [ "$N" -ge 2 ] || die "-n must be an integer >= 2"
@@ -152,21 +152,21 @@ case $PREFIX in */*|*\\*) die "-x must not contain '/' or '\\'" ;; .|..) die "-x
 case $OUTDIR in *\\*) die "-o must not contain '\\'" ;; esac
 NAME=${PREFIX//[[:space:]]/_}   # FASTA ids cannot contain spaces
 mkdir -p "$OUTDIR"
-WORK=$(mktemp -d "$OUTDIR/.subfam_${NAME}_XXXXXX")
+WORK=$(mktemp -d "$OUTDIR/.subfam_${NAME}_XXXXXX"); mkdir "$WORK/in"   # input copies in in/: no prefix can match them as chunk files
 [ -n "$KEEP_TMP" ] || trap 'rm -rf "$WORK"' EXIT
 export OPENBLAS_NUM_THREADS=$THREADS OMP_NUM_THREADS=$THREADS MKL_NUM_THREADS=$THREADS
 
 if [ "$(head -c 2 "$IN" | od -An -tx1 | tr -d ' \n')" = 1f8b ]; then     # gzip magic
-    gzip -dc "$IN" > "$WORK/input.fasta" || die "cannot decompress '$IN'"
-    IN=$WORK/input.fasta
+    gzip -dc "$IN" > "$WORK/in/gunzipped.fa" || die "cannot decompress '$IN'"
+    IN=$WORK/in/gunzipped.fa
 fi
 if [ "$(head -c 3 "$IN" | od -An -tx1 | tr -d ' \n')" = efbbbf ]; then   # UTF-8 byte-order mark: would hide the first header
-    tail -c +4 "$IN" > "$WORK/input_nobom.fasta"; IN=$WORK/input_nobom.fasta
+    tail -c +4 "$IN" > "$WORK/in/nobom.fa"; IN=$WORK/in/nobom.fa
 fi
 [ "$(head -c 1 "$IN")" = ">" ] || die "'$1' does not start with a FASTA header line"
 # one pass over the input: ids (first word of a header) must be unique, because chunks.tsv, -e and -g
 # refer to sequences by id; records without sequence are dropped; the input must be nucleotide.
-awk -v out="$WORK/input_checked.fasta" '
+awk -v out="$WORK/in/checked.fa" '
     function flush() { if (id == "") return; if (len > 0) { printf "%s", rec > out; kept++ } else { empty++; if (empty <= 3) ex = ex " " id }; id = "" }
     /^>/ { flush(); split(substr($0, 2), w, /[ \t]/); id = w[1]
            if (id == "") { print "SubFam: a header line has no id (line " NR ")" > "/dev/stderr"; bad = 1; exit 1 }
@@ -179,14 +179,15 @@ awk -v out="$WORK/input_checked.fasta" '
           if (!kept) { print "SubFam: no sequence left in the input" > "/dev/stderr"; exit 1 }
           if (other > 0.1 * all) { printf "SubFam: %.0f%% of the letters are not A/C/G/T/U/N: SubFam needs nucleotide sequences\n", 100 * other / all > "/dev/stderr"; exit 1 } }
 ' "$IN" || exit 1
-IN=$WORK/input_checked.fasta
+IN=$WORK/in/checked.fa
 
 # ---------------------------------------------------------------------------------------
 # Embedded programs
 # ---------------------------------------------------------------------------------------
 KMER_ORDER_PY=$(cat <<'PY'
-import os
 import sys
+sys.path[:] = [p for p in sys.path if p not in ("", ".")]   # no module from the current directory
+import os
 import numpy as np
 NOFLIP = os.environ.get("SUBFAM_NOFLIP") == "1"
 
@@ -580,7 +581,7 @@ printf '%s\0' "$WORK/${NAME}_"*.fasta |
         awk -v name="$name" -v conslen="$cl" -v lower="$lw" "$STATS_AWK" "$f.aln" > "$f.stats"
     ' _ {}
 cat "$WORK/${NAME}_"*.fasta.cons > "$OUTDIR/$PREFIX.cons.fasta"
-[ "$(grep -c '^>' "$OUTDIR/$PREFIX.cons.fasta")" -eq "$NCHUNK" ] || die "expected $NCHUNK consensus sequences, see $WORK"
+[ "$(grep -c '^>' "$OUTDIR/$PREFIX.cons.fasta")" -eq "$NCHUNK" ] || die "expected $NCHUNK consensus sequences, rerun with -K to keep the work files"
 cp "$WORK/chunks.tsv" "$OUTDIR/$PREFIX.chunks.tsv"
 { printf 'chunk\tn\tcons_len\tlower\tcore\tagree\tid_med\tid_min\tragged\n'; cat "$WORK/${NAME}_"*.fasta.stats; } > "$OUTDIR/$PREFIX.chunkstats.tsv"
 elapsed "$T1"

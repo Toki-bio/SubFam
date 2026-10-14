@@ -15,13 +15,13 @@
 #
 # EXAMPLES:
 #   # Single database
-#   ./annotate_aligned_by_ssearch_seqkit.sh sample.clw consensus_db.fasta sample.annot 8
+#   ./annotate_aligned_by_ssearch_seqkit.sh sample.aln.fasta consensus_db.fasta sample.annot 8
 #
 #   # Multiple databases (auto-naming from filenames)
-#   ./annotate_aligned_by_ssearch_seqkit.sh sample.clw repbase.fa,dfam.fa sample.annot 8
+#   ./annotate_aligned_by_ssearch_seqkit.sh sample.aln.fasta repbase.fa,dfam.fa sample.annot 8
 #
 #   # Multiple databases (custom names)
-#   ./annotate_aligned_by_ssearch_seqkit.sh sample.clw repbase.fa:RepBase,dfam.fa:Dfam sample.annot 8
+#   ./annotate_aligned_by_ssearch_seqkit.sh sample.aln.fasta repbase.fa:RepBase,dfam.fa:Dfam sample.annot 8
 #
 # OUTPUTS:
 #   <prefix>.aligned.annot.fasta            - All sequences (original order)
@@ -34,6 +34,7 @@
 #   Matched: >{DB1}hit_name|+|bs=450|original_id
 #   Unmatched: >original_id (unchanged)
 #
+# Input: an aligned FASTA file (not Clustal). ANNOT_EVALUE (default 1e-5): E-value cutoff of a hit.
 # Requirements: seqkit, ssearch36 (FASTA), awk, xargs, python3
 set -euo pipefail
 
@@ -71,6 +72,8 @@ fi
 command -v seqkit >/dev/null 2>&1 || { echo "seqkit required but not found" >&2; exit 1; }
 command -v ssearch36 >/dev/null 2>&1 || { echo "ssearch36 required but not found" >&2; exit 1; }
 command -v xargs >/dev/null 2>&1 || { echo "xargs required but not found" >&2; exit 1; }
+[ -s "$ALIGN" ] || { echo "aligned file not found or empty: $ALIGN" >&2; exit 1; }
+[[ "$DB" == *","* ]] || [ -s "${DB%%:*}" ] || { echo "database not found or empty: $DB" >&2; exit 1; }
 
 WORKDIR=$(mktemp -d "${TMPDIR:-/tmp}/annotate_split_XXXX")
 trap 'rm -rf "$WORKDIR"' EXIT
@@ -140,7 +143,8 @@ db="$2"
 qid=$(sed -n '1s/^>//p' "$f" | awk '{print $1}')
 
 # run ssearch36 (tabular -m 8); pick best hit by highest numeric value in last column (NF)
-if ! ssearch_output=$(ssearch36 -m 8 "$f" "$db" 2>&1); then
+# -z 3: E-values from fixed parameters, no shuffles, so scores repeat run to run; hits above ANNOT_EVALUE are ignored
+if ! ssearch_output=$(ssearch36 -z 3 -E "${ANNOT_EVALUE:-1e-5}" -m 8 "$f" "$db" 2>&1); then
     echo "WARNING: ssearch36 failed for $qid" >&2
     echo -e "${qid}\tNone\t0\t+" > "${f}.hit"
     exit 0
@@ -152,12 +156,8 @@ echo "$ssearch_output" | awk -F"\t" -v q="$qid" '
 BEGIN{best_s="None";best=0;found=0;strand="+"}
 !/^#/ && NF>=12 {
     score=$(NF)+0
-    # Determine strand: if sstart > send, it is reverse complement
-    if(NF>=10){
-        sstart=$(NF-3)
-        send=$(NF-2)
-        curr_strand = (sstart > send) ? "-" : "+"
-    }
+    # strand: ssearch36 reports a reverse-strand hit with qstart > qend (or sstart > send)
+    curr_strand = ($7+0 > $8+0 || $9+0 > $10+0) ? "-" : "+"
     if(found==0 || score>best){
         best=score
         best_s=$2
@@ -184,7 +184,7 @@ if [ "$NUM_SEQS" -eq 0 ]; then
 fi
 
 find "$SPLITDIR" -type f -name "*.fasta" -print0 \
-  | xargs -0 -n1 -P "$THREADS" -I {} bash -c '"$0" "{}" "'"$DB"'"' "$PROCESS_SCRIPT"
+  | xargs -0 -P "$THREADS" -I {} "$PROCESS_SCRIPT" {} "$DB"
 
 # 5) collect hits into single TSV (qid \t subject \t bitscore \t strand)
 BEST_TSV="${OUT_PREFIX}.best_hits.tsv"
@@ -212,7 +212,7 @@ END{
 
 # Validate that we got some hits
 TOTAL_HITS=$(wc -l < "$BEST_TSV")
-REAL_HITS=$(grep -v $'\tNone\t' "$BEST_TSV" | wc -l)
+REAL_HITS=$(awk -F'\t' '$2 != "None"' "$BEST_TSV" | wc -l)
 
 if [ "$REAL_HITS" -eq 0 ]; then
     echo "WARNING: No sequences matched the database! Check that database is appropriate." >&2
@@ -223,7 +223,7 @@ ANNOT_FA="${OUT_PREFIX}.aligned.annot.fasta"
 ANNOT_FA_SORTED="${OUT_PREFIX}.aligned.annot.sorted.fasta"
 
 # Pass SPLIT_DBS to Python script
-python3 - "$ALIGNED_FA" "$BEST_TSV" "$ANNOT_FA" "$ANNOT_FA_SORTED" "$OUT_PREFIX" "$SPLIT_DBS" <<'PY'
+python3 -I - "$ALIGNED_FA" "$BEST_TSV" "$ANNOT_FA" "$ANNOT_FA_SORTED" "$OUT_PREFIX" "$SPLIT_DBS" <<'PY'
 import sys
 import re
 if len(sys.argv)!=7:

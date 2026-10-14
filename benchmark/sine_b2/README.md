@@ -137,7 +137,7 @@ Chunk purity of the 3,000-copy run against the RepeatMasker label and the Vasset
 Purity moves by about 0.05 with N (smaller chunks are purer, as expected), by up to 0.04 with k (k = 6 best against rmsk, flat against the 2021 labels), not at all with p (p changes the consensus, not the chunk membership), and by 0.02 between random samples. The MAFFT order is 0.06 lower against rmsk. No setting was tuned on these labels.
 
 ## Stress case: 30,000 copies of mm39 chr1–3 (2026-10-11; `stress_chr123/`)
-`stress_chr123/pipeline.sh` (paths of this run; chromosomes 1–3 of mm39 from UCSC, the extraction rule of `make_b2.sh`: 41,989 full-length copies,
+`stress_chr123/pipeline.sh [WORKDIR] [THREADS]` (downloads its own data; chromosomes 1–3 of mm39 from UCSC, the extraction rule of `make_b2.sh`: 41,989 full-length copies,
 chr1 14,690, chr2 16,345, chr3 10,954; a random 30,000, seed 1, `subsample.py`), SubFam 1.4.1 for `-n 50` and `-n 50 -P`, 1.4.2 for `-n 20`
 (the three runs differ only in the final-alignment mode), 8 threads on a 4-core machine; peak RSS of the whole run. Scored by `score_big.py`
 (outputs `score_b2.txt`, `score_b2_n20.txt`): purity against the RepeatMasker class, recovery of the five Dfam consensuses and of the 60 chr19

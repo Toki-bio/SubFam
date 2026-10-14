@@ -4,6 +4,7 @@
 #   run_benchmark.sh [outdir] [threads]
 # Requires: mafft, EMBOSS, cd-hit-est, vsearch, mmseqs, python3.
 set -euo pipefail
+for t in mafft cons cd-hit-est vsearch mmseqs python3; do command -v "$t" >/dev/null || { echo "run_benchmark.sh: $t not found in PATH (needs: mafft, EMBOSS cons, cd-hit-est, vsearch, mmseqs, python3)" >&2; exit 1; }; done
 HERE=$(cd "$(dirname "$0")" && pwd)
 OUT=${1:-bench_out}; T=${2:-$(nproc)}
 mkdir -p "$OUT"; cd "$OUT"

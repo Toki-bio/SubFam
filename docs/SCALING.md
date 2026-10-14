@@ -23,7 +23,7 @@ good as the full one (8/8 subfamilies, purity 0.918 vs 0.930 for the k-mer tree)
 k-mer tree has the same n² limit as `--retree 0` and should be used below ~20,000 copies, where
 it is the best ordering (purity 0.71 vs 0.60 on the old family).
 
-Whole pipeline with `-P -n 50`:
+Whole pipeline with `-P -n 50` (measured with SubFam 1.1, whose final step was always full L-INS-i; since 1.4.2 the final alignment uses L-INS-i up to 300 consensuses, two refinement rounds up to 1,000 and MAFFT `--auto` beyond, so the last column is an upper bound):
 
 | copies | ordering | chunk alignments + consensus | final L-INS-i of the consensuses | total |
 |---|---|---|---|---|

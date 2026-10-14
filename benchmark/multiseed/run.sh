@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eo pipefail
 B=$(cd "$(dirname "$0")/.." && pwd); S=$B/../SubFam.sh
 printf 'seed\tscenario\tmethod\treps\treps_ge10\tsingleton\tpurity\tmedian_id\trecovered\n' > results.tsv
 for seed in 1 2 3 4 5 6 7 8; do
@@ -6,7 +7,7 @@ for seed in 1 2 3 4 5 6 7 8; do
   s=${scen%%:*}; d=${scen#*:}; w=s${seed}_$s; mkdir -p $w; cd $w
   python3 $B/simulate.py $s --divergence $d --seed $seed
   for n in 50 20; do
-    $S -n $n -t 4 -o sf$n -x $s $s.fasta >/dev/null 2>&1
+    $S -n $n -t 4 -o sf$n -x $s $s.fasta > sf$n.log 2>&1 || { echo "SubFam -n $n failed in $w, see $w/sf$n.log" >&2; exit 1; }
     python3 $B/evaluate.py "SubFam -n $n" sf$n/$s.cons.fasta sf$n/$s.chunks.tsv $s.truth.tsv $s.masters.fasta | sed "s/^/$seed\t$s\t/" >> ../results.tsv
   done
   for id in 0.95 0.90 0.85 0.80 0.75 0.70 0.65; do

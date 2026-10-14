@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # usage: sensitivity.sh B2_WORKDIR   (the directory of make_b2.sh: b2_chr19.fa, b2_chr19_3000.fa, b2_truth.tsv, b2_truth_kramerov.tsv); output sens.tsv, committed as sensitivity.tsv
 # sensitivity of the B2 result to N, k, p and to the sample: purity of chunks vs rmsk and vs the 2021 labels
-set -e; B=$1; HERE=$(cd "$(dirname "$0")" && pwd); SUB=$HERE/../../SubFam.sh
+set -e; B=${1:?usage: sensitivity.sh B2_WORKDIR (the make_b2.sh workdir)}; HERE=$(cd "$(dirname "$0")" && pwd); SUB=$HERE/../../SubFam.sh
 printf 'setting\tsample\tchunks\tpurity_rmsk\tpurity_v2021\tmean_agree\n' > sens.tsv
 score() { # dir prefix sample setting
   python3 - "$1/$2.chunks.tsv" "$B/b2_truth.tsv" "$3" "$1/$2.chunkstats.tsv" "$4" "$5" <<'PY'
