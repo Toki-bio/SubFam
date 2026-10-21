@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """figure_chaos_to_order.py SUB.fa SUB.tsv CHUNKS.tsv CONS.fa OUT.png [--threads T]
 
-Sketch of the 'chaos to order' figure. SUB.fa: a stratified random sample of real B2 copies (chaos_subset.py); SUB.tsv: copy<TAB>label
+Figure 2, 'chaos to order' (OUT.png at 300 dpi and OUT.pdf, 17 cm wide). SUB.fa: a stratified random sample of real B2 copies (chaos_subset.py); SUB.tsv: copy<TAB>label
 (B2a-e best hit); CHUNKS.tsv, CONS.fa: SubFam output on SUB.fa. All copies and all chunk consensuses are
 aligned together (MAFFT --auto) so the three panels share their columns:
   a) the copies in random (input) order, b) the same copies in SubFam's k-mer order, c) the chunk consensuses.
 Colour strip: the label of each copy (a, b) / the majority label of the chunk (c)."""
 import collections, subprocess, sys, tempfile, os
 import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+plt.rcParams.update({'font.size': 7, 'pdf.fonttype': 42})
 from matplotlib.colors import ListedColormap
 
 args = sys.argv[1:]; threads = 4
@@ -27,7 +28,8 @@ rows = collections.OrderedDict(copies); rows.update({'CHUNK_' + k: v for k, v in
 with tempfile.TemporaryDirectory() as t:
     with open(t + '/in.fa', 'w') as o:
         for k, v in rows.items(): o.write('>%s\n%s\n' % (k, v))
-    aln = subprocess.run(['mafft', '--auto', '--thread', str(threads), '--quiet', t + '/in.fa'], capture_output=True, text=True, check=True).stdout
+    # one thread: the multithreaded alignment differed between runs (1,106 and 1,100 columns)
+    aln = subprocess.run(['mafft', '--auto', '--thread', '1', '--quiet', t + '/in.fa'], capture_output=True, text=True, check=True).stdout
 A = rd_aln = collections.OrderedDict(); n = None
 for l in aln.splitlines():
     if l.startswith('>'): n = l[1:].split()[0]; A[n] = []
@@ -48,20 +50,21 @@ chs = sorted(cs); maj = {c: collections.Counter(byc[c]).most_common(1)[0] for c 
 labs = ['B2a', 'B2b', 'B2c', 'B2d', 'B2e']
 col = {'B2a': '#1b7837', 'B2b': '#7fbf7b', 'B2c': '#e08214', 'B2d': '#762a83', 'B2e': '#9e9e9e'}
 base = ListedColormap(['#ffffff', '#dfe7ee', '#c0392b'])  # gap, matches the column majority, differs from it
-fig = plt.figure(figsize=(11, 12))
-gs = fig.add_gridspec(3, 2, width_ratios=[1, 28], height_ratios=[len(rnd), len(rnd), len(chs) * 9], hspace=0.12, wspace=0.01)
+fig = plt.figure(figsize=(6.7, 8.4))
+gs = fig.add_gridspec(3, 2, width_ratios=[1, 28], height_ratios=[len(rnd), len(rnd), len(chs) * 12], hspace=0.12, wspace=0.01)
 def panel(r, names, title, labelof):
     ax = fig.add_subplot(gs[r, 1]); ax.imshow(m(names), aspect='auto', cmap=base, vmin=0, vmax=2, interpolation='nearest')
-    ax.set_title(title, loc='left', fontsize=10); ax.set_yticks([]); ax.set_xlabel('alignment column' if r == 2 else '')
+    ax.set_title(title[3:], loc='left', fontsize=7.5); ax.text(-0.075, 1.02, title[0], transform=ax.transAxes, fontweight='bold', fontsize=9, va='bottom'); ax.set_yticks([]); ax.set_xlabel('alignment column' if r == 2 else '')
     if r < 2: ax.set_xticks([])
     sb = fig.add_subplot(gs[r, 0]); sb.imshow(np.array([[labs.index(labelof(k)) if labelof(k) in labs else 4] for k in names]), aspect='auto',
         cmap=ListedColormap([col[x] for x in labs]), vmin=0, vmax=4, interpolation='nearest'); sb.axis('off')
     return ax
-panel(0, rnd, 'a  %d real B2 copies in input (random) order: B2a 120, B2b 30, B2c 120, B2d 120, picked by the 2021 best-hit label' % len(rnd), lambda k: lab[k])
-panel(1, ordered, 'b  the same copies, in SubFam k-mer tree order (nothing else changed)', lambda k: lab[k])
+panel(0, rnd, 'a  %d B2 copies, input order' % len(rnd), lambda k: lab[k])
+panel(1, ordered, 'b  the same copies in SubFam order', lambda k: lab[k])
 cn = ['CHUNK_' + c for c in chs]
-ax = panel(2, cn, 'c  %d chunk consensuses (N = 20), the alignment SubFam passes downstream' % len(chs), lambda k: maj[k[6:]][0])
-ax.yaxis.tick_right(); ax.set_yticks(range(len(chs))); ax.set_yticklabels(['%s  %s p=%.2f' % (c, maj[c][0], maj[c][1] / len(byc[c])) for c in chs], fontsize=7)
-fig.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=col[x]) for x in labs] + [plt.Rectangle((0, 0), 1, 1, color=c) for c in base.colors[1:]],
-           labels=labs + ['= majority base of the column', 'differs from it (white = gap)'], ncol=7, loc='lower center', fontsize=8, frameon=False)
-fig.savefig(out, dpi=170, bbox_inches='tight'); print('wrote', out, len(rnd), 'copies', len(chs), 'chunks', L, 'columns,', len(keep), 'shown', file=sys.stderr)
+ax = panel(2, cn, 'c  their %d chunk consensuses (N = 20)' % len(chs), lambda k: maj[k[6:]][0])
+ax.yaxis.tick_right(); ax.set_yticks(range(len(chs))); ax.set_yticklabels(['%d %s %.2f' % (i + 1, maj[c][0], maj[c][1] / len(byc[c])) for i, c in enumerate(chs)], fontsize=5)
+used = [x for x in labs if any(lab[k] == x for k in rnd)]   # only the groups present in the sample
+fig.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=col[x]) for x in used] + [plt.Rectangle((0, 0), 1, 1, color=c, ec='#999999', lw=0.3) for c in base.colors],
+           labels=used + ['gap', 'majority base of the column', 'other base'], ncol=7, loc='lower center', fontsize=6.5, frameon=False, bbox_to_anchor=(0.5, 0.02))
+fig.savefig(out, dpi=300, bbox_inches='tight'); fig.savefig(os.path.splitext(out)[0] + '.pdf', bbox_inches='tight'); print('wrote', out, len(rnd), 'copies', len(chs), 'chunks', L, 'columns,', len(keep), 'shown', file=sys.stderr)
