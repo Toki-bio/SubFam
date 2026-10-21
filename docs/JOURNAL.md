@@ -17,3 +17,19 @@ Not Nature/BMC, mentioned only so they are not forgotten: Bioinformatics and NAR
 Before any submission: choose a LICENSE (the README says all rights are reserved until one is added; BMC wants free non-commercial availability and recommends open source), archive a release (Zenodo DOI), check the author list and the name "SubFam" for clashes.
 
 Update: Nikita is not an author; he is thanked in the acknowledgements (README updated). License: MIT (LICENSE added, copyright line Sergei Kosushkin, 2026).
+
+## 2026-10-21
+
+- **SubFam 1.5.1** (6115958): the k-mer ordering is checked against free memory (about 4·n² bytes; SubFam stops with a message
+  when it does not fit) instead of the old advice to use `-P` above 20,000 sequences. On real Alu (30,000 copies of hg38 chr1)
+  PartTree chunks are less pure than k-mer chunks (0.400 against 0.472, `benchmark/alu_hg38/README.md`), and the k-mer ordering
+  ran there in a few GB. Input ids starting with `_R_` are refused (GLM audit 284); the `-a` no-consensus warning also goes to the
+  log (GLM audit 362). Tests: `tests/check_inputs.sh` (3 new cases), `test_robust.sh` 26/26, `test_kmer_order.sh` 292/292.
+- **Sparse k-mer ordering (`-S`)**, the DeepSeek design tested by AutoClaw on KIT (`/data/W/toki/subfam_sparse_test/`, handoffs in
+  `C:\work\SubFam\`): not adopted. It loses to `-P` and to the exact ordering on every real-data test (alu30k 0.378 against 0.399 and
+  0.466) and measured only the ordering step, never consensus quality.
+- **Manuscript v7** (`docs/MANUSCRIPT_BMC_v7.md`): stale passages corrected (Example 3, Availability, tests, final-alignment modes),
+  the memory need of the k-mer ordering and the cost of `-P` stated, abstract 324 words; Figure 2 final
+  (`docs/figures/fig2_chaos_to_order`, its MAFFT alignment on one thread so that it is reproducible) and Supplementary Figure 3
+  (`benchmark/figure_supp3_simulation.py`); 24 numbered references, each checked against PubMed or the tool page
+  (`docs/REFERENCES_BMC_v7.md`). Waiting on the author: prior-use papers, declarations, name spelling, waiver.
