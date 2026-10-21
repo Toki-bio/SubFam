@@ -62,7 +62,7 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 | `-r` | off | copies may be on both strands: strand-independent (canonical) k-mers for the tree, then each copy is oriented like its neighbour in the order, and the whole set like its majority strand |
 | `-m` | off | order with the MAFFT guide tree instead of k-mers |
 | `-I` | off | keep the input order: for input you ordered yourself, or to measure what the ordering contributes (a shuffled input gives the chance level) |
-| `-P` | off | order with MAFFT PartTree (implies `-m`), for inputs too large for an all-against-all matrix |
+| `-P` | off | order with MAFFT PartTree (implies `-m`), only when the k-mer matrix (~4·n² bytes) does not fit in free memory; SubFam checks this and stops with a message. PartTree chunks are less pure on real data (30,000 Alu copies: 0.400 vs 0.472) |
 | `-c` | off | coverage-relative plurality for truncated copies: a base needs `-p` of the sequences that span that column (end gaps excluded, at least 3 spanning), not of the whole chunk |
 | `-a` | off | keep no-consensus positions as `N` in `PREFIX.cons.fasta` (by default they are removed, which also removes alignment columns where most of the chunk has a gap); the final alignment never contains them, and SubFam warns when 30 % or more of the positions are `N` |
 | `-e LIST` | off | write the original sequences of the listed chunks to one FASTA file each in `PREFIX.chunk_fasta/`; `LIST` is `all` or chunk numbers and ranges, e.g. `3,7,22-45` |
@@ -155,7 +155,7 @@ What the table shows:
 - Fixed-size chunks do not follow subfamily boundaries. Expect some redundant rows (an abundant subfamily filling several chunks) and some mixed rows (a chunk straddling two subfamilies). Use `PREFIX.chunks.tsv` to see which copies built each row.
 - Subfamilies with fewer than about *N* copies may be absorbed by a neighbour. Lower `-n` if rare variants matter.
 - Consensus calling assumes the copies are roughly collinear. Rearranged copies should be filtered. For truncated copies (for example 5′-truncated LINEs) use `-c`, otherwise the consensus is cut down to the region most copies cover; on simulated 5′-truncated copies `-c` recovers full-length consensuses where the default does not. Chunks of very short fragments still make poor rows: discover from long copies, then assign fragments (see docs/SCALING.md).
-- The ordering step builds an all-against-all distance matrix. Use `-P` (PartTree) for very large inputs.
+- The ordering step builds an all-against-all distance matrix of ~4·n² bytes (30,000 sequences: 3.6 GB); SubFam stops when it does not fit in free memory. `-P` (PartTree) needs far less, at a cost in chunk purity.
 
 ## Authors
 
