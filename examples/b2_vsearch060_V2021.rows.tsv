@@ -1,0 +1,43 @@
+vs60_1|B2a|p0.88	CLASSCONS_B2a_consensus_of_B2a_copies	0.952
+vs60_129|B2a|p0.69	CLASSCONS_B2a_consensus_of_B2a_copies	0.957
+vs60_2|B2a|p0.96	CLASSCONS_B2a_consensus_of_B2a_copies	0.963
+vs60_351|B2a|p0.92	CLASSCONS_B2a_consensus_of_B2a_copies	0.930
+vs60_415|B2a|p1.00	CLASSCONS_B2a_consensus_of_B2a_copies	0.983
+vs60_96|B2a|p0.98	CLASSCONS_B2a_consensus_of_B2a_copies	0.995
+vs60_296|B2c|p0.86	CLASSCONS_B2c_consensus_of_B2c_copies	1.000
+vs60_105|B2d|p0.71	CLASSCONS_B2d_consensus_of_B2d_copies	0.929  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_108|B2d|p0.92	CLASSCONS_B2d_consensus_of_B2d_copies	0.854  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_114|B2d|p0.69	CLASSCONS_B2d_consensus_of_B2d_copies	0.826  closer to CLASSCONS_B2e_consensus_of_B2e_copies
+vs60_13|B2d|p0.93	CLASSCONS_B2d_consensus_of_B2d_copies	0.960
+vs60_130|B2d|p0.53	CLASSCONS_B2d_consensus_of_B2d_copies	0.891  closer to CLASSCONS_B2e_consensus_of_B2e_copies
+vs60_141|B2d|p0.75	CLASSCONS_B2d_consensus_of_B2d_copies	0.893  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_146|B2d|p0.50	CLASSCONS_B2d_consensus_of_B2d_copies	0.898
+vs60_17|B2d|p0.92	CLASSCONS_B2d_consensus_of_B2d_copies	0.947
+vs60_172|B2d|p0.86	CLASSCONS_B2d_consensus_of_B2d_copies	0.926  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_18|B2d|p0.79	CLASSCONS_B2d_consensus_of_B2d_copies	0.870
+vs60_186|B2d|p0.53	CLASSCONS_B2d_consensus_of_B2d_copies	0.952
+vs60_197|B2d|p0.83	CLASSCONS_B2d_consensus_of_B2d_copies	0.920
+vs60_221|B2d|p0.50	CLASSCONS_B2d_consensus_of_B2d_copies	0.889  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_232|B2d|p0.62	CLASSCONS_B2d_consensus_of_B2d_copies	0.911
+vs60_24|B2d|p0.93	CLASSCONS_B2d_consensus_of_B2d_copies	0.938
+vs60_26|B2d|p0.84	CLASSCONS_B2d_consensus_of_B2d_copies	0.971  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_29|B2d|p0.89	CLASSCONS_B2d_consensus_of_B2d_copies	0.986
+vs60_33|B2d|p0.87	CLASSCONS_B2d_consensus_of_B2d_copies	0.936
+vs60_36|B2d|p0.52	CLASSCONS_B2d_consensus_of_B2d_copies	0.908  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_39|B2d|p0.93	CLASSCONS_B2d_consensus_of_B2d_copies	0.975
+vs60_43|B2d|p0.90	CLASSCONS_B2d_consensus_of_B2d_copies	0.892  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_48|B2d|p0.53	CLASSCONS_B2d_consensus_of_B2d_copies	0.865
+vs60_5|B2d|p0.95	CLASSCONS_B2d_consensus_of_B2d_copies	0.941
+vs60_50|B2d|p1.00	CLASSCONS_B2d_consensus_of_B2d_copies	0.946
+vs60_51|B2d|p0.87	CLASSCONS_B2d_consensus_of_B2d_copies	0.915  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_56|B2d|p1.00	CLASSCONS_B2d_consensus_of_B2d_copies	0.906
+vs60_6|B2d|p0.90	CLASSCONS_B2d_consensus_of_B2d_copies	0.941
+vs60_63|B2d|p0.82	CLASSCONS_B2d_consensus_of_B2d_copies	0.936
+vs60_7|B2d|p0.82	CLASSCONS_B2d_consensus_of_B2d_copies	0.922  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_81|B2d|p0.92	CLASSCONS_B2d_consensus_of_B2d_copies	0.961
+vs60_82|B2d|p1.00	CLASSCONS_B2d_consensus_of_B2d_copies	0.872  closer to CLASSCONS_B2c_consensus_of_B2c_copies
+vs60_83|B2d|p0.85	CLASSCONS_B2d_consensus_of_B2d_copies	0.942
+vs60_93|B2d|p0.91	CLASSCONS_B2d_consensus_of_B2d_copies	0.910
+vs60_254|B2e|p0.60	CLASSCONS_B2e_consensus_of_B2e_copies	0.864
+vs60_320|B2e|p0.35	CLASSCONS_B2e_consensus_of_B2e_copies	0.865  closer to CLASSCONS_B2d_consensus_of_B2d_copies
+vs60_70|B2e|p0.55	CLASSCONS_B2e_consensus_of_B2e_copies	0.859
