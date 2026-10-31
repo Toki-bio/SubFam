@@ -42,7 +42,7 @@ Every RepeatMasker [13] B2_Mm1a, B2_Mm1t, B2_Mm2, B3 and B3A copy on chr19 of mm
 ### Example 4: 30,000 copies
 B2-family copies of at least 170 bp on mm39 chromosomes 1–3 (41,989; the rule of Example 1), a random 30,000 (seed 1), `-n 50`: 600 rows, 588 of them distinct, in 13 min at 4.1 GB with the k-mer order on a shared processor (6.3 min on an idle one for two further random samples of the same copies) and in 7 min at 0.7 GB with `-P` on the shared processor (Additional file 5). The five Dfam consensuses are among the rows at identity 1.000 (B2_Mm1a), 0.995 (B2_Mm2), 0.984 (B2_Mm1t), 0.943 (B3; 0.952 and 0.954 in the two further samples) and 0.889 (B3A), the last two being the old classes. In chunk order the 600 rows form one block of B2 chunks (the 11-bp deletion of the B2 lineage visible as a shared gap) flanked by B3/B3A chunks on both sides, the structure of the 60-row run in ten times as many rows (Additional file 6). 30,000 full-length Alu copies of hg38 chr1 (of 76,301) give 600 rows in 12 min at 4.3 GB on the shared processor (6.7 min at 0.8 GB with `-P`). Among them, 25 of the 26 Dfam human Alu families with 50 or more expected copies in the sample are present at ≥ 0.95 identity (median best identity 0.994), and all 74 Price et al. [6] subfamilies with 50 or more expected copies; of the rarer Price subfamilies, 88 of 90 with 10–50 expected copies and 45 of 49 with fewer are present. Presence falls with the expected copy number, as a group needs about N copies in the sample.
 
-### Input preparation (Additional file 8)
+### Input preparation (Additional file 7)
 Copies reach SubFam in different states: cut exactly to the element, or with some of their own flanking sequence. The 3,000 B2 copies of Example 1 were cut again with 25, 100 and 500 bp of their genomic flank on each side (the element part identical in every copy) and compared with the element-only run, against the variation that a different input order alone produces. With 25 or 100 bp flanks, 36 and 37 of the 60 element-only rows recur at ≥ 0.95 identity among the new rows, as with two shuffled input orders (47 and 36), and the published consensuses of the family (Dfam and Vassetzky et al. [16]) are found among the rows at the same identities as without flanks (for example B2c 0.994 without flanks, 0.979 and 0.969 with them). Which copies share a chunk changes more than the rows do: the flanks add unique k-mers, the order shifts, and the windows cut elsewhere but yield the same consensuses. With 500 bp flanks, five times the element on each side, the flanks dominate the k-mer distance: 23 of the 60 rows recur, and the rows of the old subfamilies move away from their published consensuses (B2c 0.882). Long flanks should therefore be trimmed before the run.
 
 ### The ordering is what makes the chunks (Table 1)
@@ -79,7 +79,7 @@ SubFam turns a collection of related copies that is too large to read into a com
 ## Availability and requirements
 - **Project name:** SubFam
 - **Project home page:** https://github.com/Toki-bio/SubFam
-- **Archived version:** [AUTHOR: Zenodo DOI of the release used in this paper]; source code of SubFam 1.5.1 in Additional file 7
+- **Archived version:** [AUTHOR: Zenodo DOI of the release used in this paper]; source code of SubFam 1.5.1 in Additional file 8
 - **Operating system(s):** Linux (tested); other Unix systems with bash should work, but the free-memory check reads Linux's /proc/meminfo
 - **Programming language:** Bash and C, with awk (an embedded Python 3 fallback for the ordering)
 - **Other requirements:** MAFFT ≥ 7 (7.505 tested); gawk or mawk; for the k-mer ordering a C compiler, or else Python ≥ 3.6 with numpy ≥ 1.20 (`-m`, `-P` and `-I` need MAFFT only); memory of about 4·n² bytes for n input sequences with the k-mer ordering
@@ -148,6 +148,6 @@ The 60 chunk consensuses (N = 50) of 3,000 B2, B3 and B3A copies of mm39 chr19, 
 
 **Additional file 6** (PDF). The 600 rows of the 30,000-copy B2 run. Rows in chunk order; the strip gives the most common RepeatMasker class of each chunk's copies.
 
-**Additional file 7** (ZIP). Source code of SubFam 1.5.1, as archived [AUTHOR: Zenodo DOI].
+**Additional file 7** (CSV). Input preparation. The 3,000 B2 copies of Example 1 without flanks, in two shuffled input orders, and with 25, 100 and 500 bp of their own flank on each side: copy pairs kept in the same chunk, element-only rows recurring at ≥ 0.95 identity, and the best identity of each Dfam and Vassetzky et al. [16] consensus among the rows.
 
-**Additional file 8** (CSV). Input preparation. The 3,000 B2 copies of Example 1 without flanks, in two shuffled input orders, and with 25, 100 and 500 bp of their own flank on each side: copy pairs kept in the same chunk, element-only rows recurring at ≥ 0.95 identity, and the best identity of each Dfam and Vassetzky et al. [16] consensus among the rows.
+**Additional file 8** (ZIP). Source code of SubFam 1.5.1, as archived [AUTHOR: Zenodo DOI].
