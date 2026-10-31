@@ -33,7 +33,7 @@ to the head of their own group: median 0.959, min 0.836; 5 rows are closer to an
 |---|---|---|---|---|
 | B2_Mm1a | 4 | 0.78–1.00 | 0.990–1.000 | clean |
 | B2_Mm2 | 14 | 0.44–1.00 (11 of 14 ≥ 0.76) | 0.867–1.000; 1 of 14 closer to the Mm1t head | mostly clean |
-| B2_Mm1t | 6 | 0.44–0.96 (5 of 6 ≤ 0.66) | 0.957–0.979; 3 of 6 closer to the Mm1a or Mm2 head | no chunk of its own: its copies sit between Mm1a and Mm2 |
+| B2_Mm1t | 6 | 0.44–0.96 (5 of 6 ≤ 0.66) | 0.957–0.979; 3 of 6 closer to the Mm1a or Mm2 head | majority of 6 chunks, 5 of them impure; its copies sit between Mm1a and Mm2 |
 | B3 | 27 | 0.56–1.00 | 0.914–0.990 | clean blocks, old (the copies are 23–27 % diverged) |
 | B3A | 9 | 0.50–0.92 | 0.836–0.927; 1 of 9 closer to the B3 head | old and mixed with B3 |
 
@@ -50,7 +50,7 @@ predict for Mm1t. SubFam asserts nothing here; the rows are the data.
   `benchmark/line_real/README.md` §2 for the same caveat on hg38).
 - B2b, B2c, B2e of the 2021 scheme have no Repbase name and are labelled B2_Mm2/B3/B3A by
   RepeatMasker; the next section labels the copies by the 2021 consensuses instead.
-- Purity is against rmsk labels, which are themselves uncertain between Mm1a/Mm1t/Mm2 (2 and 16
+- Purity is against rmsk labels, which are themselves uncertain between Mm1a/Mm1t/Mm2 (Dfam Mm1t differs from Mm1a at 3 positions plus one N, from Mm2 at 17 columns; earlier note: 2 and 16
   nt apart over 193 bp).
 
 ## The same copies against the 2021 subfamilies (B2a–e)

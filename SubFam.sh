@@ -565,7 +565,7 @@ TOTAL=$(grep -c '^>' "$IN" || true)
 NCHUNK=$(( (TOTAL + N / 2) / N )); [ "$NCHUNK" -ge 1 ] || NCHUNK=1     # round(TOTAL / N)
 # The k-mer ordering holds a TOTAL x TOTAL float32 matrix. It is checked against the memory this machine has free, not
 # against a fixed size: until 1.5.1 the help sent every input over 20,000 sequences to -P, but on real Alu (30,000 copies)
-# PartTree chunks are less pure than k-mer chunks (0.399 vs 0.466), and the k-mer ordering ran there in 3.5 GB.
+# PartTree chunks are less pure than k-mer chunks (0.400 vs 0.472), and the k-mer ordering ran there at a 4.3 GB peak.
 if [ "$ORDER" = kmer ]; then
     NEED_MB=$(( 4 * TOTAL * TOTAL / 1000000 + 1 ))
     AVAIL_MB=${SUBFAM_AVAIL_MB:-$(awk '/^MemAvailable:/ { print int($2 / 1024) }' /proc/meminfo 2>/dev/null || true)}   # SUBFAM_AVAIL_MB: tests

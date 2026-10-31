@@ -89,3 +89,7 @@ Nothing below has been applied to the manuscript yet.
 ## E. Waiting on the author
 
 ORCID, Sergei/Sergey, affiliation, e-mail, Zenodo DOI, funding, competing interests (co-author of Vassetzky 2021), acknowledgements, LLM statement, prior-use papers (renumbers MAGUS), the 8,000-alignment test (B4).
+
+## Status 2026-10-31
+
+A, B (incl. B1 with the Vassetzky-label purity reported in the Table 2 text and in Limitations), C and D applied. B4: the unverified 8,000-alignment and splitter sentence replaced by check_equivalence.sh (3,600 / 80 runs) and check_inputs.sh. Still open: Figure 2 column count log (B24), Additional files 2, 4, 6 not built, REFERENCES (d)2 and (d)7, section E.

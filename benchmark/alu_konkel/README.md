@@ -1,5 +1,7 @@
 # Konkel et al. 2015 Alu loci: a first real-data check (coarse)
 
+Note (2026-10-31): the tables below were made with SubFam 1.2.0 and report 15 chunks at -n 20; the current version gives 16 rows on the same 316 loci (examples/konkel_alu_n20.rows.tsv), which is what the manuscript reports.
+
 Data: the 343 GenBank records KT305395-KT305737 (Sanger-sequenced polymorphic Alu insertions, 1000 Genomes pilot; Konkel et al. 2015, GBE 7:2608). Download them yourself with efetch (see docs/HANDOFF_vscode.md); the records are not stored here.
 
 `prep.py GB_DIR PRICE_SUPPLEMENT OUT_DIR`
