@@ -1,0 +1,11 @@
+comparison,copies,normalised_Robinson_Foulds_distance,cophenetic_correlation
+whole copies vs last 1000 bp (all copies),2222,0.974,0.368
+whole copies vs last 2000 bp (copies >= 2000 bp),1345,0.958,0.523
+whole copies k = 6 vs whole copies k = 5,2222,0.791,0.911
+
+ordering input,copies,chunks,NMI_chunk_vs_length_quintile,
+whole copies,2222,112,0.459,
+last 1000 bp,2222,112,0.075,
+whole copies >= 2000 bp,1345,68,0.392,
+last 2000 bp of copies >= 2000 bp,1345,68,0.075,
+"whole copies, k = 5",2222,112,0.475,

@@ -63,7 +63,7 @@ panel(0, rnd, 'a  %d B2 copies, input order' % len(rnd), lambda k: lab[k])
 panel(1, ordered, 'b  the same copies in SubFam order', lambda k: lab[k])
 cn = ['CHUNK_' + c for c in chs]
 ax = panel(2, cn, 'c  their %d chunk consensuses (N = 20)' % len(chs), lambda k: maj[k[6:]][0])
-ax.yaxis.tick_right(); ax.set_yticks(range(len(chs))); ax.set_yticklabels(['%d %s %.2f' % (i + 1, maj[c][0], maj[c][1] / len(byc[c])) for i, c in enumerate(chs)], fontsize=5)
+ax.yaxis.tick_right(); ax.set_yticks(range(len(chs))); ax.set_yticklabels(['%d %s' % (i + 1, maj[c][0]) for i, c in enumerate(chs)], fontsize=5)
 used = [x for x in labs if any(lab[k] == x for k in rnd)]   # only the groups present in the sample
 fig.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=col[x]) for x in used] + [plt.Rectangle((0, 0), 1, 1, color=c, ec='#999999', lw=0.3) for c in base.colors],
            labels=used + ['gap', 'majority base of the column', 'other base'], ncol=7, loc='lower center', fontsize=6.5, frameon=False, bbox_to_anchor=(0.5, 0.02))
