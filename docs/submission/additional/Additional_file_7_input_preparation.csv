@@ -5,3 +5,15 @@ no flanks,1.000,1.000,60/60,1.000,1.000,3/5,Mm1a:1.000 Mm1t:0.984 Mm2:0.990 B3:0
 25 bp flanks each side,0.146,0.132,36/60,0.962,0.891,3/5,Mm1a:0.995 Mm1t:0.979 Mm2:0.995 B3:0.940 B3A:0.879,3/5,B2a:0.995 B2b:0.968 B2c:0.979 B2d:0.940 B2e:0.894
 100 bp flanks each side,0.089,0.074,37/60,0.957,0.897,3/5,Mm1a:0.995 Mm1t:0.984 Mm2:0.990 B3:0.931 B3A:0.883,3/5,B2a:1.000 B2b:0.952 B2c:0.969 B2d:0.949 B2e:0.911
 500 bp flanks each side,0.032,0.016,23/60,0.938,0.878,3/5,Mm1a:0.995 Mm1t:0.979 Mm2:0.985 B3:0.912 B3A:0.856,1/5,B2a:1.000 B2b:0.920 B2c:0.882 B2d:0.944 B2e:0.914
+"no flanks, shuffled input order (seed 101, Monsoon run)",0.348,,37/60,0.963,,,,,
+"no flanks, shuffled input order (seed 102, Monsoon run)",0.360,,40/60,0.961,,,,,
+"no flanks, shuffled input order (seed 103, Monsoon run)",0.580,,39/60,0.967,,,,,
+"no flanks, shuffled input order (seed 104, Monsoon run)",0.350,,37/60,0.962,,,,,
+"no flanks, shuffled input order (seed 105, Monsoon run)",0.518,,38/60,0.962,,,,,
+"no flanks, shuffled input order (seed 106, Monsoon run)",0.348,,37/60,0.963,,,,,
+"no flanks, shuffled input order (seed 107, Monsoon run)",0.410,,38/60,0.966,,,,,
+"no flanks, shuffled input order (seed 108, Monsoon run)",0.472,,40/60,0.963,,,,,
+"no flanks, shuffled input order (seed 109, Monsoon run)",0.360,,40/60,0.961,,,,,
+"no flanks, shuffled input order (seed 110, Monsoon run)",0.472,,40/60,0.963,,,,,
+"no flanks, N run of 1-10 bases in 1,000 of the 3,000 copies, k-mers spanning N (SubFam 1.5.1)",0.166,0.153,37/60,0.956,,,,,
+"no flanks, N run of 1-10 bases in 1,000 of the 3,000 copies, k-mers broken at N",0.170,0.156,37/60,0.962,,,,,
