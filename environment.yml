@@ -1,0 +1,13 @@
+# Environment for SubFam (SubFam.sh). Versions are those of the conda environment on the
+# author's server where the container comparison was run (see containers/README.md).
+name: subfam
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - mafft=7.526        # the aligner (>= 7 required)
+  - gawk=5.4.1         # awk (any POSIX awk works; gawk is the one tested)
+  - gcc                # C compiler: SubFam compiles kmer_order.c on every run (k-mer ordering)
+  - python=3.11        # fallback k-mer ordering (embedded Python script), used if no compiler
+  - numpy=2.4.6        #   ... needs numpy >= 1.20; used only with KMER_IMPL=py or without a compiler

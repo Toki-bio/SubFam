@@ -45,6 +45,21 @@ git clone https://github.com/toki-bio/SubFam && cd SubFam
 ./SubFam.sh -h
 ```
 
+## Run with a container
+
+`environment.yml` lists exactly what `SubFam.sh` needs (MAFFT, gawk, a C compiler, and Python with numpy for the fallback ordering). `containers/subfam.def` (Apptainer/Singularity) and `containers/Dockerfile` build the same environment on a micromamba base; the container runs the unchanged `SubFam.sh`. Build from the repository root:
+
+```bash
+apptainer build subfam.sif containers/subfam.def        # needs --fakeroot, or root
+# or: docker build -f containers/Dockerfile -t subfam .
+
+# run: give absolute paths and bind the directory that holds the data
+apptainer run --bind "$PWD" subfam.sif -n 50 -t 8 -o "$PWD/out" "$PWD/sequences.fasta"
+# docker run --rm -v "$PWD":/data subfam -n 50 -t 8 -o out sequences.fasta
+```
+
+Tested 2026-11-21 (Apptainer 1.5.4, MAFFT 7.526, gawk 5.4.1, gcc 16.2.0, numpy 2.4.6): 2,000 simulated B2-like copies (`benchmark/simulate.py middle --divergence 0.08 --seed 1`), `-n 50 -t 4`, natively and in the container, with the C and the Python k-mer ordering: all outputs (`.aln.fasta`, `.chunks.tsv`, `.chunkstats.tsv`, `.cons.fasta`, `.msf`) are byte-identical; only `.log` differs (date, command-line paths). The Docker file was written to match but was not built here (no Docker on the test server). On a machine where unprivileged `--fakeroot` is not available (no `newuidmap`), the same image was made by unpacking the base image to a sandbox, running the `%post` commands in it with `apptainer exec --writable`, and building the `.sif` from that sandbox.
+
 ## Usage
 
 ```bash

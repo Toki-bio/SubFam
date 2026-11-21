@@ -1,0 +1,24 @@
+Bootstrap: docker
+From: mambaorg/micromamba:2.0.5
+
+%files
+    environment.yml /opt/subfam/environment.yml
+    SubFam.sh /opt/subfam/SubFam.sh
+    kmer_order.c /opt/subfam/kmer_order.c
+
+%post
+    micromamba create -y -n subfam -f /opt/subfam/environment.yml
+    micromamba clean -a -y
+    chmod 755 /opt/subfam/SubFam.sh
+    ln -s /opt/subfam/SubFam.sh /usr/local/bin/SubFam.sh
+
+%environment
+    export PATH=/opt/conda/envs/subfam/bin:$PATH
+    export LC_ALL=C
+
+%runscript
+    exec /opt/subfam/SubFam.sh "$@"
+
+%help
+    SubFam in a container. Run:  apptainer run subfam.sif [options] sequences.fasta
+    (see README.md, "Run with a container").
