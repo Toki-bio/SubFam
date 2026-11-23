@@ -12,7 +12,7 @@
 
 ## Reproducibility and conventions
 - Document every run step so that it can be repeated exactly (inputs, seeds, tool versions, commands); each benchmark directory has a README and a script.
-- Commit messages end with the two trailer lines the session's attribution reminder gives. Develop and push only on `claude/practical-dijkstra-a0xv8i`; no pull request unless asked.
+- Commit messages end with the two trailer lines the session's attribution reminder gives. No pull request unless asked.
 - No keys or passwords in the repository or in chat. No model identifiers in repository content.
 - Short answers (the author is often on a phone); verify from source or text and say what was and was not verified; always give a link when something needed is mentioned; do not flatter.
 - Compute runs on the author's servers are not reachable from the cloud container: prepare scripts, do not claim results.
