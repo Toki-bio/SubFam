@@ -18,7 +18,7 @@ Where each file comes from is described at the end of this page.
 - Linux or macOS. On Windows, use WSL (Windows Subsystem for Linux) and run every command inside its Linux terminal.
 - conda (Miniforge or Miniconda). Check: `conda --version` prints a version number.
 - git. Check: `git --version` prints a version number.
-- About 5 GB of free memory for Example 4; the other examples need less than 1 GB.
+- About 5 GB of free memory for Examples 2 and 4; the other examples need less than 100 MB.
 
 ## Step 2. Get SubFam and the demo files
 
@@ -47,6 +47,14 @@ Check that it works:
 
 You should see `SubFam 1.5.1`.
 
+**If conda cannot download** (some networks block or throttle its servers; the error is `CondaHTTPError: HTTP 000 CONNECTION FAILED`): on Ubuntu, Debian or WSL install the same programs from the system instead, and skip `conda activate subfam` in the later steps:
+
+```
+sudo apt install mafft gawk gcc
+```
+
+The results are the same: this was tested with Ubuntu's MAFFT 7.525 and gawk 5.3.2.
+
 ## Step 4. Example 1: 3,000 mouse B2 copies
 
 ```bash
@@ -55,7 +63,7 @@ You should see `SubFam 1.5.1`.
 
 `-n 50` puts 50 copies in each chunk, `-t 8` uses 8 processor threads (use the number your computer has), `-o` names the output folder and `-x` the prefix of the output files.
 
-Expected: EX1_EXPECTED
+Expected: the count below prints `60` (3,000 copies / 50 = 60 rows), as in the manuscript. It takes about 6 seconds.
 
 Count the rows:
 
@@ -84,7 +92,7 @@ The copy ids start with their RepeatMasker class (for example `B2_Mm1a_chr19_159
 awk '/^>/{n++} END{print n}' demo_out/fig2/b2_390.cons.fasta
 ```
 
-Expected: FIG2_EXPECTED
+Expected: `20`. These 20 rows are panel (c) of Figure 2. The figure itself, with the copies and the rows in one alignment, is drawn by `benchmark/sine_b2/figure_chaos_to_order.py`.
 
 ## Step 6. Example 2: 2,222 human L1PA copies, most of them 5′-truncated
 
@@ -95,7 +103,7 @@ awk '/^>/{n++} END{print n}' demo_out/ex2/l1pa.cons.fasta
 
 `-c` is for truncated copies: a base of a row is called from the copies that reach that position, so the rows reach as far 5′ as their copies do.
 
-Expected: EX2_EXPECTED
+Expected: `111`. This is the slow one: about 6 minutes and 4.4 GB of memory with 8 threads, 17 minutes with 2 threads.
 
 ## Step 7. Example 3: 316 young human Alu loci
 
@@ -104,7 +112,13 @@ Expected: EX2_EXPECTED
 awk '/^>/{n++} END{print n}' demo_out/ex3/alu.cons.fasta
 ```
 
-Expected: EX3_EXPECTED
+Expected: `16`. Only 7 of the 16 rows are different sequences: in a young family several chunks give the same consensus (manuscript, Limitations). To count the different rows:
+
+```bash
+awk '/^>/{if(s!="")print toupper(s); s=""; next} {s=s $0} END{print toupper(s)}' demo_out/ex3/alu.cons.fasta | sort -u | wc -l
+```
+
+This prints `7`.
 
 ## Step 8. Example 4: 30,000 mouse B2 copies
 
@@ -113,9 +127,27 @@ Expected: EX3_EXPECTED
 awk '/^>/{n++} END{print n}' demo_out/ex4/b2_30000.cons.fasta
 ```
 
-Expected: EX4_EXPECTED
+Expected: `600` (588 of them different sequences; use the command of Step 7 on `demo_out/ex4/b2_30000.cons.fasta` to count them). About 4 minutes and 3.6 GB of memory with 8 threads, 12 minutes with 2 threads.
 
-## Step 9. Look at the result
+## Step 9. Check that you got exactly the manuscript result
+
+```bash
+md5sum demo_out/*/*.cons.fasta
+```
+
+(On macOS: `md5 demo_out/*/*.cons.fasta`.) You should see these five checksums:
+
+```
+ffabc9786ac57fec4a1da03a6585fa9f  demo_out/ex1/b2_3000.cons.fasta
+ef34f2a6031846f20c26e725d77293be  demo_out/ex2/l1pa.cons.fasta
+fa66dcef581cfe208ed0626012c11177  demo_out/ex3/alu.cons.fasta
+18ef64f9e900f7a2aeec9e5afc9da01b  demo_out/ex4/b2_30000.cons.fasta
+bb256d4555bd1191f4e77cbf1adc1860  demo_out/fig2/b2_390.cons.fasta
+```
+
+If they match, your rows are the very rows of the manuscript, base for base. The `.aln.fasta` files can differ slightly between MAFFT versions and thread counts (only the 600-row alignment of Example 4 did so in our tests: 263 to 265 columns); the rows themselves do not. Tested with 2 and 8 threads, MAFFT 7.525 and 7.526.
+
+## Step 10. Look at the result
 
 Open any `.aln.fasta` file in an alignment viewer: Jalview, AliView, or ViewAlign in the browser (https://toki-bio.github.io/MSA-viewer/, load the file from your computer).
 Read the rows from top to bottom: groups of similar copies appear as blocks of adjacent rows that share the same differences. Lower-case bases are weakly supported: half of the chunk or fewer carry them.
