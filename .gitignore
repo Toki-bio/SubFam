@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 bench_out/
+
+# AI-assistant working files (kept locally, not part of SubFam)
+CLAUDE.md
+.claude/
+~$*
