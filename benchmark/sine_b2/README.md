@@ -1,6 +1,6 @@
 # Mouse B2 SINEs (mm39 chr19): SubFam against two published classifications
 
-Run 2026-10-10 in the cloud session (8 threads, MAFFT 7.505, SubFam 1.3.0). Everything is made by
+Run 2026-10-10 (8 threads, MAFFT 7.505, SubFam 1.3.0). Everything is made by
 `make_b2.sh WORKDIR` (downloads, extraction, sampling with seed 1, SubFam, grouped alignment).
 Result file: `examples/b2_mm39_chr19_n50.aln.fasta` (the five Vassetzky 2021 consensuses B2a–e are its first five rows, `REFERENCE_KRAMEROV_*`; the Dfam ones are likewise in the file grouped by B2a–e).
 

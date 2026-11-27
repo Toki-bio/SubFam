@@ -207,7 +207,7 @@ awk -v out="$WORK/in/checked.fa" '
     /^>/ { flush(); split(substr($0, 2), w, /[ \t]/); id = w[1]
            if (id == "") { print "SubFam: a header line has no id (line " NR ")" > "/dev/stderr"; bad = 1; exit 1 }
            # "_R_" marks a reverse-complemented copy (MAFFT and the k-mer orienter add it); an input id that already starts with
-           # it was recorded as id-without-prefix on the minus strand (GLM audit 284)
+           # it was recorded as id-without-prefix on the minus strand (audit item 284)
            if (id ~ /^_R_/) { print "SubFam: sequence id \"" id "\" (line " NR ") starts with _R_, the prefix SubFam uses for reverse-complemented copies; rename it" > "/dev/stderr"; bad = 1; exit 1 }
            if (id in seen) { print "SubFam: duplicate sequence id \"" id "\" (lines " seen[id] " and " NR "); ids must be unique" > "/dev/stderr"; bad = 1; exit 1 }
            seen[id] = NR; rec = $0 "\n"; len = 0; next }
@@ -642,7 +642,7 @@ awk 'function out(   t) { t = s; gsub(/[Nn]/, "", t); tot += length(s); nn += le
      END { if (h != "") out(); printf "%d %d\n", nn, tot > "/dev/stderr" }' "$OUTDIR/$PREFIX.cons.fasta" > "$WORK/cons.called.fasta" 2> "$WORK/nfrac.txt"
 read -r NN NTOT < "$WORK/nfrac.txt"
 if [ -n "$KEEP_N" ] && [ "${NTOT:-0}" -gt 0 ] && [ $((NN * 100 / NTOT)) -ge 30 ]; then
-    # also into the log: a warning on stderr alone is lost in a batch run (GLM audit 362)
+    # also into the log: a warning on stderr alone is lost in a batch run (audit item 362)
     { echo "SubFam: warning: $((NN * 100 / NTOT))% of the consensus positions have no consensus (N): the chunks are heterogeneous or"
       echo "        the copies truncated; try -c (coverage-relative plurality). They are left out of the final alignment."
     } | tee -a "$OUTDIR/$PREFIX.log" >&2

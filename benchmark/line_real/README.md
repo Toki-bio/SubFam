@@ -1,6 +1,6 @@
 # Real L1 copies (hg38 chr4, L1PA2-L1PA8): SubFam, peel into groups, group consensuses
 
-Run 2026-10-08 in the cloud session (4 cores). Data: UCSC hg38 `rmsk.txt.gz` and `chr4.fa.gz` (hgdownload.soe.ucsc.edu). Not a benchmark with a truth; a worked example on real copies.
+Run 2026-10-08 on a 4-core machine. Data: UCSC hg38 `rmsk.txt.gz` and `chr4.fa.gz` (hgdownload.soe.ucsc.edu). Not a benchmark with a truth; a worked example on real copies.
 
 1. `extract_l1.py rmsk.txt.gz chr4.fa.gz l1.fa 1000`: every RepeatMasker L1PA2-L1PA8 copy on chr4 of at least 1 kb, without N, on the element strand. 2,222 copies (L1PA2 179, PA3 428, PA4 393, PA5 372, PA6 220, PA7 483, PA8 147); mean length about 3.3 kb.
 2. `SubFam.sh -n 20 -c -t 4 -x l1 l1.fa`: 111 chunk consensuses, 5 min 2 s (`subfam.log`).

@@ -1,6 +1,6 @@
 # COSEG 0.2.4 read at the source level (coseg.c, runcoseg.pl, preprocessAlignments.pl)
 
-Read 2026-10-08. Not read: postprocess.pl, refineConsSeqs.pl, buildCpGAdjustedConsensus. The same text, with the SINEderella/peel comparison, is in the owner's Claude Docs doc "Alu subfamily definitions and how they are told apart" (artifact https://claude.ai/artifact/U5kNLaQtKsZByEy5sr6fRD, sections 3A and 8A).
+Read 2026-10-08. Not read: postprocess.pl, refineConsSeqs.pl, buildCpGAdjustedConsensus.
 
 - Flow: up to 10 rounds of {best pair (or triple with -t) in any subfamily -> split -> EM re-fit -> prune}; then single mutations; MST tree; at most 400 subfamilies (MAXS).
 - Pair search: 5 states per site (A,C,G,T,deletion); first site >= minDist (10), second >= minDist before it; a state present in any subfamily consensus at that position is skipped; a state or pair carried by fewer than minCount copies is skipped; CpG transitions (C<->T before G, G<->A after C) skipped at both sites; two deletion states refused (DISALLOW_DASHDASH); z-score >= 3.0 pre-filter; P < 0.001 after Bonferroni factor 0.5 (L-d-m)(L-d-m+1) 16 (594,048 at L=282, minDist 10, i.e. raw P < 1.7e-9); then a local 2-way EM must reproduce both mutations; then the worst P over the union with every other subfamily.

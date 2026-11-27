@@ -2,7 +2,15 @@
 
 Note (2026-10-31): the tables below were made with SubFam 1.2.0 and report 15 chunks at -n 20; the current version gives 16 rows on the same 316 loci (examples/konkel_alu_n20.rows.tsv), which is what the manuscript reports.
 
-Data: the 343 GenBank records KT305395-KT305737 (Sanger-sequenced polymorphic Alu insertions, 1000 Genomes pilot; Konkel et al. 2015, GBE 7:2608). Download them yourself with efetch (see docs/HANDOFF_vscode.md); the records are not stored here.
+Data: the 343 GenBank records KT305395-KT305737 (Sanger-sequenced polymorphic Alu insertions, 1000 Genomes pilot; Konkel et al. 2015, GBE 7:2608). Download them yourself; the records are not stored here:
+
+```
+mkdir -p konkel && cd konkel
+for i in $(seq 395 737); do for try in 1 2 3 4 5; do
+  curl -sf -m 60 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=KT305$i&rettype=gb&retmode=text" -o KT305$i.gb && break; sleep $((try*2)); done; sleep 0.4; done
+```
+
+`prep.py` also needs the Price et al. 2004 supplement `SUBFAMILIES.FINAL.txt` (Genome Res, doi:10.1101/gr.2693004, Supplemental Material).
 
 `prep.py GB_DIR PRICE_SUPPLEMENT OUT_DIR`
 1. local-aligns every locus to the Price et al. 2004 AluY consensus (supplement of that paper, not stored here), cuts the Alu body out;

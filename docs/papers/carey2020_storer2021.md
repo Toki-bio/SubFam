@@ -11,7 +11,7 @@ NOT peer reviewed (preprint v3, 14 Dec 2020, CC BY). hg19 / hg38-panTro4, Repeat
 - Confidence from the ensemble of competing alignment scores (softmax of scores): median lower confidence 73.4 % in concordant vs 52.8 % in discordant pairs.
 - Recommendations: use reliability measures to decide how aggressively to split families; annotation pipelines should report confidence.
 - Relevance: the single-best-score "adjudication" criticised here is what a flat bitscore vote does. SINEderella's 10-cycle unanimity and the LEAK flag are a form of confidence; the paper gives a reference for the problem and a score-ensemble confidence measure to compare with.
-- Data/scripts: http://wheelerlab.org/pubs/2020-discordant-CareyPatterson/CareyPatterson_suppl.tar.gz (blocked from the cloud container).
+- Data/scripts: http://wheelerlab.org/pubs/2020-discordant-CareyPatterson/CareyPatterson_suppl.tar.gz (could not be downloaded).
 
 ## Storer, Hubley, Rosen, Smit - Curation guidelines for de novo generated TE families
 - Subfamily analysis uses COSEG: alignAndCallConsensus.pl -> bestwindow.pl -> preprocessAlignments.pl -> runcoseg.pl. Copies are aligned pairwise to ONE consensus (transitive MSA); stated to work when the reference "lack[s] significant indels".
