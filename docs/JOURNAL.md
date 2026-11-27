@@ -33,3 +33,14 @@ Update: Nikita is not an author; he is thanked in the acknowledgements (README u
   (`docs/figures/fig2_chaos_to_order`, its MAFFT alignment on one thread so that it is reproducible) and Supplementary Figure 3
   (`benchmark/figure_supp3_simulation.py`); 24 numbered references, each checked against PubMed or the tool page
   (`docs/REFERENCES_BMC_v7.md`). Waiting on the author: prior-use papers, declarations, name spelling, waiver.
+
+## 2026-11-27: demo/ folder for readers and colleagues
+- `demo/data/`: the inputs of all five manuscript examples (Ex1 B2 3,000; Fig 2 B2 390; Ex2 L1PA 2,222; Ex3 Alu 316; Ex4 B2 30,000).
+  B2 3,000/390 and Alu 316 from the colleague package of 2026-11-14 (390 = `benchmark/sine_b2/chaos_subset.fa`, 3,000 ids = `b2_truth_kramerov.tsv`);
+  L1 and 30k rebuilt on therioserver (`therioserver:/home/toki/tmp/subfam_demo/rebuild.sh`) from UCSC with `extract_l1.py` / `subsample.py`:
+  ids identical to `line_real/sf_last900/l1_3p.chunks.tsv` and `stress_chr123/s1.truth.tsv`, 41,989 copies before sampling.
+- `demo/README.md` tested by running its own code blocks from a fresh clone on therioserver (`therioserver:/home/toki/tmp/subfam_demo/test1/SubFam`):
+  every row identical to the committed manuscript rows (60, 20 = Fig 2 md5 ff83c26a, 111, 16/7 distinct, 600/588 distinct);
+  `.cons.fasta` and `.chunks.tsv` byte-identical with MAFFT 7.526 (conda) and 7.525 + gawk 5.3.2 (Ubuntu packages), and with -t 8 and -t 2;
+  only the Ex4 `.aln.fasta` changes (263-265 columns). Not tested yet: `conda env create` itself (conda.anaconda.org throttled to ~400 B/s
+  from therioserver; to be run on Monsoon).
